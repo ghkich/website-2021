@@ -1,0 +1,5 @@
+export default {
+  LINE_HEIGHT_TIGHT: 1.25,
+  LINE_HEIGHT_SNUG: 1.35,
+  LINE_HEIGHT_NORMAL: 1.5,
+}
