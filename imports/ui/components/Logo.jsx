@@ -1,75 +1,138 @@
-import React, {useEffect, useState} from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import styled, {css} from 'styled-components'
 import {Colors} from '../theme'
-import {Logomark} from './Logomark'
 
-const LogoType = {
-  G: 'g',
+export const LogoShape = {
+  NORMAL: 'normal',
   CODE: 'code',
 }
 
-export const Logo = () => {
-  const [logoType, setLogoType] = useState(LogoType.G)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLogoType((prev) => (prev === LogoType.G ? LogoType.CODE : LogoType.G))
-    }, 20000)
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [])
-
+export const Logo = ({shape}) => {
   return (
     <MainContainer>
-      <Logomark type={logoType} />
-      <NameContainer type={logoType}>
-        <h1>Gustavo Kich</h1>
-        <span>Full-stack Developer</span>
-      </NameContainer>
+      <TopPiece shape={shape} />
+      <LeftPiece shape={shape}>
+        <div className="left-piece-a" />
+        <div className="left-piece-b" />
+      </LeftPiece>
+      <RightPiece shape={shape}>
+        <div className="right-piece-a" />
+        <div className="right-piece-b" />
+      </RightPiece>
     </MainContainer>
   )
 }
 
+Logo.propTypes = {
+  shape: PropTypes.oneOf(Object.values(LogoShape)),
+}
+
+const PIECE = 10
+const SPACE = 4
+const SCALE = 1
+
+const LogoSize = {
+  PIECE: PIECE,
+  SPACE: SPACE,
+  WIDTH: 3 * PIECE + 2 * SPACE,
+  BOTTOM: 2 * PIECE + SPACE,
+  SCALE: SCALE,
+}
+
 const MainContainer = styled.div`
-  display: flex;
-  align-items: center;
+  position: relative;
+  width: ${LogoSize.WIDTH}px;
+  height: ${LogoSize.WIDTH}px;
 `
 
-const NameContainer = styled.div`
+const TopPiece = styled.div`
+  width: ${LogoSize.WIDTH}px;
+  height: ${LogoSize.PIECE}px;
+  background-color: ${Colors.PINK};
+  position: absolute;
+  top: 0;
+  left: 0;
   transition: all 0.35s ease;
 
-  > h1 {
-    margin: 0;
-    margin-bottom: 2px;
-    font-weight: normal;
-    font-size: 15px;
-    transition: color 0.35s ease;
-    color: ${Colors.WHITEPINK};
-  }
-
-  > span {
-    font-size: 14px;
-    transition: color 0.35s ease;
-  }
-
   ${(props) => {
-    if (props.type === LogoType.G) {
+    if (props.shape === LogoShape.CODE) {
       return css`
-        margin-left: 15px;
-
-        > span {
-          color: rgba(255, 255, 255, 0.3);
-        }
+        width: ${LogoSize.WIDTH * 1.25}px;
+        top: 14px;
+        left: -3px;
+        transform: rotate(-75deg) scale(${LogoSize.SCALE});
       `
     }
-    return css`
-      margin-left: 25px;
-
-      > span {
-        color: ${Colors.LIGHTPINK};
-      }
-    `
   }}
+`
+
+const LeftPiece = styled.div`
+  height: ${LogoSize.BOTTOM}px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: all 0.35s ease;
+
+  ${(props) => {
+    if (props.shape === LogoShape.CODE) {
+      return css`
+        bottom: 11px;
+        left: -3px;
+        transform: rotate(45deg) scale(${LogoSize.SCALE});
+      `
+    }
+  }}
+
+  > .left-piece-a {
+    width: ${LogoSize.BOTTOM}px;
+    height: ${LogoSize.PIECE}px;
+    background-color: ${Colors.LIGHTPINK};
+    position: absolute;
+    bottom: 0;
+  }
+
+  > .left-piece-b {
+    width: ${LogoSize.PIECE}px;
+    height: ${LogoSize.BOTTOM}px;
+    background-color: ${Colors.LIGHTPINK};
+    position: absolute;
+    bottom: 0;
+  }
+`
+
+const RightPiece = styled.div`
+  height: ${LogoSize.BOTTOM}px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transition: all 0.35s ease;
+
+  ${(props) => {
+    if (props.shape === LogoShape.CODE) {
+      return css`
+        bottom: 0px;
+        right: -3px;
+        transform: rotate(45deg) scale(${LogoSize.SCALE});
+      `
+    }
+  }}
+
+  > .right-piece-a {
+    width: ${LogoSize.BOTTOM}px;
+    height: ${LogoSize.PIECE}px;
+    background-color: ${Colors.WHITEPINK};
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  > .right-piece-b {
+    width: ${LogoSize.PIECE}px;
+    height: ${LogoSize.BOTTOM}px;
+    background-color: ${Colors.WHITEPINK};
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
 `

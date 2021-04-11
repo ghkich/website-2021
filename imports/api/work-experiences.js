@@ -1,6 +1,6 @@
 import {Mongo} from 'meteor/mongo'
 
-const COLLECTION_NAME = 'experiences'
+const COLLECTION_NAME = 'work-experiences'
 
 const Collection = new Mongo.Collection(COLLECTION_NAME)
 
@@ -14,6 +14,6 @@ const Methods = {
   },
 }
 
-export const ExperiencesCollection = Collection
-export const ExperiencesMethodRequests = MethodRequests
-export const ExperiencesMethods = Methods
+export const WorkExperiencesCollection = Collection
+export const WorkExperiencesMethodRequests = MethodRequests
+export const WorkExperiencesMethods = Methods

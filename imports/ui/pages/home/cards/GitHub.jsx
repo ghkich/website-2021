@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import {GitHubMethodRequests} from '../../api/github'
-import {useMethodRequest} from '../../infra/useMethodRequest'
-import {Card} from '../components/Card'
-import {Colors, Typography} from '../theme'
+import {GitHubMethodRequests} from '../../../../api/github'
+import {useMethodRequest} from '../../../../infra/useMethodRequest'
+import {Card} from '../../../components/Card'
+import {Colors, Typography} from '../../../theme'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faBookAlt} from '@fortawesome/pro-light-svg-icons'
 
 export const GitHub = ({title}) => {
   const updateRequest = useMethodRequest(GitHubMethodRequests.UPDATE, {manual: true})
@@ -15,8 +17,10 @@ export const GitHub = ({title}) => {
       const today = new Date().getTime()
       const lastUpdate = new Date(updatedAt).getTime()
 
-      if (today > lastUpdate + delayTime) {
-        // update collection if one day passed since last update
+      // TODO: move this update function inside methodRequest
+      // TODO: remove data condition after initialize data
+      if (!data || today > lastUpdate + delayTime) {
+        // update collection if $delayTime passed since last update
         fetch('https://api.github.com/users/ghkich/repos?type=owner&sort=pushed')
           .then((resp) => resp.json())
           .then((data) => updateRequest.run({id: _id, data}))
@@ -33,11 +37,21 @@ GitHub.propTypes = {
 
 export const GitHubComponent = ({title, repos}) => {
   return (
-    <Card title={title}>
+    <Card
+      title={title}
+      rightSpot={
+        <>
+          Repos: <b>12</b>
+        </>
+      }
+    >
       <MainContainer>
         {repos?.map((repo) => (
           <GitHubItem key={repo.id}>
-            <h2>{repo.name}</h2>
+            <h2>
+              <FontAwesomeIcon icon={faBookAlt} />
+              <span>{repo.name}</span>
+            </h2>
             <p>{repo.description || 'Add description on GitHub'}</p>
           </GitHubItem>
         ))}
@@ -66,17 +80,24 @@ const MainContainer = styled.div`
 
 const GitHubItem = styled.div`
   padding: 10px;
-  height: 55px;
+  height: 50px;
   border-radius: 4px;
   background-color: rgba(255, 255, 255, 0.01);
   border: 1px solid rgba(255, 255, 255, 0.03);
 
   > h2 {
-    margin: 0;
-    margin-bottom: 7px;
+    margin: 0 0 7px;
     font-size: 12px;
     font-weight: lighter;
-    color: ${Colors.LIGHTPINK};
+    color: ${Colors.WHITEPINK};
+
+    > svg {
+      color: ${Colors.LIGHTPINK};
+    }
+
+    > span {
+      margin-left: 5px;
+    }
   }
 
   > p {
@@ -84,6 +105,6 @@ const GitHubItem = styled.div`
     font-size: 12px;
     font-weight: lighter;
     line-height: ${Typography.LINE_HEIGHT_SNUG};
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.3);
   }
 `

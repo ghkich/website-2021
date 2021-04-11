@@ -1,28 +1,18 @@
 import 'normalize.css'
 import React from 'react'
 import styled from 'styled-components'
-import {Experiences} from '../cards/Experiences'
-import {GitHub} from '../cards/GitHub'
-import {Card} from '../components/Card'
-import {Logo} from '../components/Logo'
 import {Colors} from '../theme'
+import {routes} from './routes'
+import {Switch} from './Router'
 
 export const App = () => {
   return (
     <AppContainer>
-      <BoxedLayout>
-        <Header>
-          <Logo />
-        </Header>
-        <CardsGrid>
-          <Experiences title="Work Experiences" />
-          <Card title="Short Bio"></Card>
-          <GitHub title="GitHub" />
-          <Card title="Skills" />
-          <Card title="Travels" />
-          <Card title="Blog" />
-        </CardsGrid>
-      </BoxedLayout>
+      <Switch>
+        {routes.map(({name, path, component: Component}) => (
+          <Component key={name} path={path} />
+        ))}
+      </Switch>
     </AppContainer>
   )
 }
@@ -38,23 +28,4 @@ const AppContainer = styled.div`
     ${Colors.PURPLE} 70%,
     ${Colors.DARKMAGENTA} 100%
   );
-`
-
-const BoxedLayout = styled.div`
-  width: 1300px;
-`
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 128px;
-`
-
-const CardsGrid = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 24px;
-  row-gap: 24px;
 `

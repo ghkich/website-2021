@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types'
 import React, {useState} from 'react'
 import styled, {css} from 'styled-components'
-import {ExperiencesMethodRequests} from '../../api/experiences'
-import {useMethodRequest} from '../../infra/useMethodRequest'
-import {Card} from '../components/Card'
-import {Colors, Typography} from '../theme'
-import {formatDate} from '../utils/formatters'
+import {WorkExperiencesMethodRequests} from '../../../../api/work-experiences'
+import {useMethodRequest} from '../../../../infra/useMethodRequest'
+import {Card} from '../../../components/Card'
+import {Colors, Typography} from '../../../theme'
+import {formatDate} from '../../../utils/formatters'
 
-export const Experiences = ({title}) => {
+export const WorkExperiences = ({title}) => {
   const [activeId, setActiveId] = useState('')
 
-  const {data, loading} = useMethodRequest(ExperiencesMethodRequests.FETCH, {
+  const {data, loading} = useMethodRequest(WorkExperiencesMethodRequests.FETCH, {
     onSuccess: (data) => data?.length > 0 && setActiveId(data[0]._id),
   })
 
@@ -39,7 +39,7 @@ export const Experiences = ({title}) => {
   )
 }
 
-Experiences.propTypes = {
+WorkExperiences.propTypes = {
   title: PropTypes.string.isRequired,
 }
 
@@ -51,8 +51,8 @@ const MainContainer = styled.div`
 `
 
 const Indicator = styled.div`
-  width: 5px;
-  height: 5px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.2);
   border: 2px solid transparent;
@@ -75,19 +75,18 @@ const Line = styled.div`
   width: 1px;
   background-color: rgba(255, 255, 255, 0.075);
   position: absolute;
-  top: 20px;
-  bottom: 5px;
-  left: 4px;
+  top: 18px;
+  bottom: 3px;
+  left: 3px;
 `
 
 const Header = styled.div`
   cursor: pointer;
 
   > h2 {
-    margin: 0;
-    margin-bottom: 5px;
+    margin: 0 0 7px;
     color: ${Colors.BLUE};
-    font-size: 14px;
+    font-size: 13px;
     font-weight: normal;
 
     > span {
@@ -129,7 +128,7 @@ const Body = styled.div`
     margin-top: 15px;
     margin-bottom: 0;
     color: rgba(255, 255, 255, 0.5);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: lighter;
     line-height: ${Typography.LINE_HEIGHT_NORMAL};
   }

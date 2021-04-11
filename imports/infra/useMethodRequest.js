@@ -1,9 +1,16 @@
 import {useEffect, useState} from 'react'
-import {ExperiencesMethodRequests} from '../api/experiences'
+import {WorkExperiencesMethodRequests} from '../api/work-experiences'
 import {GitHubMethodRequests} from '../api/github'
 import {methodCall} from './methodCall'
+import {ShortBioMethodRequests} from '../api/short-bio'
+import {ContactInfoMethodRequests} from '../api/contact-info'
 
-const AllMethodRequests = [ExperiencesMethodRequests, GitHubMethodRequests]
+const AllMethodRequests = [
+  WorkExperiencesMethodRequests,
+  GitHubMethodRequests,
+  ShortBioMethodRequests,
+  ContactInfoMethodRequests,
+]
 
 const RequestStatuses = {
   IDLE: 'idle',
@@ -14,7 +21,7 @@ const RequestStatuses = {
 
 export const useMethodRequest = (requestName, opt) => {
   if (!AllMethodRequests.some((item) => Object.values(item).some((value) => value === requestName))) {
-    throw new Error(`Not a valid requestName`)
+    throw new Error(`Not a valid method requestName`)
   }
 
   const options = {manual: false, onSuccess: () => {}, ...opt}
