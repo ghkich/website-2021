@@ -4,12 +4,15 @@ import {GitHubMethodRequests} from '../api/github'
 import {methodCall} from './methodCall'
 import {ShortBioMethodRequests} from '../api/short-bio'
 import {ContactInfoMethodRequests} from '../api/contact-info'
+import {BlogMethodRequests} from '../api/blog'
+import {fetchFromSource} from './fetchFromSource'
 
 const AllMethodRequests = [
   WorkExperiencesMethodRequests,
   GitHubMethodRequests,
   ShortBioMethodRequests,
   ContactInfoMethodRequests,
+  BlogMethodRequests,
 ]
 
 const RequestStatuses = {
@@ -29,16 +32,32 @@ export const useMethodRequest = (requestName, opt) => {
   const [data, setData] = useState([])
   const [status, setStatus] = useState(RequestStatuses.IDLE)
 
+  const handleError = (error) => {
+    console.error(error)
+    setStatus(RequestStatuses.ERROR)
+  }
+
   const run = async (params) => {
     try {
       setStatus(RequestStatuses.LOADING)
-      const response = await methodCall(requestName, params)
+      let response = await methodCall(requestName, params)
+
+      if (options.updateCollection) {
+        const {validate, sourceUrl, updateRequestName} = options.updateCollection
+        if (!validate || !sourceUrl || !updateRequestName) {
+          handleError(`updateCollectionFromSource missing some config`)
+        } else if (validate(response)) {
+          const sourceData = await fetchFromSource(sourceUrl)
+          await methodCall(updateRequestName, {id: response?._id, data: sourceData})
+          response = await methodCall(requestName, params)
+        }
+      }
+
       setStatus(RequestStatuses.SUCCESS)
       setData(response)
       options.onSuccess(response)
     } catch (error) {
-      console.error(error)
-      setStatus(RequestStatuses.ERROR)
+      handleError(error)
     }
   }
 

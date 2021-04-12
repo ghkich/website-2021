@@ -7,24 +7,14 @@ import {Card} from '../../../components/Card'
 import {Colors, Typography} from '../../../theme'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBookAlt} from '@fortawesome/pro-light-svg-icons'
+import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
 
 export const GitHub = ({title}) => {
-  const updateRequest = useMethodRequest(GitHubMethodRequests.UPDATE, {manual: true})
-
   const {data} = useMethodRequest(GitHubMethodRequests.FETCH, {
-    onSuccess: ({_id, updatedAt} = {updatedAt: new Date()}) => {
-      const delayTime = 1 * 60 * 1000 // x hours * 60 min * 1000 milliseconds
-      const today = new Date().getTime()
-      const lastUpdate = new Date(updatedAt).getTime()
-
-      // TODO: move this update function inside methodRequest
-      // TODO: remove data condition after initialize data
-      if (!data || today > lastUpdate + delayTime) {
-        // update collection if $delayTime passed since last update
-        fetch('https://api.github.com/users/ghkich/repos?type=owner&sort=pushed')
-          .then((resp) => resp.json())
-          .then((data) => updateRequest.run({id: _id, data}))
-      }
+    updateCollection: {
+      validate: (data) => shouldUpdateCollection(data),
+      sourceUrl: 'https://api.github.com/users/ghkich/repos?type=owner&sort=pushed',
+      updateRequestName: GitHubMethodRequests.UPDATE,
     },
   })
 

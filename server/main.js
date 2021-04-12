@@ -3,6 +3,7 @@ import {GitHubMethods} from '../imports/api/github'
 import {WorkExperiencesCollection, WorkExperiencesMethods} from '/imports/api/work-experiences'
 import {ShortBioCollection, ShortBioMethods} from '../imports/api/short-bio'
 import {ContactInfoCollection, ContactInfoMethods} from '../imports/api/contact-info'
+import {BlogMethods} from '../imports/api/blog'
 
 const WORK_EXPERIENCES_DATA = [
   {
@@ -72,6 +73,7 @@ Meteor.methods({
   ...GitHubMethods,
   ...ShortBioMethods,
   ...ContactInfoMethods,
+  ...BlogMethods,
 })
 
 Meteor.startup(() => {

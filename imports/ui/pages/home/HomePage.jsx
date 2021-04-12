@@ -7,11 +7,16 @@ import {HeaderLogo} from './HeaderLogo'
 import {ShortBio} from './cards/ShortBio'
 import {HeaderContactInfo} from './HeaderContactInfo'
 import PropTypes from 'prop-types'
+import {WorldMap} from './cards/WorldMap'
+import {Card} from '../../components/Card'
+import {Blog} from './cards/Blog'
 
 const CardNames = {
   WORK_EXPERIENCES: 'work-experiences',
   SHORT_BIO: 'short-bio',
   GITHUB: 'github',
+  WORLD_MAP: 'world-map',
+  BLOG: 'blog',
 }
 
 export const Cards = [
@@ -29,6 +34,21 @@ export const Cards = [
     name: CardNames.GITHUB,
     title: 'GitHub',
     component: GitHub,
+  },
+  {
+    name: 'skills',
+    title: 'Skills',
+    component: Card,
+  },
+  {
+    name: CardNames.WORLD_MAP,
+    title: 'World Map',
+    component: WorldMap,
+  },
+  {
+    name: CardNames.BLOG,
+    title: 'Blog',
+    component: Blog,
   },
 ]
 
@@ -64,6 +84,7 @@ HomePageComponent.propTypes = {
 
 const BoxedLayout = styled.div`
   width: 1300px;
+  margin: 0 18px;
 `
 
 const Header = styled.div`
@@ -71,6 +92,7 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 128px;
+  margin: 0 8px;
 `
 
 const CardsGrid = styled.div`

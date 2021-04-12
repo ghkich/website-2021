@@ -1,6 +1,8 @@
 import {Mongo} from 'meteor/mongo'
+import {shouldUpdateCollection} from '../infra/shouldUpdateCollection'
+import {fetchFromExternalApi} from '../infra/fetchFromSource'
 
-const COLLECTION_NAME = 'github'
+const COLLECTION_NAME = 'blog'
 
 const Collection = new Mongo.Collection(COLLECTION_NAME)
 
@@ -14,22 +16,21 @@ const Methods = {
     return Collection.find().fetch()[0]
   },
   [MethodRequests.UPDATE]({id, data}) {
-    const repos = data.map(({id, name, description, homepage, html_url, pushed_at}) => ({
-      id,
-      name,
+    const posts = data?.items?.map(({guid, title, description, categories, link}) => ({
+      guid,
+      title,
       description,
-      homepage,
-      htmlUrl: html_url,
-      pushedAt: pushed_at,
+      categories,
+      link,
     }))
 
-    return Collection.upsert(
+    Collection.upsert(
       {
         _id: id,
       },
       {
         $set: {
-          repos,
+          posts,
           updatedAt: new Date(),
         },
       },
@@ -37,6 +38,6 @@ const Methods = {
   },
 }
 
-export const GitHubCollection = Collection
-export const GitHubMethodRequests = MethodRequests
-export const GitHubMethods = Methods
+export const BlogCollection = Collection
+export const BlogMethodRequests = MethodRequests
+export const BlogMethods = Methods
