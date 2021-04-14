@@ -5,12 +5,18 @@ import {BlogMethodRequests} from '../../../../api/blog'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card} from '../../../components/Card'
 import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
+import {Colors, Typography} from '../../../theme'
+
+const API_KEY = 'f34ieehw4u4zcysmvyyeqqghfjkt9yx8alo2mzfd'
+const TIMESTAMP = new Date().getTime() // to ignore rss2json cache
+const SOURCE_DATA_URL = `https://gustavokich.medium.com/feed?t=${TIMESTAMP}`
+const URL_RSS_TO_JSON = `https://api.rss2json.com/v1/api.json?rss_url=${SOURCE_DATA_URL}&api_key=${API_KEY}`
 
 export const Blog = ({title}) => {
   const {data} = useMethodRequest(BlogMethodRequests.FETCH, {
     updateCollection: {
       validate: (data) => shouldUpdateCollection(data),
-      sourceUrl: 'https://api.rss2json.com/v1/api.json?rss_url=https://gustavokich.medium.com/feed/',
+      sourceDataUrl: URL_RSS_TO_JSON,
       updateRequestName: BlogMethodRequests.UPDATE,
     },
   })
@@ -27,7 +33,10 @@ export const BlogComponent = ({title, posts}) => {
     <Card title={title} rightSpot="">
       <MainContainer>
         {posts?.map((post) => (
-          <div key={post.guid}>{post.title}</div>
+          <PostContainer key={post.guid}>
+            <h2>{post.title}</h2>
+            <div dangerouslySetInnerHTML={{__html: post.description}} />
+          </PostContainer>
         ))}
       </MainContainer>
     </Card>
@@ -49,4 +58,31 @@ BlogComponent.propTypes = {
 
 const MainContainer = styled.div`
   position: relative;
+`
+
+const PostContainer = styled.div`
+  margin-bottom: 12px;
+  color: ${Colors.LIGHTPINK};
+  padding: 10px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+
+  > h2 {
+    margin: 0 0 10px;
+    color: ${Colors.LIGHTPINK};
+    font-weight: lighter;
+    font-size: 13px;
+  }
+
+  > div {
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: lighter;
+    font-size: 13px;
+    line-height: ${Typography.LINE_HEIGHT_SNUG};
+
+    p {
+      margin: 0;
+    }
+  }
 `

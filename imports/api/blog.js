@@ -1,6 +1,4 @@
 import {Mongo} from 'meteor/mongo'
-import {shouldUpdateCollection} from '../infra/shouldUpdateCollection'
-import {fetchFromExternalApi} from '../infra/fetchFromSource'
 
 const COLLECTION_NAME = 'blog'
 
@@ -16,13 +14,24 @@ const Methods = {
     return Collection.find().fetch()[0]
   },
   [MethodRequests.UPDATE]({id, data}) {
-    const posts = data?.items?.map(({guid, title, description, categories, link}) => ({
-      guid,
-      title,
-      description,
-      categories,
-      link,
-    }))
+    if (!data) {
+      console.warn('Blog Collection could not be updated')
+      return
+    }
+
+    const posts = data.items?.map(({guid, title, description, categories, link}) => {
+      // TODO: improve the following code to get content of first paragraph
+      const htmlTagsRemoved = description.replace(/<[^>]+>/g, '')
+      const shorterDescription = htmlTagsRemoved.substr(0, 150) + '...'
+
+      return {
+        guid,
+        title,
+        description: shorterDescription,
+        categories,
+        link,
+      }
+    })
 
     Collection.upsert(
       {

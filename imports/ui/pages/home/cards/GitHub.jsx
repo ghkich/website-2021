@@ -9,11 +9,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBookAlt} from '@fortawesome/pro-light-svg-icons'
 import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
 
+const SOURCE_DATA_URL = 'https://api.github.com/users/ghkich/repos?type=owner&sort=pushed'
+
 export const GitHub = ({title}) => {
   const {data} = useMethodRequest(GitHubMethodRequests.FETCH, {
     updateCollection: {
       validate: (data) => shouldUpdateCollection(data),
-      sourceUrl: 'https://api.github.com/users/ghkich/repos?type=owner&sort=pushed',
+      sourceDataUrl: SOURCE_DATA_URL,
       updateRequestName: GitHubMethodRequests.UPDATE,
     },
   })

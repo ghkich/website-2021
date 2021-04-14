@@ -5,7 +5,7 @@ import {methodCall} from './methodCall'
 import {ShortBioMethodRequests} from '../api/short-bio'
 import {ContactInfoMethodRequests} from '../api/contact-info'
 import {BlogMethodRequests} from '../api/blog'
-import {fetchFromSource} from './fetchFromSource'
+import {fetchApi} from './fetchApi'
 
 const AllMethodRequests = [
   WorkExperiencesMethodRequests,
@@ -41,18 +41,18 @@ export const useMethodRequest = (requestName, opt) => {
     try {
       setStatus(RequestStatuses.LOADING)
       let response = await methodCall(requestName, params)
-
       if (options.updateCollection) {
-        const {validate, sourceUrl, updateRequestName} = options.updateCollection
-        if (!validate || !sourceUrl || !updateRequestName) {
-          handleError(`updateCollectionFromSource missing some config`)
-        } else if (validate(response)) {
-          const sourceData = await fetchFromSource(sourceUrl)
+        const {validate, sourceDataUrl, updateRequestName} = options.updateCollection
+        if (!validate || !sourceDataUrl || !updateRequestName) {
+          handleError(`updateCollection is missing some config`)
+          return
+        }
+        if (validate(response)) {
+          const sourceData = await fetchApi(sourceDataUrl)
           await methodCall(updateRequestName, {id: response?._id, data: sourceData})
           response = await methodCall(requestName, params)
         }
       }
-
       setStatus(RequestStatuses.SUCCESS)
       setData(response)
       options.onSuccess(response)

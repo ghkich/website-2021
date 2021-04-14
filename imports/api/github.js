@@ -14,6 +14,11 @@ const Methods = {
     return Collection.find().fetch()[0]
   },
   [MethodRequests.UPDATE]({id, data}) {
+    if (!data) {
+      console.warn('GitHub Collection could not be updated')
+      return
+    }
+
     const repos = data.map(({id, name, description, homepage, html_url, pushed_at}) => ({
       id,
       name,
