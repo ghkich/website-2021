@@ -7,6 +7,7 @@ import {Card} from '../../../components/Card'
 import {Colors, Typography} from '../../../theme'
 import {formatDate} from '../../../utils/formatters'
 import {SkeletonTypes} from '../../../components/Skeleton'
+import {KeywordIcon} from '../../../components/KeywordIcon'
 
 export const WorkExperiences = ({title}) => {
   const [activeId, setActiveId] = useState('')
@@ -21,15 +22,20 @@ export const WorkExperiences = ({title}) => {
         <MainContainer key={item._id} active={item._id === activeId}>
           <Indicator active={item._id === activeId} />
           {idx < data.length - 1 && <Line />}
-          <Header active={item._id === activeId} onClick={() => setActiveId(item._id === activeId ? '' : item._id)}>
-            <h2>
-              {item.jobTitle} <span>at {item.company}</span>
-            </h2>
+          <Header onClick={() => setActiveId(item._id === activeId ? '' : item._id)}>
             <div>
-              <span>{formatDate(item.startDate)}</span>
-              <span> - </span>
-              <span>{item.endDate ? formatDate(item.endDate) : 'Present'}</span>
+              <Title active={item._id === activeId}>
+                {item.jobTitle} <span>at {item.company}</span>
+              </Title>
+              <SubTitle>
+                <span>{formatDate(item.startDate)}</span>
+                <span> - </span>
+                <span>{item.endDate ? formatDate(item.endDate) : 'Present'}</span>
+              </SubTitle>
             </div>
+            {item.keywords.map((keyword) => (
+              <StyledKeywordIcon key={keyword} keyword={keyword} />
+            ))}
           </Header>
           <Body active={item._id === activeId}>
             <p>{item.description}</p>
@@ -82,42 +88,41 @@ const Line = styled.div`
 `
 
 const Header = styled.div`
+  display: flex;
   cursor: pointer;
 
-  > h2 {
-    margin: 0 0 7px;
-    color: ${Colors.BLUE};
-    font-size: 13px;
-    font-weight: normal;
-
-    > span {
-      color: ${Colors.LIGHTBLUE};
-    }
-  }
-
   > div {
-    font-size: 12px;
-    font-weight: lighter;
-    color: rgba(255, 255, 255, 0.3);
+    flex: 1;
+  }
+`
+
+const Title = styled.h2`
+  flex: 1;
+  margin: 0 0 7px;
+  color: ${Colors.BLUE};
+  font-size: 13px;
+  font-weight: normal;
+
+  > span {
+    color: ${Colors.LIGHTBLUE};
   }
 
-  ${(props) => {
-    if (props.active) {
-      return css`
-        > h2 {
-          color: ${Colors.BLUE};
-        }
-      `
-    } else {
-      return css`
-        :hover {
-          > h2 {
-            color: ${Colors.LIGHTBLUE};
-          }
-        }
-      `
-    }
-  }}
+  :hover {
+    color: ${({active}) => (active ? Colors.BLUE : Colors.LIGHTBLUE)};
+  }
+`
+
+const StyledKeywordIcon = styled(KeywordIcon)`
+  margin-left: 10px;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 1.4em;
+`
+
+const SubTitle = styled.h3`
+  margin: 0;
+  font-size: 12px;
+  font-weight: lighter;
+  color: rgba(255, 255, 255, 0.3);
 `
 
 const Body = styled.div`
