@@ -6,6 +6,7 @@ import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card} from '../../../components/Card'
 import {Colors, Typography} from '../../../theme'
 import {formatDate} from '../../../utils/formatters'
+import {SkeletonTypes} from '../../../components/Skeleton'
 
 export const WorkExperiences = ({title}) => {
   const [activeId, setActiveId] = useState('')
@@ -15,7 +16,7 @@ export const WorkExperiences = ({title}) => {
   })
 
   return (
-    <Card title={title} loading={loading}>
+    <Card title={title} skeletonType={SkeletonTypes.TEXT} loading={loading}>
       {data.map((item, idx) => (
         <MainContainer key={item._id} active={item._id === activeId}>
           <Indicator active={item._id === activeId} />

@@ -2,8 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
-import styled, {keyframes} from 'styled-components'
+import styled from 'styled-components'
 import {Colors, Spacings} from '../theme'
+import {Skeleton, SkeletonTypes} from './Skeleton'
 
 // export const CardErrorBoundary = ({error, children, onFixButtonClick}) => {
 //   if (error) {
@@ -23,7 +24,7 @@ import {Colors, Spacings} from '../theme'
 //   onFixButtonClick: PropTypes.func,
 // }
 
-export const Card = ({title, rightSpot, children}) => {
+export const Card = ({title, rightSpot, skeletonType, loading, children}) => {
   return (
     <CardContainer>
       <Header>
@@ -32,7 +33,11 @@ export const Card = ({title, rightSpot, children}) => {
       </Header>
       <HeaderShadow />
       <StyledSimpleBar>
-        <Body>{children}</Body>
+        <Body>
+          <Skeleton type={skeletonType} loading={loading}>
+            {children}
+          </Skeleton>
+        </Body>
       </StyledSimpleBar>
     </CardContainer>
   )
@@ -41,7 +46,9 @@ export const Card = ({title, rightSpot, children}) => {
 Card.propTypes = {
   title: PropTypes.string.isRequired,
   rightSpot: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  children: PropTypes.node.isRequired,
+  skeletonType: PropTypes.oneOf(Object.values(SkeletonTypes)),
+  loading: PropTypes.bool,
+  children: PropTypes.node,
 }
 
 const CARD_HEIGHT = 280
