@@ -8,11 +8,12 @@ import {Colors, Typography} from '../../../theme'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBookAlt} from '@fortawesome/pro-light-svg-icons'
 import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
+import {SkeletonTypes} from '../../../components/Skeleton'
 
 const SOURCE_DATA_URL = 'https://api.github.com/users/ghkich/repos?type=owner&sort=pushed'
 
 export const GitHub = ({title}) => {
-  const {data} = useMethodRequest(GitHubMethodRequests.FETCH, {
+  const {data, loading} = useMethodRequest(GitHubMethodRequests.FETCH, {
     updateCollection: {
       validate: (data) => shouldUpdateCollection(data),
       sourceDataUrl: SOURCE_DATA_URL,
@@ -20,17 +21,19 @@ export const GitHub = ({title}) => {
     },
   })
 
-  return <GitHubComponent title={title} repos={data?.repos} />
+  return <GitHubComponent title={title} loading={loading} repos={data?.repos} />
 }
 
 GitHub.propTypes = {
   title: PropTypes.string.isRequired,
 }
 
-export const GitHubComponent = ({title, repos}) => {
+export const GitHubComponent = ({title, loading, repos}) => {
   return (
     <Card
       title={title}
+      loading={loading}
+      skeletonType={SkeletonTypes.GRID}
       rightSpot={
         <>
           Repos: <b>12</b>
@@ -54,6 +57,7 @@ export const GitHubComponent = ({title, repos}) => {
 
 GitHubComponent.propTypes = {
   title: PropTypes.string.isRequired,
+  loading: PropTypes.bool,
   repos: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,

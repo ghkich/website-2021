@@ -37,8 +37,20 @@ export const Skeleton = ({type, loading, children}) => {
       </div>
     </Text>
   )
+  const SkeletonGrid = () => (
+    <Grid>
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+    </Grid>
+  )
+
   const TypesComponents = {
     [SkeletonTypes.TEXT]: SkeletonText,
+    [SkeletonTypes.GRID]: SkeletonGrid,
   }
   return (
     <MainContainer>
@@ -95,5 +107,25 @@ const Text = styled.div`
         height: 75px;
       }
     }
+  }
+`
+
+const Grid = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  animation: ${pulse} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  row-gap: 10px;
+
+  > div {
+    height: 72px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.03);
   }
 `
