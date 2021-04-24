@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import styled, {css} from 'styled-components'
-import {Colors} from '../../theme'
-import {Logo, LogoShape} from '../../components/Logo'
+import {Colors, Spacing} from '../../theme'
+import {Logo, LOGO_TRANSITION, LogoShape} from '../../components/Logo'
 
 export const HeaderLogo = () => {
   const [logoShape, setLogoShape] = useState(LogoShape.NORMAL)
@@ -28,12 +28,13 @@ export const HeaderLogo = () => {
 }
 
 const MainContainer = styled.div`
+  flex: none;
   display: flex;
   align-items: center;
 `
 
 const NameContainer = styled.div`
-  transition: all 0.35s ease;
+  transition: ${LOGO_TRANSITION};
 
   > h1 {
     margin: 0 0 2px;
@@ -51,7 +52,7 @@ const NameContainer = styled.div`
   ${(props) => {
     if (props.logoShape === LogoShape.NORMAL) {
       return css`
-        margin-left: 15px;
+        margin-left: ${Spacing(1)};
 
         > span {
           color: rgba(255, 255, 255, 0.3);
@@ -59,7 +60,7 @@ const NameContainer = styled.div`
       `
     }
     return css`
-      margin-left: 25px;
+      margin-left: ${Spacing(1.625)};
 
       > span {
         color: ${Colors.LIGHTPINK};
