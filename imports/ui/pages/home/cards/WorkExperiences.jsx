@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled, {css} from 'styled-components'
 import {WorkExperiencesMethodRequests} from '../../../../api/work-experiences'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
@@ -7,21 +7,33 @@ import {Card} from '../../../components/Card'
 import {Colors, Typography} from '../../../theme'
 import {formatDate} from '../../../utils/formatters'
 import {SkeletonTypes} from '../../../components/Skeleton'
-import {KeywordIcon} from '../../../components/KeywordIcon'
+import {KeywordIcon, KeywordTypes} from '../../../components/KeywordIcon'
 
 export const WorkExperiences = ({title}) => {
+  const {data, loading} = useMethodRequest(WorkExperiencesMethodRequests.FETCH)
+
+  return <WorkExperiencesComponent title={title} loading={loading} experiences={data} />
+}
+
+WorkExperiences.propTypes = {
+  title: PropTypes.string.isRequired,
+}
+
+export const WorkExperiencesComponent = ({title, loading, experiences}) => {
   const [activeId, setActiveId] = useState('')
 
-  const {data, loading} = useMethodRequest(WorkExperiencesMethodRequests.FETCH, {
-    onSuccess: (data) => data?.length > 0 && setActiveId(data[0]._id),
-  })
+  useEffect(() => {
+    if (experiences?.length > 0) {
+      setActiveId(experiences[0]._id)
+    }
+  }, [experiences])
 
   return (
     <Card title={title} skeletonType={SkeletonTypes.TEXT} loading={loading}>
-      {data.map((item, idx) => (
+      {experiences.map((item, idx) => (
         <MainContainer key={item._id} active={item._id === activeId}>
           <Indicator active={item._id === activeId} />
-          {idx < data.length - 1 && <Line />}
+          {idx < experiences.length - 1 && <Line />}
           <Header onClick={() => setActiveId(item._id === activeId ? '' : item._id)}>
             <div>
               <Title active={item._id === activeId}>
@@ -46,8 +58,20 @@ export const WorkExperiences = ({title}) => {
   )
 }
 
-WorkExperiences.propTypes = {
+WorkExperiencesComponent.propTypes = {
   title: PropTypes.string.isRequired,
+  loading: PropTypes.bool,
+  experiences: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      company: PropTypes.string.isRequired,
+      jobTitle: PropTypes.string.isRequired,
+      startDate: PropTypes.string.isRequired,
+      endDate: PropTypes.string,
+      keywords: PropTypes.arrayOf(PropTypes.oneOf(Object.values(KeywordTypes))),
+      description: PropTypes.string.isRequired,
+    }),
+  ),
 }
 
 const MainContainer = styled.div`
