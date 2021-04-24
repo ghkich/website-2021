@@ -6,6 +6,7 @@ import {ContactInfoMethodRequests} from '../../../api/contact-info'
 import {faGithub, faInstagram, faLinkedin} from '@fortawesome/free-brands-svg-icons'
 import {faAt} from '@fortawesome/pro-light-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {Spacing} from '../../theme'
 
 const ICONS_BY_CODE = {
   github: faGithub,
@@ -59,14 +60,14 @@ const Links = styled.div`
 `
 
 const LinksDivider = styled.div`
-  height: 10px;
-  width: 1px;
-  margin-left: 10px;
+  height: ${Spacing(0.625)};
+  width: ${Spacing(0.0625)};
+  margin-left: ${Spacing(0.625)};
   background-color: rgba(255, 255, 255, 0.1);
 `
 
 const IconLink = styled.a`
-  margin-left: 10px;
+  margin-left: ${Spacing(0.625)};
   font-size: 18px;
   color: rgba(255, 255, 255, 0.3);
   transition: color 0.15s linear;
@@ -77,7 +78,7 @@ const IconLink = styled.a`
 `
 
 const Phone = styled.div`
-  margin-top: 7px;
+  margin-top: ${Spacing(0.45)};
   font-size: 14px;
   color: rgba(255, 255, 255, 0.2);
 `

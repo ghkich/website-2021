@@ -4,7 +4,7 @@ import styled, {css} from 'styled-components'
 import {WorkExperiencesMethodRequests} from '../../../../api/work-experiences'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card} from '../../../components/Card'
-import {Colors, Typography} from '../../../theme'
+import {Colors, Spacing, Typography} from '../../../theme'
 import {formatDate} from '../../../utils/formatters'
 import {SkeletonTypes} from '../../../components/Skeleton'
 import {KeywordIcon, KeywordTypes} from '../../../components/KeywordIcon'
@@ -75,22 +75,22 @@ WorkExperiencesComponent.propTypes = {
 }
 
 const MainContainer = styled.div`
-  padding-bottom: 20px;
-  margin-left: 5px;
-  padding-left: 23px;
+  padding-bottom: ${Spacing(1)};
+  margin-left: ${Spacing(0.25)};
+  padding-left: ${Spacing(1.5)};
   position: relative;
 `
 
 const Indicator = styled.div`
-  width: 3px;
-  height: 3px;
+  width: ${Spacing(0.1875)};
+  height: ${Spacing(0.1875)};
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.2);
-  border: 2px solid transparent;
+  border: ${Spacing(0.125)} solid transparent;
   transition: all 0.3s ease;
   position: absolute;
   left: 0;
-  top: 4px;
+  top: ${Spacing(0.25)};
 
   ${(props) => {
     if (props.active) {
@@ -103,12 +103,12 @@ const Indicator = styled.div`
 `
 
 const Line = styled.div`
-  width: 1px;
+  width: ${Spacing(0.0625)};
   background-color: rgba(255, 255, 255, 0.075);
   position: absolute;
-  top: 18px;
-  bottom: 3px;
-  left: 3px;
+  top: ${Spacing(1.125)};
+  bottom: ${Spacing(0.1875)};
+  left: ${Spacing(0.1875)};
 `
 
 const Header = styled.div`
@@ -122,7 +122,7 @@ const Header = styled.div`
 
 const Title = styled.h2`
   flex: 1;
-  margin: 0 0 7px;
+  margin: 0 0 ${Spacing(0.425)};
   color: ${Colors.BLUE};
   font-size: 13px;
   font-weight: normal;
@@ -137,7 +137,7 @@ const Title = styled.h2`
 `
 
 const StyledKeywordIcon = styled(KeywordIcon)`
-  margin-left: 10px;
+  margin-left: ${Spacing(0.625)};
   color: rgba(255, 255, 255, 0.3);
   font-size: 1.4em;
 `
@@ -155,7 +155,7 @@ const Body = styled.div`
   transition: max-height 0.3s linear;
 
   > p {
-    margin-top: 15px;
+    margin-top: ${Spacing(0.875)};
     margin-bottom: 0;
     color: rgba(255, 255, 255, 0.5);
     font-size: 13px;
@@ -166,7 +166,7 @@ const Body = styled.div`
   ${(props) => {
     if (props.active) {
       return css`
-        max-height: 200px;
+        max-height: ${Spacing(10)};
       `
     }
   }}

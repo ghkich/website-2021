@@ -3,7 +3,7 @@ import React from 'react'
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
 import styled from 'styled-components'
-import {Colors, Spacings} from '../theme'
+import {Colors, Spacing} from '../theme'
 import {Skeleton, SkeletonTypes} from './Skeleton'
 
 // export const CardErrorBoundary = ({error, children, onFixButtonClick}) => {
@@ -51,18 +51,15 @@ Card.propTypes = {
   children: PropTypes.node,
 }
 
-const CARD_HEIGHT = 280
-const HEADER_HEIGHT = 48
-
 const CardStyle = {
-  RADIUS: Spacings.byFactor(3),
-  PADDING: Spacings.byFactor(10),
-  HEADER_HEIGHT: HEADER_HEIGHT,
-  HEIGHT: CARD_HEIGHT,
+  HEIGHT: Spacing(17),
+  HEADER_HEIGHT: Spacing(3),
+  RADIUS: Spacing(0.3),
+  PADDING: Spacing(1),
 }
 
 const CardContainer = styled.div`
-  border-radius: ${CardStyle.RADIUS}px;
+  border-radius: ${CardStyle.RADIUS};
   background-color: rgba(0, 0, 0, 0.25);
   //backdrop-filter: blur(4px);
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03);
@@ -74,8 +71,8 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: ${CardStyle.HEADER_HEIGHT}px;
-  padding: 0 ${CardStyle.PADDING}px;
+  height: ${CardStyle.HEADER_HEIGHT};
+  padding: 0 ${CardStyle.PADDING};
   //backdrop-filter: blur(4px);
 
   //background-color: rgba(255, 255, 255, 0.0025);
@@ -99,20 +96,15 @@ const Header = styled.div`
   }
 `
 
-const SHADOW_HEIGHT = 20
-
-const HeaderShadowStyle = {
-  HEIGHT: SHADOW_HEIGHT,
-  CLIP_HEIGHT: SHADOW_HEIGHT * 2.5,
-  POS_FROM_TOP: HEADER_HEIGHT - SHADOW_HEIGHT,
-}
+const SHADOW_HEIGHT = Spacing(1)
+const SHADOW_CLIP_HEIGHT = `calc(${SHADOW_HEIGHT} * 2.5)`
 
 const HeaderShadow = styled.div`
   position: absolute;
-  top: ${HeaderShadowStyle.POS_FROM_TOP}px;
+  top: calc(${CardStyle.HEADER_HEIGHT} - ${SHADOW_HEIGHT});
   left: 0;
   right: 0;
-  height: ${HeaderShadowStyle.HEIGHT}px;
+  height: ${SHADOW_HEIGHT};
 
   :before {
     position: absolute;
@@ -121,20 +113,20 @@ const HeaderShadow = styled.div`
     right: 2%;
     bottom: 0;
     top: 0;
-    border-radius: 50% / ${HeaderShadowStyle.HEIGHT}px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0 5px 10px;
+    border-radius: 50% / ${SHADOW_HEIGHT};
+    box-shadow: rgba(0, 0, 0, 0.1) 0 ${Spacing(0.25)} ${Spacing(0.5)};
     clip-path: polygon(
-      0% ${HeaderShadowStyle.HEIGHT}px,
-      0% ${HeaderShadowStyle.CLIP_HEIGHT}px,
-      100% ${HeaderShadowStyle.CLIP_HEIGHT}px,
-      100% ${HeaderShadowStyle.HEIGHT}px
+      0% ${SHADOW_HEIGHT},
+      0% ${SHADOW_CLIP_HEIGHT},
+      100% ${SHADOW_CLIP_HEIGHT},
+      100% ${SHADOW_HEIGHT}
     );
   }
 `
 
 const StyledSimpleBar = styled(SimpleBar)`
-  height: ${CardStyle.HEIGHT}px;
-  margin-bottom: 3px;
+  height: ${CardStyle.HEIGHT};
+  margin-bottom: ${Spacing(0.25)};
   position: relative;
   z-index: 0;
 
@@ -148,5 +140,5 @@ const StyledSimpleBar = styled(SimpleBar)`
 `
 
 const Body = styled.div`
-  padding: ${CardStyle.PADDING}px;
+  padding: ${CardStyle.PADDING};
 `

@@ -10,6 +10,7 @@ import PropTypes from 'prop-types'
 import {WorldMap} from './cards/WorldMap'
 import {Card} from '../../components/Card'
 import {Blog} from './cards/Blog'
+import {Breakpoints, Spacing} from '../../theme'
 
 const CardNames = {
   WORK_EXPERIENCES: 'work-experiences',
@@ -83,22 +84,30 @@ HomePageComponent.propTypes = {
 }
 
 const BoxedLayout = styled.div`
-  width: 1300px;
-  margin: 0 18px;
+  width: ${Spacing(80)};
+  margin: 0 ${Spacing(1)};
 `
 
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 128px;
-  margin: 0 8px;
+  height: ${Spacing(7)};
+  margin: 0 ${Spacing(1)};
 `
 
 const CardsGrid = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 18px;
-  row-gap: 18px;
+  grid-template-columns: 1fr;
+  column-gap: ${Spacing(1)};
+  row-gap: ${Spacing(1)};
+
+  ${Breakpoints.XS} {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  ${Breakpoints.XL} {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 `
