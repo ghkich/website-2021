@@ -4,25 +4,31 @@ import styled from 'styled-components'
 import {ShortBioMethodRequests} from '../../../../api/short-bio'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card} from '../../../components/Card'
-import {Colors, Typography} from '../../../theme'
+import {Typography} from '../../../theme'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faMugHot, faPlane, faCode, faGamepadAlt} from '@fortawesome/pro-solid-svg-icons'
+import {SkeletonTypes} from '../../../components/Skeleton'
 
-export const ShortBio = ({title}) => {
-  const {data} = useMethodRequest(ShortBioMethodRequests.FETCH)
+export const ShortBio = (props) => {
+  const {data, loading} = useMethodRequest(ShortBioMethodRequests.FETCH)
 
   const age = '32'
 
-  return <ShortBioComponent title={title} name={data.name} age={age} description={data.description} />
-}
-
-ShortBio.propTypes = {
-  title: PropTypes.string.isRequired,
-}
-
-export const ShortBioComponent = ({title, name, age, description}) => {
   return (
-    <Card title={title} rightSpot={<>Hello!</>}>
+    <ShortBioComponent
+      {...props}
+      loading={loading}
+      name={data.name}
+      hometown={data.hometown}
+      age={age}
+      description={data.description}
+    />
+  )
+}
+
+export const ShortBioComponent = ({loading, name, hometown, age, description, ...props}) => {
+  return (
+    <Card {...props} loading={loading} skeletonType={SkeletonTypes.TEXT}>
       <MainContainer>
         <AvatarDescription>
           <Avatar>
@@ -32,7 +38,7 @@ export const ShortBioComponent = ({title, name, age, description}) => {
             <h3>
               Name: <b>{name}</b>
             </h3>
-            <h3>Hometown: Brazil</h3>
+            <h3>Hometown: {hometown}</h3>
             <h3>Age: {age} years</h3>
             <Icons>
               <div>
@@ -59,8 +65,9 @@ export const ShortBioComponent = ({title, name, age, description}) => {
 }
 
 ShortBioComponent.propTypes = {
-  title: PropTypes.string.isRequired,
+  loading: PropTypes.bool,
   name: PropTypes.string,
+  hometown: PropTypes.string,
   age: PropTypes.string,
   description: PropTypes.string,
 }

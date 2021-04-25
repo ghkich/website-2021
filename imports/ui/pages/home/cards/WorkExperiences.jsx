@@ -9,17 +9,13 @@ import {formatDate} from '../../../utils/formatters'
 import {SkeletonTypes} from '../../../components/Skeleton'
 import {KeywordIcon, KeywordTypes} from '../../../components/KeywordIcon'
 
-export const WorkExperiences = ({title}) => {
+export const WorkExperiences = (props) => {
   const {data, loading} = useMethodRequest(WorkExperiencesMethodRequests.FETCH)
 
-  return <WorkExperiencesComponent title={title} loading={loading} experiences={data} />
+  return <WorkExperiencesComponent {...props} loading={loading} experiences={data} />
 }
 
-WorkExperiences.propTypes = {
-  title: PropTypes.string.isRequired,
-}
-
-export const WorkExperiencesComponent = ({title, loading, experiences}) => {
+export const WorkExperiencesComponent = ({loading, experiences, ...props}) => {
   const [activeId, setActiveId] = useState('')
 
   useEffect(() => {
@@ -29,7 +25,7 @@ export const WorkExperiencesComponent = ({title, loading, experiences}) => {
   }, [experiences])
 
   return (
-    <Card title={title} skeletonType={SkeletonTypes.TEXT} loading={loading}>
+    <Card {...props} loading={loading} skeletonType={SkeletonTypes.TEXT}>
       {experiences.map((item, idx) => (
         <MainContainer key={item._id} active={item._id === activeId}>
           <Indicator active={item._id === activeId} />
@@ -59,7 +55,6 @@ export const WorkExperiencesComponent = ({title, loading, experiences}) => {
 }
 
 WorkExperiencesComponent.propTypes = {
-  title: PropTypes.string.isRequired,
   loading: PropTypes.bool,
   experiences: PropTypes.arrayOf(
     PropTypes.shape({

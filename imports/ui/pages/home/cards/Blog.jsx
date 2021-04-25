@@ -6,14 +6,15 @@ import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card} from '../../../components/Card'
 import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
 import {Colors, Typography} from '../../../theme'
+import {SkeletonTypes} from '../../../components/Skeleton'
 
 const API_KEY = 'f34ieehw4u4zcysmvyyeqqghfjkt9yx8alo2mzfd'
 const TIMESTAMP = new Date().getTime() // to ignore rss2json cache
 const SOURCE_DATA_URL = `https://gustavokich.medium.com/feed?t=${TIMESTAMP}`
 const URL_RSS_TO_JSON = `https://api.rss2json.com/v1/api.json?rss_url=${SOURCE_DATA_URL}&api_key=${API_KEY}`
 
-export const Blog = ({title}) => {
-  const {data} = useMethodRequest(BlogMethodRequests.FETCH, {
+export const Blog = (props) => {
+  const {data, loading} = useMethodRequest(BlogMethodRequests.FETCH, {
     updateCollection: {
       validate: (data) => shouldUpdateCollection(data),
       sourceDataUrl: URL_RSS_TO_JSON,
@@ -21,16 +22,12 @@ export const Blog = ({title}) => {
     },
   })
 
-  return <BlogComponent title={title} posts={data?.posts} />
+  return <BlogComponent {...props} loading={loading} posts={data?.posts} />
 }
 
-Blog.propTypes = {
-  title: PropTypes.string.isRequired,
-}
-
-export const BlogComponent = ({title, posts}) => {
+export const BlogComponent = ({loading, posts, ...props}) => {
   return (
-    <Card title={title} rightSpot="">
+    <Card {...props} loading={loading} skeletonType={SkeletonTypes.TEXT}>
       <MainContainer>
         {posts?.map((post) => (
           <PostContainer key={post.guid}>
@@ -44,7 +41,7 @@ export const BlogComponent = ({title, posts}) => {
 }
 
 BlogComponent.propTypes = {
-  title: PropTypes.string.isRequired,
+  loading: PropTypes.bool,
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       guid: PropTypes.string.isRequired,

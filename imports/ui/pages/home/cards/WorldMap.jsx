@@ -1,28 +1,20 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, {keyframes} from 'styled-components'
-import {WorldMapMethodRequests} from '../../../../api/short-bio'
-import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card} from '../../../components/Card'
-import {Colors, Typography} from '../../../theme'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faMugHot, faPlane, faCode, faGamepadAlt} from '@fortawesome/pro-solid-svg-icons'
+import {Colors} from '../../../theme'
 
-export const WorldMap = ({title}) => {
+export const WorldMap = (props) => {
   // const {data} = useMethodRequest(WorldMapMethodRequests.FETCH)
   //
   // const age = '32'
 
-  return <WorldMapComponent title={title} />
+  return <WorldMapComponent {...props} />
 }
 
-WorldMap.propTypes = {
-  title: PropTypes.string.isRequired,
-}
-
-export const WorldMapComponent = ({title}) => {
+export const WorldMapComponent = ({...props}) => {
   return (
-    <Card title={title} rightSpot={<CurrentLocationMessage>Living in Toledo, Brazil</CurrentLocationMessage>}>
+    <Card {...props}>
       <MainContainer>
         <CurrentLocationPin />
         <img src="/images/world_map.png" alt="aaa" />
@@ -42,10 +34,6 @@ const MainContainer = styled.div`
     opacity: 0.75;
     width: 100%;
   }
-`
-
-const CurrentLocationMessage = styled.span`
-  color: ${Colors.LIGHTPINK};
 `
 
 const pulsate = keyframes`

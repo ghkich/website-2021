@@ -12,7 +12,7 @@ import {SkeletonTypes} from '../../../components/Skeleton'
 
 const SOURCE_DATA_URL = 'https://api.github.com/users/ghkich/repos?type=owner&sort=pushed'
 
-export const GitHub = ({title}) => {
+export const GitHub = (props) => {
   const {data, loading} = useMethodRequest(GitHubMethodRequests.FETCH, {
     updateCollection: {
       validate: (data) => shouldUpdateCollection(data),
@@ -21,25 +21,12 @@ export const GitHub = ({title}) => {
     },
   })
 
-  return <GitHubComponent title={title} loading={loading} repos={data?.repos} />
+  return <GitHubComponent {...props} loading={loading} repos={data?.repos} />
 }
 
-GitHub.propTypes = {
-  title: PropTypes.string.isRequired,
-}
-
-export const GitHubComponent = ({title, loading, repos}) => {
+export const GitHubComponent = ({loading, repos, ...props}) => {
   return (
-    <Card
-      title={title}
-      loading={loading}
-      skeletonType={SkeletonTypes.GRID}
-      rightSpot={
-        <>
-          Repos: <b>12</b>
-        </>
-      }
-    >
+    <Card {...props} loading={loading} skeletonType={SkeletonTypes.GRID}>
       <MainContainer>
         {repos?.map((repo) => (
           <GitHubItem key={repo.id}>
@@ -56,7 +43,6 @@ export const GitHubComponent = ({title, loading, repos}) => {
 }
 
 GitHubComponent.propTypes = {
-  title: PropTypes.string.isRequired,
   loading: PropTypes.bool,
   repos: PropTypes.arrayOf(
     PropTypes.shape({
