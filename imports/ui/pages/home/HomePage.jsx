@@ -12,6 +12,7 @@ import {Blog} from './cards/Blog'
 import {Breakpoints, Spacing} from '../../theme'
 import {Contact, ContactDataType} from '../../components/Contact'
 import {PERSONAL_INFO_DATA} from '../../../infra/data/personal-info'
+import {MAX_WIDTH_XS} from '../../theme/config/breakpoints'
 
 const CardNames = {
   WORK_EXPERIENCES: 'work-experiences',
@@ -61,14 +62,14 @@ export const HomePage = () => {
 
 export const HomePageComponent = ({cards, contactData}) => {
   const [activeCardId, setActiveCardId] = useState()
-  const [isMobile, setIsMobile] = useState()
+  const [isSmallScreen, setIsSmallScreen] = useState()
 
   useEffect(() => {
-    setIsMobile(window.matchMedia('(max-width: 500px)').matches)
+    setIsSmallScreen(window.matchMedia(MAX_WIDTH_XS).matches)
   }, [])
 
-  // wait for matchMedia
-  if (isMobile === undefined) return null
+  // wait matchMedia().matches before rendering
+  if (isSmallScreen === undefined) return null
 
   return (
     <BoxedLayout>
@@ -83,8 +84,8 @@ export const HomePageComponent = ({cards, contactData}) => {
           <Component
             key={id}
             title={title}
-            active={isMobile ? activeCardId === id : true}
-            onHeaderClick={() => isMobile && setActiveCardId((prev) => (prev !== id ? id : undefined))}
+            active={isSmallScreen ? activeCardId === id : true}
+            onHeaderClick={() => isSmallScreen && setActiveCardId((prev) => (prev !== id ? id : undefined))}
           />
         ))}
       </CardsGrid>
