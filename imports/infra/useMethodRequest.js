@@ -3,7 +3,6 @@ import {WorkExperiencesMethodRequests} from '../api/work-experiences'
 import {GitHubMethodRequests} from '../api/github'
 import {methodCall} from './methodCall'
 import {ShortBioMethodRequests} from '../api/short-bio'
-import {ContactInfoMethodRequests} from '../api/contact-info'
 import {BlogMethodRequests} from '../api/blog'
 import {fetchApi} from './fetchApi'
 
@@ -11,7 +10,6 @@ const AllMethodRequests = [
   WorkExperiencesMethodRequests,
   GitHubMethodRequests,
   ShortBioMethodRequests,
-  ContactInfoMethodRequests,
   BlogMethodRequests,
 ]
 
@@ -53,9 +51,12 @@ export const useMethodRequest = (requestName, opt) => {
           response = await methodCall(requestName, params)
         }
       }
-      setStatus(RequestStatuses.SUCCESS)
-      setData(response)
-      options.onSuccess(response)
+      //TODO: remove after all loading tests
+      setTimeout(() => {
+        setStatus(RequestStatuses.SUCCESS)
+        setData(response)
+        options.onSuccess(response)
+      }, 1000)
     } catch (error) {
       handleError(error)
     }
