@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled, {keyframes} from 'styled-components'
 
@@ -10,54 +10,7 @@ export const SkeletonTypes = {
 }
 
 export const Skeleton = ({type, loading, children}) => {
-  const [delayedLoading, setDelayedLoading] = useState(false)
-
-  useEffect(() => {
-    if (!loading) {
-      setDelayedLoading(false)
-      return
-    }
-    const timer = setTimeout(() => setDelayedLoading(loading), 200)
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [loading])
-
-  const SkeletonText = () => (
-    <Text>
-      <div>
-        <div />
-        <div />
-        <div />
-      </div>
-      <div>
-        <div />
-        <div />
-        <div />
-      </div>
-    </Text>
-  )
-  const SkeletonGrid = () => (
-    <Grid>
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-    </Grid>
-  )
-
-  const TypesComponents = {
-    [SkeletonTypes.TEXT]: SkeletonText,
-    [SkeletonTypes.GRID]: SkeletonGrid,
-  }
-  return (
-    <MainContainer>
-      {delayedLoading && TypesComponents[type]()}
-      {children}
-    </MainContainer>
-  )
+  return <MainContainer>{loading ? SkeletonComponents[type]() : children}</MainContainer>
 }
 
 Skeleton.propTypes = {
@@ -69,6 +22,37 @@ Skeleton.propTypes = {
 const MainContainer = styled.div`
   position: relative;
 `
+
+const SkeletonText = () => (
+  <Text>
+    <div>
+      <div />
+      <div />
+      <div />
+    </div>
+    <div>
+      <div />
+      <div />
+      <div />
+    </div>
+  </Text>
+)
+
+const SkeletonGrid = () => (
+  <Grid>
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+  </Grid>
+)
+
+const SkeletonComponents = {
+  [SkeletonTypes.TEXT]: SkeletonText,
+  [SkeletonTypes.GRID]: SkeletonGrid,
+}
 
 const pulse = keyframes`
   0%, 100% {
