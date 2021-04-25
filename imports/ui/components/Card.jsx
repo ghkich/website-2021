@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {Colors, Spacing} from '../theme'
 import {Skeleton, SkeletonTypes} from './Skeleton'
 
@@ -24,12 +24,11 @@ import {Skeleton, SkeletonTypes} from './Skeleton'
 //   onFixButtonClick: PropTypes.func,
 // }
 
-export const Card = ({title, rightSpot, skeletonType, loading, children}) => {
+export const Card = ({title, loading, skeletonType, active, onHeaderClick, children}) => {
   return (
-    <CardContainer>
-      <Header>
+    <CardContainer tabIndex={0} active={active}>
+      <Header onClick={onHeaderClick}>
         <h1>{title}</h1>
-        <h3>{rightSpot}</h3>
       </Header>
       <HeaderShadow />
       <StyledSimpleBar>
@@ -45,9 +44,10 @@ export const Card = ({title, rightSpot, skeletonType, loading, children}) => {
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
-  rightSpot: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  skeletonType: PropTypes.oneOf(Object.values(SkeletonTypes)),
   loading: PropTypes.bool,
+  skeletonType: PropTypes.oneOf(Object.values(SkeletonTypes)),
+  active: PropTypes.bool,
+  onHeaderClick: PropTypes.func.isRequired,
   children: PropTypes.node,
 }
 
@@ -61,10 +61,20 @@ const CardStyle = {
 const CardContainer = styled.div`
   border-radius: ${CardStyle.RADIUS};
   background-color: rgba(0, 0, 0, 0.25);
-  //backdrop-filter: blur(4px);
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03);
   position: relative;
   overflow: hidden;
+  height: ${CardStyle.HEADER_HEIGHT};
+  transition: height 0.3s linear;
+  outline: none;
+
+  ${(props) => {
+    if (props.active) {
+      return css`
+        height: calc(${CardStyle.HEIGHT} + ${CardStyle.HEADER_HEIGHT});
+      `
+    }
+  }}
 `
 
 const Header = styled.div`
@@ -73,6 +83,7 @@ const Header = styled.div`
   align-items: center;
   height: ${CardStyle.HEADER_HEIGHT};
   padding: 0 ${CardStyle.PADDING};
+  cursor: pointer;
   //backdrop-filter: blur(4px);
 
   //background-color: rgba(255, 255, 255, 0.0025);

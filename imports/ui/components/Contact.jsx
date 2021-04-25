@@ -1,12 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import {useMethodRequest} from '../../../infra/useMethodRequest'
 import PropTypes from 'prop-types'
-import {ContactInfoMethodRequests} from '../../../api/contact-info'
 import {faGithub, faInstagram, faLinkedin} from '@fortawesome/free-brands-svg-icons'
 import {faAt} from '@fortawesome/pro-light-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {Spacing} from '../../theme'
+import {Spacing} from '../../ui/theme'
 
 const ICONS_BY_CODE = {
   github: faGithub,
@@ -14,13 +12,20 @@ const ICONS_BY_CODE = {
   instagram: faInstagram,
 }
 
-export const HeaderContactInfo = () => {
-  const {data} = useMethodRequest(ContactInfoMethodRequests.FETCH)
-
-  return <ContactInfoComponent phone={data.phone} email={data.email} networks={data.networks} />
+export const ContactDataType = {
+  phone: PropTypes.string,
+  email: PropTypes.string,
+  networks: PropTypes.arrayOf(
+    PropTypes.shape({
+      code: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+    }),
+  ),
 }
 
-export const ContactInfoComponent = ({phone, email, networks}) => {
+export const Contact = ({data}) => {
+  const {phone, email, networks} = data
   return (
     <MainContainer>
       <Links>
@@ -39,16 +44,9 @@ export const ContactInfoComponent = ({phone, email, networks}) => {
   )
 }
 
-ContactInfoComponent.propTypes = {
-  phone: PropTypes.string,
-  email: PropTypes.string,
-  networks: PropTypes.arrayOf(
-    PropTypes.shape({
-      code: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-    }),
-  ),
+Contact.propTypes = {
+  type: PropTypes.string,
+  data: PropTypes.shape(ContactDataType),
 }
 
 const MainContainer = styled.div``

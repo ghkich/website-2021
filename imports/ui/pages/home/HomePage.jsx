@@ -1,16 +1,17 @@
 import 'normalize.css'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {WorkExperiences} from './cards/WorkExperiences'
 import {GitHub} from './cards/GitHub'
 import {HeaderLogo} from './HeaderLogo'
 import {ShortBio} from './cards/ShortBio'
-import {HeaderContactInfo} from './HeaderContactInfo'
 import PropTypes from 'prop-types'
 import {WorldMap} from './cards/WorldMap'
 import {Card} from '../../components/Card'
 import {Blog} from './cards/Blog'
 import {Breakpoints, Spacing} from '../../theme'
+import {Contact, ContactDataType} from '../../components/Contact'
+import {PERSONAL_INFO_DATA} from '../../../infra/data/personal-info'
 
 const CardNames = {
   WORK_EXPERIENCES: 'work-experiences',
@@ -20,55 +21,76 @@ const CardNames = {
   BLOG: 'blog',
 }
 
-export const Cards = [
+const cards = [
   {
-    name: CardNames.WORK_EXPERIENCES,
+    id: CardNames.WORK_EXPERIENCES,
     title: 'Work Experiences',
     component: WorkExperiences,
   },
   {
-    name: CardNames.SHORT_BIO,
+    id: CardNames.SHORT_BIO,
     title: 'Short Bio',
     component: ShortBio,
   },
   {
-    name: CardNames.GITHUB,
+    id: CardNames.GITHUB,
     title: 'GitHub',
     component: GitHub,
   },
   {
-    name: 'skills',
+    id: 'skills',
     title: 'Skills',
     component: Card,
   },
   {
-    name: CardNames.WORLD_MAP,
+    id: CardNames.WORLD_MAP,
     title: 'World Map',
     component: WorldMap,
   },
   {
-    name: CardNames.BLOG,
+    id: CardNames.BLOG,
     title: 'Blog',
     component: Blog,
   },
 ]
 
 export const HomePage = () => {
-  return <HomePageComponent cards={Cards} />
+  const {email, phone, networks} = PERSONAL_INFO_DATA
+  return <HomePageComponent cards={cards} contactData={{email, phone, networks}} />
 }
 
-export const HomePageComponent = ({cards}) => {
+export const HomePageComponent = ({cards, contactData}) => {
+  const [activeCardId, setActiveCardId] = useState()
+  const [isMobile, setIsMobile] = useState()
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia('(max-width: 500px)').matches)
+  }, [])
+
+  // wait for matchMedia
+  if (isMobile === undefined) return null
+
   return (
     <BoxedLayout>
       <Header>
         <HeaderLogo />
-        <HeaderContactInfo />
+        <ContactContainer>
+          <Contact data={contactData} />
+        </ContactContainer>
       </Header>
       <CardsGrid>
-        {cards?.map(({name, title, component: Component}) => (
-          <Component key={name} title={title} />
+        {cards?.map(({id, title, component: Component}) => (
+          <Component
+            key={id}
+            title={title}
+            active={isMobile ? activeCardId === id : true}
+            onHeaderClick={() => isMobile && setActiveCardId((prev) => (prev !== id ? id : undefined))}
+          />
         ))}
       </CardsGrid>
+      <Footer>
+        <Contact data={contactData} />
+      </Footer>
     </BoxedLayout>
   )
 }
@@ -76,15 +98,17 @@ export const HomePageComponent = ({cards}) => {
 HomePageComponent.propTypes = {
   cards: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       component: PropTypes.node.isRequired,
     }),
   ),
+  contactData: PropTypes.shape(ContactDataType),
 }
 
 const BoxedLayout = styled.div`
-  width: ${Spacing(80)};
+  width: 100%;
+  max-width: ${Spacing(80)};
   margin: 0 ${Spacing(1)};
 `
 
@@ -96,18 +120,39 @@ const Header = styled.div`
   margin: 0 ${Spacing(1)};
 `
 
+const ContactContainer = styled.div`
+  display: none;
+
+  ${Breakpoints.XS} {
+    display: block;
+  }
+`
+
 const CardsGrid = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  column-gap: ${Spacing(1)};
-  row-gap: ${Spacing(1)};
+  column-gap: ${Spacing(0.625)};
+  row-gap: ${Spacing(0.625)};
 
   ${Breakpoints.XS} {
     grid-template-columns: 1fr 1fr;
+    column-gap: ${Spacing(1)};
+    row-gap: ${Spacing(1)};
   }
 
   ${Breakpoints.XL} {
     grid-template-columns: 1fr 1fr 1fr;
+  }
+`
+
+const Footer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: ${Spacing(1.5)} 0;
+
+  ${Breakpoints.XS} {
+    display: none;
   }
 `

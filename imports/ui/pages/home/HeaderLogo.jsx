@@ -2,8 +2,14 @@ import React, {useEffect, useState} from 'react'
 import styled, {css} from 'styled-components'
 import {Colors, Spacing} from '../../theme'
 import {Logo, LOGO_TRANSITION, LogoShape} from '../../components/Logo'
+import PropTypes from 'prop-types'
+import {PERSONAL_INFO_DATA} from '../../../infra/data/personal-info'
 
 export const HeaderLogo = () => {
+  return <HeaderLogoComponent name={PERSONAL_INFO_DATA.name} tagLine={PERSONAL_INFO_DATA.jobTitle} />
+}
+
+export const HeaderLogoComponent = ({name, tagLine}) => {
   const [logoShape, setLogoShape] = useState(LogoShape.NORMAL)
 
   useEffect(() => {
@@ -20,11 +26,16 @@ export const HeaderLogo = () => {
     <MainContainer>
       <Logo shape={logoShape} />
       <NameContainer logoShape={logoShape}>
-        <h1>Gustavo Kich</h1>
-        <span>Full-stack Developer</span>
+        <h1>{name}</h1>
+        <span>{tagLine}</span>
       </NameContainer>
     </MainContainer>
   )
+}
+
+HeaderLogoComponent.propTypes = {
+  name: PropTypes.string,
+  tagLine: PropTypes.string,
 }
 
 const MainContainer = styled.div`
@@ -39,13 +50,13 @@ const NameContainer = styled.div`
   > h1 {
     margin: 0 0 2px;
     font-weight: normal;
-    font-size: 15px;
+    font-size: 14px;
     transition: color 0.35s ease;
     color: ${Colors.WHITEPINK};
   }
 
   > span {
-    font-size: 14px;
+    font-size: 13px;
     transition: color 0.35s ease;
   }
 
