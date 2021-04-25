@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled, {keyframes} from 'styled-components'
+import {Spacing} from '../theme'
 
 export const SkeletonTypes = {
   TEXT: 'text',
@@ -46,12 +47,22 @@ const SkeletonGrid = () => (
     <div />
     <div />
     <div />
+    <div />
   </Grid>
+)
+
+const SkeletonBlocks = () => (
+  <Blocks>
+    <div />
+    <div />
+    <div />
+  </Blocks>
 )
 
 const SkeletonComponents = {
   [SkeletonTypes.TEXT]: SkeletonText,
   [SkeletonTypes.GRID]: SkeletonGrid,
+  [SkeletonTypes.BLOCKS]: SkeletonBlocks,
 }
 
 const pulse = keyframes`
@@ -74,12 +85,12 @@ const Text = styled.div`
   animation: ${pulse} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
   > div {
-    margin-bottom: 20px;
+    margin-bottom: ${Spacing(1.25)};
 
     > div {
       width: 75%;
-      height: 15px;
-      margin-bottom: 5px;
+      height: ${Spacing(0.85)};
+      margin-bottom: ${Spacing(0.3)};
       background-color: rgba(255, 255, 255, 0.03);
 
       &:first-child {
@@ -88,7 +99,7 @@ const Text = styled.div`
 
       &:last-child {
         width: 100%;
-        height: 75px;
+        height: ${Spacing(6)};
       }
     }
   }
@@ -104,12 +115,31 @@ const Grid = styled.div`
   animation: ${pulse} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 10px;
-  row-gap: 10px;
+  column-gap: ${Spacing(0.625)};
+  row-gap: ${Spacing(0.625)};
 
   > div {
-    height: 72px;
-    border-radius: 4px;
+    height: ${Spacing(4.5)};
+    border-radius: ${Spacing(0.25)};
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+`
+
+const Blocks = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  animation: ${pulse} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: ${Spacing(0.75)};
+
+  > div {
+    height: ${Spacing(6)};
+    border-radius: ${Spacing(0.25)};
     background-color: rgba(255, 255, 255, 0.03);
   }
 `
