@@ -3,7 +3,7 @@ import React from 'react'
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
 import styled, {css} from 'styled-components'
-import {Colors, Spacing} from '../theme'
+import {Breakpoints, Colors, Spacing} from '../theme'
 import {Skeleton, SkeletonTypes} from './Skeleton'
 
 // export const CardErrorBoundary = ({error, children, onFixButtonClick}) => {
@@ -51,27 +51,25 @@ Card.propTypes = {
   children: PropTypes.node,
 }
 
-const CardStyle = {
-  HEIGHT: Spacing(17),
-  HEADER_HEIGHT: Spacing(3),
-  RADIUS: Spacing(0.3),
-  PADDING: Spacing(1),
-}
+const CARD_HEIGHT = Spacing(17)
+const CARD_HEADER_HEIGHT = Spacing(3)
+const CARD_RADIUS = Spacing(0.3)
+const CARD_PADDING = Spacing(1)
 
 const CardContainer = styled.div`
-  border-radius: ${CardStyle.RADIUS};
+  border-radius: ${CARD_RADIUS};
   background-color: rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03);
   position: relative;
   overflow: hidden;
-  height: ${CardStyle.HEADER_HEIGHT};
+  height: ${CARD_HEADER_HEIGHT};
   transition: height 0.3s linear;
   outline: none;
 
   ${(props) => {
     if (props.active) {
       return css`
-        height: calc(${CardStyle.HEIGHT} + ${CardStyle.HEADER_HEIGHT});
+        height: calc(${CARD_HEIGHT} + ${CARD_HEADER_HEIGHT});
       `
     }
   }}
@@ -81,14 +79,9 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: ${CardStyle.HEADER_HEIGHT};
-  padding: 0 ${CardStyle.PADDING};
+  height: ${CARD_HEADER_HEIGHT};
+  padding: 0 ${CARD_PADDING};
   cursor: pointer;
-  //backdrop-filter: blur(4px);
-
-  //background-color: rgba(255, 255, 255, 0.0025);
-  //border-bottom: 1px solid rgba(255, 255, 255, 0.01);
-  //box-shadow: 4px 0 10px 0 rgba(0, 0, 0, 0.25);
 
   > h1 {
     margin: 0;
@@ -105,6 +98,10 @@ const Header = styled.div`
     font-size: 12px;
     font-weight: lighter;
   }
+
+  ${Breakpoints.XS} {
+    cursor: auto;
+  }
 `
 
 const SHADOW_HEIGHT = Spacing(1)
@@ -112,7 +109,7 @@ const SHADOW_CLIP_HEIGHT = `calc(${SHADOW_HEIGHT} * 2.5)`
 
 const HeaderShadow = styled.div`
   position: absolute;
-  top: calc(${CardStyle.HEADER_HEIGHT} - ${SHADOW_HEIGHT});
+  top: calc(${CARD_HEADER_HEIGHT} - ${SHADOW_HEIGHT});
   left: 0;
   right: 0;
   height: ${SHADOW_HEIGHT};
@@ -136,7 +133,7 @@ const HeaderShadow = styled.div`
 `
 
 const StyledSimpleBar = styled(SimpleBar)`
-  height: ${CardStyle.HEIGHT};
+  height: ${CARD_HEIGHT};
   margin-bottom: ${Spacing(0.25)};
   position: relative;
   z-index: 0;
@@ -151,5 +148,5 @@ const StyledSimpleBar = styled(SimpleBar)`
 `
 
 const Body = styled.div`
-  padding: ${CardStyle.PADDING};
+  padding: ${CARD_PADDING};
 `
