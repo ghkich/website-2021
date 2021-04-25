@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import {GitHubMethodRequests} from '../../../../api/github'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card} from '../../../components/Card'
-import {Colors, Typography} from '../../../theme'
+import {Colors, Spacing, Typography} from '../../../theme'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBookAlt} from '@fortawesome/pro-light-svg-icons'
 import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
@@ -56,19 +56,20 @@ GitHubComponent.propTypes = {
 const MainContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 10px;
-  row-gap: 10px;
+  column-gap: ${Spacing(0.625)};
+  row-gap: ${Spacing(0.625)};
 `
 
 const GitHubItem = styled.div`
-  padding: 10px;
-  height: 50px;
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.01);
+  box-sizing: border-box;
+  height: ${Spacing(4.5)};
+  padding: ${Spacing(0.625)};
+  border-radius: ${Spacing(0.25)};
   border: 1px solid rgba(255, 255, 255, 0.03);
+  background-color: rgba(255, 255, 255, 0.01);
 
   > h2 {
-    margin: 0 0 7px;
+    margin: 0 0 ${Spacing(0.4375)};
     font-size: 12px;
     font-weight: lighter;
     color: ${Colors.WHITEPINK};
@@ -78,7 +79,7 @@ const GitHubItem = styled.div`
     }
 
     > span {
-      margin-left: 5px;
+      margin-left: ${Spacing(0.3125)};
     }
   }
 

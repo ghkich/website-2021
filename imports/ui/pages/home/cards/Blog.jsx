@@ -5,7 +5,7 @@ import {BlogMethodRequests} from '../../../../api/blog'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card} from '../../../components/Card'
 import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
-import {Colors, Typography} from '../../../theme'
+import {Colors, Spacing, Typography} from '../../../theme'
 import {SkeletonTypes} from '../../../components/Skeleton'
 
 const API_KEY = 'f34ieehw4u4zcysmvyyeqqghfjkt9yx8alo2mzfd'
@@ -27,7 +27,7 @@ export const Blog = (props) => {
 
 export const BlogComponent = ({loading, posts, ...props}) => {
   return (
-    <Card {...props} loading={loading} skeletonType={SkeletonTypes.TEXT}>
+    <Card {...props} loading={loading} skeletonType={SkeletonTypes.BLOCKS}>
       <MainContainer>
         {posts?.map((post) => (
           <PostContainer key={post.guid}>
@@ -58,15 +58,15 @@ const MainContainer = styled.div`
 `
 
 const PostContainer = styled.div`
-  margin-bottom: 12px;
-  color: ${Colors.LIGHTPINK};
-  padding: 10px;
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.01);
+  margin-bottom: ${Spacing(0.75)};
+  padding: ${Spacing(0.625)};
+  border-radius: ${Spacing(0.25)};
   border: 1px solid rgba(255, 255, 255, 0.03);
+  color: ${Colors.LIGHTPINK};
+  background-color: rgba(255, 255, 255, 0.01);
 
   > h2 {
-    margin: 0 0 10px;
+    margin: 0 0 ${Spacing(0.625)};
     color: ${Colors.LIGHTPINK};
     font-weight: lighter;
     font-size: 13px;
