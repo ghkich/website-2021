@@ -3,6 +3,19 @@ body {
     'Helvetica Neue', sans-serif;
 }
 
-* {
-  display: border-box;
+:root {
+  --color-primary: #F36B6B;
+  --color-light-primary: #EE9797;
+  --color-white-primary: #F6E1E1;
+  --color-secondary: #DEA16A;
+  --color-light-secondary: #D8CCB0;
+  --color-white-secondary: #F7EEDE;
+  --color-text: rgba(255,255,255, 0.3);
+  --color-light-text: rgba(255,255,255, 0.5);
+  --color-white-text: rgba(255,255,255, 0.75);
+  --color-bg-gradient-1: #1B1D25;
+  --color-bg-gradient-2: #231F2D;
+  --color-bg-gradient-3: #271C2D;
+  --color-bg-gradient-4: #241627;
 }
+

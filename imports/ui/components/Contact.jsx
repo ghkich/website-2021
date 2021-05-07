@@ -26,6 +26,8 @@ export const ContactDataType = {
 
 export const Contact = ({data}) => {
   const {phone, email, networks} = data
+  const [codeArea, phoneNumber] = phone.split(/ (.+)/)
+
   return (
     <MainContainer>
       <Links>
@@ -39,7 +41,9 @@ export const Contact = ({data}) => {
           </IconLink>
         ))}
       </Links>
-      <Phone>{phone}</Phone>
+      <Phone>
+        <span>{codeArea}</span> {phoneNumber}
+      </Phone>
     </MainContainer>
   )
 }
@@ -66,7 +70,7 @@ const LinksDivider = styled.div`
 
 const IconLink = styled.a`
   margin-left: ${Spacing(0.625)};
-  font-size: 18px;
+  font-size: 16px;
   color: rgba(255, 255, 255, 0.3);
   transition: color 0.15s linear;
 
@@ -77,6 +81,10 @@ const IconLink = styled.a`
 
 const Phone = styled.div`
   margin-top: ${Spacing(0.45)};
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.2);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.25);
+
+  > span {
+    color: rgba(255, 255, 255, 0.15);
+  }
 `

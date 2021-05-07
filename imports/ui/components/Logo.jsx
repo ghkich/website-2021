@@ -46,7 +46,7 @@ const MainContainer = styled.div`
 const TopPiece = styled.div`
   width: ${LOGO_WIDTH};
   height: ${TOP_PIECE_HEIGHT};
-  background-color: ${Colors.PINK};
+  background-color: ${Colors.PRIMARY};
   position: absolute;
   top: 0;
   left: 0;
@@ -75,7 +75,7 @@ const LeftPiece = styled.div`
   > .left-piece-a {
     width: ${BOTTOM_PIECE_WIDTH};
     height: ${TOP_PIECE_HEIGHT};
-    background-color: ${Colors.LIGHTPINK};
+    background-color: ${Colors.LIGHT_PRIMARY};
     position: absolute;
     bottom: 0;
   }
@@ -83,7 +83,7 @@ const LeftPiece = styled.div`
   > .left-piece-b {
     width: ${TOP_PIECE_HEIGHT};
     height: ${BOTTOM_PIECE_WIDTH};
-    background-color: ${Colors.LIGHTPINK};
+    background-color: ${Colors.LIGHT_PRIMARY};
     position: absolute;
     bottom: 0;
   }
@@ -113,7 +113,7 @@ const RightPiece = styled.div`
   > .right-piece-a {
     width: ${BOTTOM_PIECE_WIDTH};
     height: ${TOP_PIECE_HEIGHT};
-    background-color: ${Colors.WHITEPINK};
+    background-color: ${Colors.WHITE_PRIMARY};
     position: absolute;
     top: 0;
     right: 0;
@@ -122,7 +122,7 @@ const RightPiece = styled.div`
   > .right-piece-b {
     width: ${TOP_PIECE_HEIGHT};
     height: ${BOTTOM_PIECE_WIDTH};
-    background-color: ${Colors.WHITEPINK};
+    background-color: ${Colors.WHITE_PRIMARY};
     position: absolute;
     bottom: 0;
     right: 0;

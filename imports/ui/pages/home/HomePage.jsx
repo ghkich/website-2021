@@ -7,7 +7,7 @@ import {HeaderLogo} from './HeaderLogo'
 import {ShortBio} from './cards/ShortBio'
 import PropTypes from 'prop-types'
 import {WorldMap} from './cards/WorldMap'
-import {Card} from '../../components/Card'
+import {Card, CardIcons} from '../../components/Card'
 import {Blog} from './cards/Blog'
 import {Breakpoints, Spacing} from '../../theme'
 import {Contact, ContactDataType} from '../../components/Contact'
@@ -41,7 +41,7 @@ const cards = [
   {
     id: 'skills',
     title: 'Skills',
-    component: Card,
+    component: (props) => <Card {...props} icon={CardIcons.SKILLS} />,
   },
   {
     id: CardNames.WORLD_MAP,

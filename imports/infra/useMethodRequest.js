@@ -27,7 +27,7 @@ export const useMethodRequest = (requestName, opt) => {
 
   const options = {manual: false, onSuccess: () => {}, ...opt}
 
-  const [data, setData] = useState([])
+  const [data, setData] = useState()
   const [status, setStatus] = useState(RequestStatuses.IDLE)
 
   const handleError = (error) => {

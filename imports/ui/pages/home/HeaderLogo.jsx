@@ -51,22 +51,22 @@ const NameContainer = styled.div`
     margin: 0 0 2px;
     font-weight: normal;
     font-size: 14px;
-    transition: color 0.35s ease;
-    color: ${Colors.WHITEPINK};
+    transition: ${LOGO_TRANSITION};
+    color: ${Colors.WHITE_PRIMARY};
   }
 
   > span {
     font-size: 13px;
-    transition: color 0.35s ease;
+    transition: ${LOGO_TRANSITION};
   }
 
-  ${(props) => {
-    if (props.logoShape === LogoShape.NORMAL) {
+  ${({logoShape}) => {
+    if (logoShape === LogoShape.NORMAL) {
       return css`
         margin-left: ${Spacing(1)};
 
         > span {
-          color: rgba(255, 255, 255, 0.3);
+          color: ${Colors.TEXT};
         }
       `
     }
@@ -74,7 +74,7 @@ const NameContainer = styled.div`
       margin-left: ${Spacing(1.625)};
 
       > span {
-        color: ${Colors.LIGHTPINK};
+        color: ${Colors.LIGHT_PRIMARY};
       }
     `
   }}
