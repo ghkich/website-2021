@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, {keyframes} from 'styled-components'
-import {Card} from '../../../components/Card'
+import {Card, CardIcons} from '../../../components/Card'
 import {Colors} from '../../../theme'
+import {WorldMapImage} from '../../../images/WorldMap'
 
 export const WorldMap = (props) => {
   // const {data} = useMethodRequest(WorldMapMethodRequests.FETCH)
@@ -14,10 +15,10 @@ export const WorldMap = (props) => {
 
 export const WorldMapComponent = ({...props}) => {
   return (
-    <Card {...props}>
+    <Card {...props} icon={CardIcons.WORLD}>
       <MainContainer>
         <CurrentLocationPin />
-        <img src="/images/world_map.png" alt="aaa" />
+        <StyledWorldMapImage />
       </MainContainer>
     </Card>
   )
@@ -29,11 +30,6 @@ WorldMapComponent.propTypes = {
 
 const MainContainer = styled.div`
   position: relative;
-
-  > img {
-    opacity: 0.75;
-    width: 100%;
-  }
 `
 
 const pulsate = keyframes`
@@ -62,7 +58,7 @@ const CurrentLocationPin = styled.div`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: ${Colors.PINK};
+    background-color: ${Colors.SECONDARY};
     border: 1px solid transparent;
     position: absolute;
     left: 0;
@@ -75,10 +71,15 @@ const CurrentLocationPin = styled.div`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    border: 1px solid ${Colors.LIGHTPINK};
+    border: 1px solid ${Colors.LIGHT_SECONDARY};
     animation: ${pulsate} 1s ease-out infinite;
     position: absolute;
     left: 0;
     top: 0;
   }
+`
+
+const StyledWorldMapImage = styled(WorldMapImage)`
+  width: 100%;
+  color: rgba(255, 255, 255, 0.25);
 `

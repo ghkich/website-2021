@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled, {keyframes} from 'styled-components'
+import styled, {css, keyframes} from 'styled-components'
 import {Spacing} from '../theme'
 
 export const SkeletonTypes = {
@@ -75,6 +75,10 @@ const pulse = keyframes`
   }
 `
 
+const pulseAnimation = css`
+  animation: ${pulse} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+`
+
 const Text = styled.div`
   position: absolute;
   top: 0;
@@ -82,7 +86,7 @@ const Text = styled.div`
   bottom: 0;
   left: 0;
   z-index: 10;
-  animation: ${pulse} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  ${pulseAnimation};
 
   > div {
     margin-bottom: ${Spacing(1.25)};
@@ -112,11 +116,11 @@ const Grid = styled.div`
   bottom: 0;
   left: 0;
   z-index: 10;
-  animation: ${pulse} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: ${Spacing(0.625)};
   row-gap: ${Spacing(0.625)};
+  ${pulseAnimation};
 
   > div {
     height: ${Spacing(4.5)};
@@ -132,10 +136,10 @@ const Blocks = styled.div`
   bottom: 0;
   left: 0;
   z-index: 10;
-  animation: ${pulse} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   display: grid;
   grid-template-columns: 1fr;
   row-gap: ${Spacing(0.75)};
+  ${pulseAnimation};
 
   > div {
     height: ${Spacing(6)};
