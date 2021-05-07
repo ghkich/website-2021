@@ -11,7 +11,7 @@ const MethodRequests = {
 
 const Methods = {
   [MethodRequests.FETCH]() {
-    return Collection.find().fetch()[0]
+    return Collection.find().fetch()[0]?.posts
   },
   [MethodRequests.UPDATE]({id, data}) {
     if (!data) {
