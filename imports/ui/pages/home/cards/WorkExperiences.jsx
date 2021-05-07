@@ -3,14 +3,14 @@ import React, {useEffect, useState} from 'react'
 import styled, {css} from 'styled-components'
 import {WorkExperiencesMethodRequests} from '../../../../api/work-experiences'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
-import {Card} from '../../../components/Card'
-import {Colors, Spacing, Typography} from '../../../theme'
+import {Card, CardIcons} from '../../../components/Card'
+import {Colors, Spacing, Transitions, Typography} from '../../../theme'
 import {formatDate} from '../../../utils/formatters'
 import {SkeletonTypes} from '../../../components/Skeleton'
 import {KeywordIcon, KeywordTypes} from '../../../components/KeywordIcon'
 
 export const WorkExperiences = (props) => {
-  const {data, loading} = useMethodRequest(WorkExperiencesMethodRequests.FETCH)
+  const {data = [], loading} = useMethodRequest(WorkExperiencesMethodRequests.FETCH)
 
   return <WorkExperiencesComponent {...props} loading={loading} experiences={data} />
 }
@@ -25,7 +25,7 @@ export const WorkExperiencesComponent = ({loading, experiences, ...props}) => {
   }, [experiences])
 
   return (
-    <Card {...props} loading={loading} skeletonType={SkeletonTypes.TEXT}>
+    <Card {...props} icon={CardIcons.WORK} loading={loading} skeletonType={SkeletonTypes.TEXT}>
       {experiences.map((item, idx) => (
         <MainContainer key={item._id} active={item._id === activeId}>
           <Indicator active={item._id === activeId} />
@@ -35,14 +35,14 @@ export const WorkExperiencesComponent = ({loading, experiences, ...props}) => {
               <Title active={item._id === activeId}>
                 {item.jobTitle} <span>at {item.company}</span>
               </Title>
-              <SubTitle>
-                <span>{formatDate(item.startDate)}</span>
+              <SubTitle active={item._id === activeId}>
+                <span>{item.startDate && formatDate(item.startDate)}</span>
                 <span> - </span>
                 <span>{item.endDate ? formatDate(item.endDate) : 'Present'}</span>
               </SubTitle>
             </div>
             {item.keywords.map((keyword) => (
-              <StyledKeywordIcon key={keyword} keyword={keyword} />
+              <StyledKeywordIcon key={keyword} keyword={keyword} active={item._id === activeId} />
             ))}
           </Header>
           <Body active={item._id === activeId}>
@@ -91,7 +91,7 @@ const Indicator = styled.div`
     if (props.active) {
       return css`
         background-color: transparent;
-        border-color: ${Colors.PINK};
+        border-color: ${Colors.SECONDARY};
       `
     }
   }}
@@ -118,30 +118,40 @@ const Header = styled.div`
 const Title = styled.h2`
   flex: 1;
   margin: 0 0 ${Spacing(0.425)};
-  color: ${Colors.BLUE};
+  color: ${({active}) => (active ? Colors.SECONDARY : Colors.LIGHT_TEXT)};
   font-size: 13px;
   font-weight: normal;
+  transition: ${Transitions.COLORS};
 
   > span {
-    color: ${Colors.LIGHTBLUE};
+    font-weight: 200;
+    font-style: italic;
+    color: ${({active}) => (active ? Colors.LIGHT_SECONDARY : Colors.TEXT)};
+    transition: ${Transitions.COLORS};
   }
 
-  :hover {
-    color: ${({active}) => (active ? Colors.BLUE : Colors.LIGHTBLUE)};
+  ${Header}:hover & {
+    color: ${Colors.SECONDARY};
+
+    > span {
+      color: ${Colors.LIGHT_SECONDARY};
+    }
   }
 `
 
 const StyledKeywordIcon = styled(KeywordIcon)`
-  margin-left: ${Spacing(0.625)};
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 1.4em;
+  margin-left: ${Spacing(0.425)};
+  color: ${({active}) => (active ? 'rgba(255, 255, 255, 0.3)' : 'rgba(255, 255, 255, 0.15)')};
+  font-size: 1.35em;
+  transition: ${Transitions.COLORS};
 `
 
 const SubTitle = styled.h3`
   margin: 0;
-  font-size: 12px;
-  font-weight: lighter;
-  color: rgba(255, 255, 255, 0.3);
+  font-size: 11px;
+  font-weight: 200;
+  color: ${({active}) => (active ? Colors.LIGHT_TEXT : Colors.TEXT)};
+  transition: ${Transitions.COLORS};
 `
 
 const Body = styled.div`
@@ -150,16 +160,16 @@ const Body = styled.div`
   transition: max-height 0.3s linear;
 
   > p {
-    margin-top: ${Spacing(0.875)};
+    margin-top: ${Spacing(0.625)};
     margin-bottom: 0;
-    color: rgba(255, 255, 255, 0.5);
     font-size: 13px;
-    font-weight: lighter;
+    font-weight: 200;
     line-height: ${Typography.LINE_HEIGHT_NORMAL};
+    color: ${Colors.TEXT};
   }
 
-  ${(props) => {
-    if (props.active) {
+  ${({active}) => {
+    if (active) {
       return css`
         max-height: ${Spacing(10)};
       `

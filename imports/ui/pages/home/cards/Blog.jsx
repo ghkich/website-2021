@@ -3,9 +3,9 @@ import React from 'react'
 import styled from 'styled-components'
 import {BlogMethodRequests} from '../../../../api/blog'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
-import {Card} from '../../../components/Card'
+import {Card, CardIcons} from '../../../components/Card'
 import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
-import {Colors, Spacing, Typography} from '../../../theme'
+import {Colors, Spacing, Transitions, Typography} from '../../../theme'
 import {SkeletonTypes} from '../../../components/Skeleton'
 
 const API_KEY = 'f34ieehw4u4zcysmvyyeqqghfjkt9yx8alo2mzfd'
@@ -14,7 +14,7 @@ const SOURCE_DATA_URL = `https://gustavokich.medium.com/feed?t=${TIMESTAMP}`
 const URL_RSS_TO_JSON = `https://api.rss2json.com/v1/api.json?rss_url=${SOURCE_DATA_URL}&api_key=${API_KEY}`
 
 export const Blog = (props) => {
-  const {data, loading} = useMethodRequest(BlogMethodRequests.FETCH, {
+  const {data = [], loading} = useMethodRequest(BlogMethodRequests.FETCH, {
     updateCollection: {
       validate: (data) => shouldUpdateCollection(data),
       sourceDataUrl: URL_RSS_TO_JSON,
@@ -22,12 +22,12 @@ export const Blog = (props) => {
     },
   })
 
-  return <BlogComponent {...props} loading={loading} posts={data?.posts} />
+  return <BlogComponent {...props} loading={loading} posts={data} />
 }
 
 export const BlogComponent = ({loading, posts, ...props}) => {
   return (
-    <Card {...props} loading={loading} skeletonType={SkeletonTypes.BLOCKS}>
+    <Card {...props} icon={CardIcons.BLOG} loading={loading} skeletonType={SkeletonTypes.BLOCKS}>
       <MainContainer>
         {posts?.map((post) => (
           <PostContainer key={post.guid}>
@@ -61,25 +61,36 @@ const PostContainer = styled.div`
   margin-bottom: ${Spacing(0.75)};
   padding: ${Spacing(0.625)};
   border-radius: ${Spacing(0.25)};
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  color: ${Colors.LIGHTPINK};
+  border: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.03);
   background-color: rgba(255, 255, 255, 0.01);
+  transition: ${Transitions.COLORS};
+  cursor: pointer;
 
   > h2 {
     margin: 0 0 ${Spacing(0.625)};
-    color: ${Colors.LIGHTPINK};
-    font-weight: lighter;
+    color: ${Colors.LIGHT_SECONDARY};
+    font-weight: 200;
     font-size: 13px;
+    transition: ${Transitions.COLORS};
   }
 
   > div {
-    color: rgba(255, 255, 255, 0.3);
-    font-weight: lighter;
+    font-weight: 200;
     font-size: 13px;
     line-height: ${Typography.LINE_HEIGHT_SNUG};
+    color: ${Colors.TEXT};
 
     p {
       margin: 0;
+    }
+  }
+
+  :hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.03);
+
+    > h2 {
+      color: ${Colors.WHITE_SECONDARY};
     }
   }
 `

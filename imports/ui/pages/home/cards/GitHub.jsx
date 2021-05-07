@@ -3,8 +3,8 @@ import React from 'react'
 import styled from 'styled-components'
 import {GitHubMethodRequests} from '../../../../api/github'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
-import {Card} from '../../../components/Card'
-import {Colors, Spacing, Typography} from '../../../theme'
+import {Card, CardIcons} from '../../../components/Card'
+import {Colors, Spacing, Transitions, Typography} from '../../../theme'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBookAlt} from '@fortawesome/pro-light-svg-icons'
 import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
@@ -26,7 +26,7 @@ export const GitHub = (props) => {
 
 export const GitHubComponent = ({loading, repos, ...props}) => {
   return (
-    <Card {...props} loading={loading} skeletonType={SkeletonTypes.GRID}>
+    <Card {...props} icon={CardIcons.REPO} loading={loading} skeletonType={SkeletonTypes.GRID}>
       <MainContainer>
         {repos?.map((repo) => (
           <GitHubItem key={repo.id}>
@@ -65,17 +65,20 @@ const GitHubItem = styled.div`
   height: ${Spacing(4.5)};
   padding: ${Spacing(0.625)};
   border-radius: ${Spacing(0.25)};
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.03);
   background-color: rgba(255, 255, 255, 0.01);
+  transition: ${Transitions.COLORS};
+  cursor: pointer;
 
   > h2 {
     margin: 0 0 ${Spacing(0.4375)};
     font-size: 12px;
-    font-weight: lighter;
-    color: ${Colors.WHITEPINK};
+    font-weight: 200;
+    color: ${Colors.LIGHT_SECONDARY};
+    transition: ${Transitions.COLORS};
 
     > svg {
-      color: ${Colors.LIGHTPINK};
+      color: ${Colors.SECONDARY};
     }
 
     > span {
@@ -86,8 +89,17 @@ const GitHubItem = styled.div`
   > p {
     margin: 0;
     font-size: 12px;
-    font-weight: lighter;
+    font-weight: 200;
     line-height: ${Typography.LINE_HEIGHT_SNUG};
-    color: rgba(255, 255, 255, 0.3);
+    color: ${Colors.TEXT};
+  }
+
+  :hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.03);
+
+    > h2 {
+      color: ${Colors.WHITE_SECONDARY};
+    }
   }
 `

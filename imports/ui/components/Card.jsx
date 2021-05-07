@@ -5,6 +5,23 @@ import 'simplebar/dist/simplebar.min.css'
 import styled, {css} from 'styled-components'
 import {Breakpoints, Colors, Spacing} from '../theme'
 import {Skeleton, SkeletonTypes} from './Skeleton'
+import {faLaptopCode, faIdCard, faSwords, faBooks, faMapMarkedAlt, faBlog} from '@fortawesome/pro-duotone-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
+export const CardIcons = {
+  WORK: faLaptopCode,
+  PROFILE: faIdCard,
+  REPO: faBooks,
+  SKILLS: faSwords,
+  WORLD: faMapMarkedAlt,
+  BLOG: faBlog,
+}
+
+const CardIcon = ({icon}) => <FontAwesomeIcon icon={icon} />
+
+CardIcon.propTypes = {
+  icon: PropTypes.oneOf(Object.values(CardIcons)).isRequired,
+}
 
 // export const CardErrorBoundary = ({error, children, onFixButtonClick}) => {
 //   if (error) {
@@ -24,11 +41,13 @@ import {Skeleton, SkeletonTypes} from './Skeleton'
 //   onFixButtonClick: PropTypes.func,
 // }
 
-export const Card = ({title, loading, skeletonType, active, onHeaderClick, children}) => {
+export const Card = ({icon, title, loading, skeletonType, active, onHeaderClick, children}) => {
   return (
     <CardContainer tabIndex={0} active={active}>
       <Header onClick={onHeaderClick}>
-        <h1>{title}</h1>
+        <h1>
+          <CardIcon icon={icon} /> {title}
+        </h1>
       </Header>
       <HeaderShadow />
       <StyledSimpleBar>
@@ -43,6 +62,7 @@ export const Card = ({title, loading, skeletonType, active, onHeaderClick, child
 }
 
 Card.propTypes = {
+  icon: PropTypes.oneOf(Object.values(CardIcons)).isRequired,
   title: PropTypes.string.isRequired,
   loading: PropTypes.bool,
   skeletonType: PropTypes.oneOf(Object.values(SkeletonTypes)),
@@ -54,7 +74,7 @@ Card.propTypes = {
 const CARD_HEIGHT = Spacing(17)
 const CARD_HEADER_HEIGHT = Spacing(3)
 const CARD_RADIUS = Spacing(0.3)
-const CARD_PADDING = Spacing(1)
+const CARD_PADDING = Spacing(1.25)
 
 const CardContainer = styled.div`
   border-radius: ${CARD_RADIUS};
@@ -85,18 +105,16 @@ const Header = styled.div`
 
   > h1 {
     margin: 0;
-    color: rgba(255, 255, 255, 0.75);
     font-size: 13px;
-    font-weight: lighter;
+    font-weight: 200;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-  }
+    letter-spacing: 0.6px;
+    color: ${Colors.LIGHT_TEXT};
 
-  > h3 {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.3);
-    font-size: 12px;
-    font-weight: lighter;
+    > svg {
+      margin-right: ${Spacing(0.3125)};
+      color: ${Colors.PRIMARY};
+    }
   }
 
   ${Breakpoints.XS} {
@@ -142,7 +160,7 @@ const StyledSimpleBar = styled(SimpleBar)`
     opacity: 0.25;
 
     &:before {
-      background-color: ${Colors.BLACK};
+      background-color: black;
     }
   }
 `
