@@ -21,11 +21,5 @@ const AppContainer = styled.div`
   display: flex;
   justify-content: center;
   min-height: 100vh;
-  background-image: linear-gradient(
-    165deg,
-    ${Colors.DARKINDIGO} 0%,
-    ${Colors.INDIGO} 30%,
-    ${Colors.PURPLE} 70%,
-    ${Colors.DARKMAGENTA} 100%
-  );
+  background-image: linear-gradient(165deg, ${Colors.BG_GRADIENT_1} 0%, ${Colors.BG_GRADIENT_2} 100%);
 `
