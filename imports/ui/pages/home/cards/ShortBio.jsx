@@ -3,44 +3,40 @@ import React from 'react'
 import styled from 'styled-components'
 import {ShortBioMethodRequests} from '../../../../api/short-bio'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
-import {Card} from '../../../components/Card'
-import {Typography} from '../../../theme'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faMugHot, faPlane, faCode, faGamepadAlt} from '@fortawesome/pro-solid-svg-icons'
+import {Card, CardIcons} from '../../../components/Card'
+import {Colors, Spacing, Transitions, Typography} from '../../../theme'
+import {faCode, faGamepadAlt, faMugHot, faPlaneAlt} from '@fortawesome/pro-light-svg-icons'
 import {SkeletonTypes} from '../../../components/Skeleton'
+import {calculateAge} from '../../../utils/calculators'
+import {formatDate} from '../../../utils/formatters'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 export const ShortBio = (props) => {
-  const {data, loading} = useMethodRequest(ShortBioMethodRequests.FETCH)
+  const {data = {}, loading} = useMethodRequest(ShortBioMethodRequests.FETCH)
 
-  const age = '32'
-
-  return (
-    <ShortBioComponent
-      {...props}
-      loading={loading}
-      name={data.name}
-      hometown={data.hometown}
-      age={age}
-      description={data.description}
-    />
-  )
+  return <ShortBioComponent {...props} loading={loading} data={data} />
 }
 
-export const ShortBioComponent = ({loading, name, hometown, age, description, ...props}) => {
+export const ShortBioComponent = ({loading, data, ...props}) => {
+  const {avatarSrc, name, birthdate, description} = data
+  const age = calculateAge(birthdate)
+  const birthdateFormatted = formatDate(birthdate, {year: 'numeric', month: 'short', day: 'numeric'})
+
   return (
-    <Card {...props} loading={loading} skeletonType={SkeletonTypes.TEXT}>
+    <Card {...props} icon={CardIcons.PROFILE} loading={loading} skeletonType={SkeletonTypes.TEXT}>
       <MainContainer>
-        <AvatarDescription>
+        <Profile>
           <Avatar>
-            <img alt={name} src="/images/avatar.jpeg" />
+            <img alt={name} src={avatarSrc} />
           </Avatar>
-          <Description>
-            <h3>
-              Name: <b>{name}</b>
-            </h3>
-            <h3>Hometown: {hometown}</h3>
-            <h3>Age: {age} years</h3>
-            <Icons>
+          <div>
+            <Identification>
+              <h3>{name}</h3>
+              <p>
+                {age} years <span>({birthdateFormatted})</span>
+              </p>
+            </Identification>
+            <Likes>
               <div>
                 <FontAwesomeIcon icon={faGamepadAlt} />
               </div>
@@ -48,14 +44,17 @@ export const ShortBioComponent = ({loading, name, hometown, age, description, ..
                 <FontAwesomeIcon icon={faCode} />
               </div>
               <div>
-                <FontAwesomeIcon icon={faPlane} />
+                <FontAwesomeIcon
+                  icon={faPlaneAlt}
+                  style={{marginLeft: Spacing(0.125), marginBottom: Spacing(0.0625)}}
+                />
               </div>
               <div>
                 <FontAwesomeIcon icon={faMugHot} />
               </div>
-            </Icons>
-          </Description>
-        </AvatarDescription>
+            </Likes>
+          </div>
+        </Profile>
         <Description>
           <p>{description}</p>
         </Description>
@@ -66,63 +65,100 @@ export const ShortBioComponent = ({loading, name, hometown, age, description, ..
 
 ShortBioComponent.propTypes = {
   loading: PropTypes.bool,
-  name: PropTypes.string,
-  hometown: PropTypes.string,
-  age: PropTypes.string,
-  description: PropTypes.string,
+  data: PropTypes.shape({
+    avatarSrc: PropTypes.string,
+    name: PropTypes.string,
+    birthdate: PropTypes.string,
+    description: PropTypes.string,
+  }),
 }
 
-const MainContainer = styled.div``
+const MainContainer = styled.div`
+  padding: ${Spacing(0.25)};
+`
 
-const AvatarDescription = styled.div`
+const Profile = styled.div`
   display: flex;
+  margin-bottom: ${Spacing(0.825)};
 `
 
 const Avatar = styled.div`
-  margin-right: 10px;
+  width: ${Spacing(6)};
+  height: ${Spacing(6)};
+  margin-right: ${Spacing(1)};
+  padding: ${Spacing(0.25)};
+  border: ${Spacing(0.125)} solid rgba(255, 255, 255, 0.05);
+  border-radius: ${Spacing(0.625)};
 
   > img {
-    width: 96px;
-    border-radius: 10px;
-    border: 5px solid rgba(0, 0, 0, 0.15);
+    width: 100%;
+    border-radius: ${Spacing(0.35)};
   }
 `
 
-const Icons = styled.div`
+const Identification = styled.div`
+  margin: ${Spacing(0.5)} 0;
+
+  > h3 {
+    display: block;
+    margin: 0 0 ${Spacing(0.425)} 0;
+    font-size: 13px;
+    font-weight: 300;
+    color: ${Colors.LIGHT_SECONDARY};
+  }
+
+  > p {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 200;
+    color: ${Colors.LIGHT_TEXT};
+
+    > span {
+      color: ${Colors.TEXT};
+    }
+  }
+`
+
+const Likes = styled.div`
   flex: 1;
-  margin: 10px 0;
+  margin-top: ${Spacing(1.15)};
   width: 100%;
   display: flex;
+  justify-content: space-between;
   font-size: 16px;
 
   > div {
-    width: 36px;
-    height: 36px;
-    border-radius: 20%;
-    border: 1px solid rgba(255, 255, 255, 0.075);
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 10px;
+    width: ${Spacing(2.5)};
+    height: ${Spacing(2.5)};
+    margin-right: ${Spacing(0.425)};
+    border-top: ${Spacing(0.0625)} solid rgba(0, 0, 0, 0.3);
+    border-bottom: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.05);
+    border-radius: ${Spacing(0.625)};
+    background-color: rgba(0, 0, 0, 0.1);
+    color: ${Colors.SECONDARY};
+    transition: ${Transitions.COLORS};
+    cursor: pointer;
+
+    :hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: ${Colors.LIGHT_SECONDARY};
+    }
   }
 `
 
 const Description = styled.div`
-  flex: 1;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 13px;
-  font-weight: lighter;
-  line-height: ${Typography.LINE_HEIGHT_NORMAL};
-
-  > h3 {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 13px;
-    font-weight: lighter;
-    line-height: ${Typography.LINE_HEIGHT_NORMAL};
-  }
+  padding: 0 ${Spacing(0.325)};
 
   > p {
-    padding: 0 5px;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    font-weight: 200;
+    line-height: ${Typography.LINE_HEIGHT_NORMAL};
+    color: ${Colors.TEXT};
   }
 `
