@@ -1,5 +1,5 @@
 import React from 'react'
-import {Icon} from '../components/Icon'
+import {SvgImage} from '../components/SvgImage'
 
 const svg = (
   <svg width="1em" height="1em" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -10,4 +10,4 @@ const svg = (
   </svg>
 )
 
-export const IconMeteor = (props) => <Icon svg={svg} {...props} />
+export const IconMeteor = (props) => <SvgImage svg={svg} {...props} />
