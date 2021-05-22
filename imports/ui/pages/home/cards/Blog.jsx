@@ -30,7 +30,7 @@ export const BlogComponent = ({loading, posts, ...props}) => {
     <Card {...props} icon={CardIcons.BLOG} loading={loading} skeletonType={SkeletonTypes.BLOCKS}>
       <MainContainer>
         {posts?.map((post) => (
-          <PostContainer key={post.guid}>
+          <PostContainer key={post.guid} target="_blank" rel="noreferrer" href={post.link}>
             <h2>{post.title}</h2>
             <div dangerouslySetInnerHTML={{__html: post.description}} />
           </PostContainer>
@@ -57,7 +57,8 @@ const MainContainer = styled.div`
   position: relative;
 `
 
-const PostContainer = styled.div`
+const PostContainer = styled.a`
+  display: block;
   margin-bottom: ${Spacing(0.75)};
   padding: ${Spacing(0.625)};
   border-radius: ${Spacing(0.25)};
@@ -65,6 +66,7 @@ const PostContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.01);
   transition: ${Transitions.COLORS};
   cursor: pointer;
+  text-decoration: none;
 
   > h2 {
     margin: 0 0 ${Spacing(0.625)};
