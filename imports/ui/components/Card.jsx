@@ -1,18 +1,17 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import SimpleBar from 'simplebar-react'
-import 'simplebar/dist/simplebar.min.css'
 import styled, {css} from 'styled-components'
 import {Breakpoints, Colors, Spacing} from '../theme'
 import {Skeleton, SkeletonTypes} from './Skeleton'
-import {faLaptopCode, faIdCard, faSwords, faBooks, faMapMarkedAlt, faBlog} from '@fortawesome/pro-duotone-svg-icons'
+import {faLaptopCode, faIdCard, faSparkles, faBooks, faMapMarkedAlt, faBlog} from '@fortawesome/pro-duotone-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 export const CardIcons = {
   WORK: faLaptopCode,
   PROFILE: faIdCard,
   REPO: faBooks,
-  SKILLS: faSwords,
+  SKILLS: faSparkles,
   WORLD: faMapMarkedAlt,
   BLOG: faBlog,
 }
@@ -85,6 +84,7 @@ const CardContainer = styled.div`
   height: ${CARD_HEADER_HEIGHT};
   transition: height 0.3s linear;
   outline: none;
+  //backdrop-filter: blur(3px);
 
   ${(props) => {
     if (props.active) {

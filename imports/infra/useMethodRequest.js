@@ -5,11 +5,13 @@ import {methodCall} from './methodCall'
 import {ShortBioMethodRequests} from '../api/short-bio'
 import {BlogMethodRequests} from '../api/blog'
 import {fetchApi} from './fetchApi'
+import {SkillsMethodRequests} from '../api/skills'
 
 const AllMethodRequests = [
   WorkExperiencesMethodRequests,
   GitHubMethodRequests,
   ShortBioMethodRequests,
+  SkillsMethodRequests,
   BlogMethodRequests,
 ]
 
