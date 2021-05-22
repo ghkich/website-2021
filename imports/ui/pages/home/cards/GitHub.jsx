@@ -29,7 +29,7 @@ export const GitHubComponent = ({loading, repos, ...props}) => {
     <Card {...props} icon={CardIcons.REPO} loading={loading} skeletonType={SkeletonTypes.GRID}>
       <MainContainer>
         {repos?.map((repo) => (
-          <GitHubItem key={repo.id}>
+          <GitHubItem key={repo.id} target="_blank" rel="noreferrer" href={repo.htmlUrl}>
             <h2>
               <FontAwesomeIcon icon={faBookAlt} />
               <span>{repo.name}</span>
@@ -49,6 +49,7 @@ GitHubComponent.propTypes = {
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       description: PropTypes.string,
+      htmlUrl: PropTypes.string.isRequired,
     }),
   ),
 }
@@ -60,7 +61,7 @@ const MainContainer = styled.div`
   row-gap: ${Spacing(0.625)};
 `
 
-const GitHubItem = styled.div`
+const GitHubItem = styled.a`
   box-sizing: border-box;
   height: ${Spacing(4.5)};
   padding: ${Spacing(0.625)};
@@ -69,6 +70,7 @@ const GitHubItem = styled.div`
   background-color: rgba(255, 255, 255, 0.01);
   transition: ${Transitions.COLORS};
   cursor: pointer;
+  text-decoration: none;
 
   > h2 {
     margin: 0 0 ${Spacing(0.4375)};
