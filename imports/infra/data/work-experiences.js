@@ -9,7 +9,7 @@ export const WORK_EXPERIENCES_DATA = [
     location: 'Toledo, PR',
     keywords: [KeywordTypes.METEOR, KeywordTypes.REACT],
     description:
-      'I am currently working in a international team in 5 different projects. Fugiat non proident consectetur labore. Deserunt fugiat tempor elit ex excepteur eu elit deserunt eu occaecat elit ex.',
+      'Dolor sit asimet fugiat non proident consectetur labore. Deserunt fugiat tempor elit ex excepteur eu elit deserunt eu occaecat elit ex.',
   },
   {
     jobTitle: 'Front-end developer',

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import {ShortBioMethodRequests} from '../../../../api/short-bio'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card, CardIcons} from '../../../components/Card'
-import {Colors, Spacing, Transitions, Typography} from '../../../theme'
+import {Colors, Spacing, Typography} from '../../../theme'
 import {faCode, faGamepadAlt, faMugHot, faPlaneAlt} from '@fortawesome/pro-light-svg-icons'
 import {SkeletonTypes} from '../../../components/Skeleton'
 import {calculateAge} from '../../../utils/calculators'
@@ -74,7 +74,7 @@ ShortBioComponent.propTypes = {
 }
 
 const MainContainer = styled.div`
-  padding: ${Spacing(0.25)};
+  padding: ${Spacing(0.325)};
 `
 
 const Profile = styled.div`
@@ -87,12 +87,12 @@ const Avatar = styled.div`
   height: ${Spacing(6)};
   margin-right: ${Spacing(1)};
   padding: ${Spacing(0.25)};
-  border: ${Spacing(0.125)} solid rgba(255, 255, 255, 0.05);
+  border: ${Spacing(0.25)} solid rgba(255, 255, 255, 0.05);
   border-radius: ${Spacing(0.625)};
 
   > img {
     width: 100%;
-    border-radius: ${Spacing(0.35)};
+    border-radius: ${Spacing(0.25)};
   }
 `
 
@@ -132,27 +132,17 @@ const Likes = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: ${Spacing(2.5)};
-    height: ${Spacing(2.5)};
+    width: ${Spacing(2.6)};
+    height: ${Spacing(2.6)};
     margin-right: ${Spacing(0.425)};
-    border-top: ${Spacing(0.0625)} solid rgba(0, 0, 0, 0.3);
-    border-bottom: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.05);
-    border-radius: ${Spacing(0.625)};
-    background-color: rgba(0, 0, 0, 0.1);
+    border: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.03);
+    border-radius: ${Spacing(0.25)};
+    background-color: rgba(255, 255, 255, 0.01);
     color: ${Colors.SECONDARY};
-    transition: ${Transitions.COLORS};
-    cursor: pointer;
-
-    :hover {
-      background-color: rgba(0, 0, 0, 0.05);
-      color: ${Colors.LIGHT_SECONDARY};
-    }
   }
 `
 
 const Description = styled.div`
-  padding: 0 ${Spacing(0.325)};
-
   > p {
     margin: 0;
     padding: 0;

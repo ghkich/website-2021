@@ -6,7 +6,7 @@ import {faAt} from '@fortawesome/pro-light-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Spacing} from '../../ui/theme'
 
-const ICONS_BY_CODE = {
+const NetworkCodeIcons = {
   github: faGithub,
   linkedin: faLinkedin,
   instagram: faInstagram,
@@ -37,7 +37,7 @@ export const Contact = ({data}) => {
         <LinksDivider />
         {networks?.map((network) => (
           <IconLink key={network.code} href={network.url} target="_blank">
-            <FontAwesomeIcon icon={ICONS_BY_CODE[network.code]} />
+            <FontAwesomeIcon icon={NetworkCodeIcons[network.code]} />
           </IconLink>
         ))}
       </Links>
