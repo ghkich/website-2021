@@ -5,10 +5,12 @@ import {GitHubMethodRequests} from '../../../../api/github'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card, CardIcons} from '../../../components/Card'
 import {Colors, Spacing, Transitions, Typography} from '../../../theme'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faBookAlt} from '@fortawesome/pro-light-svg-icons'
 import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
 import {SkeletonTypes} from '../../../components/Skeleton'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faBookAlt} from '@fortawesome/pro-light-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+library.add(faBookAlt)
 
 const SOURCE_DATA_URL = 'https://api.github.com/users/ghkich/repos?type=owner&sort=pushed'
 

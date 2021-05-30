@@ -3,11 +3,13 @@ import React, {useEffect, useState} from 'react'
 import styled, {css} from 'styled-components'
 import {Card, CardIcons} from '../../../components/Card'
 import {Colors, Spacing, Transitions, Typography} from '../../../theme'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faComments, faBrain, faBullseye, faHeart} from '@fortawesome/pro-solid-svg-icons'
 import {SkillsMethodRequests} from '../../../../api/skills'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {SkeletonTypes} from '../../../components/Skeleton'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faComments, faBrain, faBullseye, faHeart} from '@fortawesome/pro-solid-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+library.add(faComments, faBrain, faBullseye, faHeart)
 
 export const SkillTypes = {
   COMMUNICATION: 'communication',

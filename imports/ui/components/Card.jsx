@@ -4,8 +4,12 @@ import SimpleBar from 'simplebar-react'
 import styled, {css} from 'styled-components'
 import {Breakpoints, Colors, Spacing} from '../theme'
 import {Skeleton, SkeletonTypes} from './Skeleton'
-import {faLaptopCode, faIdCard, faSparkles, faBooks, faMapMarkedAlt, faBlog} from '@fortawesome/pro-duotone-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faLaptopCode, faIdCard, faSparkles, faBooks, faMapMarkedAlt, faBlog} from '@fortawesome/pro-duotone-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+library.add(faLaptopCode, faIdCard, faSparkles, faBooks, faMapMarkedAlt, faBlog)
+
+console.log(library)
 
 export const CardIcons = {
   WORK: faLaptopCode,

@@ -5,11 +5,13 @@ import {ShortBioMethodRequests} from '../../../../api/short-bio'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card, CardIcons} from '../../../components/Card'
 import {Colors, Spacing, Typography} from '../../../theme'
-import {faCode, faGamepadAlt, faMugHot, faPlaneAlt} from '@fortawesome/pro-light-svg-icons'
 import {SkeletonTypes} from '../../../components/Skeleton'
 import {calculateAge} from '../../../utils/calculators'
 import {formatDate} from '../../../utils/formatters'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCode, faGamepadAlt, faMugHot, faPlaneAlt} from '@fortawesome/pro-light-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+library.add(faCode, faGamepadAlt, faMugHot, faPlaneAlt)
 
 export const ShortBio = (props) => {
   const {data = {}, loading} = useMethodRequest(ShortBioMethodRequests.FETCH)

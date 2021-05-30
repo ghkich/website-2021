@@ -15,6 +15,8 @@ import {MAX_WIDTH_XS} from '../../theme/config/breakpoints'
 import {Skills} from './cards/Skills'
 import {faHeart, faCoffee} from '@fortawesome/pro-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {library} from '@fortawesome/fontawesome-svg-core'
+library.add(faHeart, faCoffee)
 
 const CardNames = {
   WORK_EXPERIENCES: 'work-experiences',

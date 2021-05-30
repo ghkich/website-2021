@@ -2,8 +2,12 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled, {keyframes} from 'styled-components'
 import {Card, CardIcons} from '../../../components/Card'
-import {Colors} from '../../../theme'
+import {Colors, Spacing} from '../../../theme'
 import {WorldMapImage} from '../../../images/WorldMap'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faChevronDown} from '@fortawesome/pro-regular-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+library.add(faChevronDown)
 
 export const WorldMap = (props) => {
   // const {data} = useMethodRequest(WorldMapMethodRequests.FETCH)
@@ -17,8 +21,16 @@ export const WorldMapComponent = ({...props}) => {
   return (
     <Card {...props} icon={CardIcons.WORLD}>
       <MainContainer>
-        <CurrentLocationPin />
-        <StyledWorldMapImage />
+        <Locations>
+          <Selected>
+            <span className="country">Brazil</span> - <span>Toledo, PR</span> - Current location
+          </Selected>
+          <FontAwesomeIcon icon={faChevronDown} />
+        </Locations>
+        <MapContainer>
+          <CurrentLocationPin />
+          <StyledWorldMapImage />
+        </MapContainer>
       </MainContainer>
     </Card>
   )
@@ -30,6 +42,45 @@ WorldMapComponent.propTypes = {
 
 const MainContainer = styled.div`
   position: relative;
+`
+
+const Locations = styled.div`
+  margin-bottom: ${Spacing(0.25)};
+  padding: ${Spacing(0.625)};
+  border-radius: ${Spacing(0.25)};
+  border: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.03);
+  background-color: rgba(255, 255, 255, 0.01);
+  display: flex;
+  align-items: center;
+  font-weight: 200;
+
+  > svg {
+    margin-left: ${Spacing(0.625)};
+    font-size: 11px;
+    color: ${Colors.LIGHT_SECONDARY};
+  }
+`
+
+const Selected = styled.div`
+  flex: 1;
+  font-weight: 200;
+  font-size: 11px;
+  color: ${Colors.TEXT};
+
+  > span {
+    font-weight: 400;
+    color: ${Colors.LIGHT_SECONDARY};
+  }
+
+  > span.country {
+    color: ${Colors.SECONDARY};
+  }
+`
+
+const MapContainer = styled.div`
+  position: relative;
+  max-width: ${Spacing(20)};
+  margin: 0 auto;
 `
 
 const pulsate = keyframes`

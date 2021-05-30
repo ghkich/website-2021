@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import {Spacing} from '../../ui/theme'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faGithub, faInstagram, faLinkedin} from '@fortawesome/free-brands-svg-icons'
 import {faAt} from '@fortawesome/pro-light-svg-icons'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {Spacing} from '../../ui/theme'
+import {library} from '@fortawesome/fontawesome-svg-core'
+library.add(faAt, faGithub, faInstagram, faLinkedin)
 
 const NetworkCodeIcons = {
   github: faGithub,

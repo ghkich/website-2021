@@ -10,15 +10,25 @@ export const HeaderLogo = () => {
 }
 
 export const HeaderLogoComponent = ({name, tagLine}) => {
-  const [logoShape, setLogoShape] = useState(LogoShape.NORMAL)
+  const [logoShape, setLogoShape] = useState(LogoShape.CODE)
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setLogoShape((prev) => (prev === LogoShape.NORMAL ? LogoShape.CODE : LogoShape.NORMAL))
+  //   }, 10000)
+  //
+  //   return () => {
+  //     clearInterval(interval)
+  //   }
+  // }, [])
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const timeout = setTimeout(() => {
       setLogoShape((prev) => (prev === LogoShape.NORMAL ? LogoShape.CODE : LogoShape.NORMAL))
-    }, 10000)
+    }, 3000)
 
     return () => {
-      clearInterval(interval)
+      clearTimeout(timeout)
     }
   }, [])
 
