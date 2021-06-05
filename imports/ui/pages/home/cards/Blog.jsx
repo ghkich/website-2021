@@ -7,6 +7,10 @@ import {Card, CardIcons} from '../../../components/Card'
 import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
 import {Colors, Spacing, Transitions, Typography} from '../../../theme'
 import {SkeletonTypes} from '../../../components/Skeleton'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faMemoPad} from '@fortawesome/pro-light-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+library.add(faMemoPad)
 
 const API_KEY = 'f34ieehw4u4zcysmvyyeqqghfjkt9yx8alo2mzfd'
 const TIMESTAMP = new Date().getTime() // to ignore rss2json cache
@@ -31,7 +35,10 @@ export const BlogComponent = ({loading, posts, ...props}) => {
       <MainContainer>
         {posts?.map((post) => (
           <PostContainer key={post.guid} target="_blank" rel="noreferrer" href={post.link}>
-            <h2>{post.title}</h2>
+            <h2>
+              <FontAwesomeIcon icon={faMemoPad} />
+              <span>{post.title}</span>
+            </h2>
             <div dangerouslySetInnerHTML={{__html: post.description}} />
           </PostContainer>
         ))}
@@ -74,6 +81,14 @@ const PostContainer = styled.a`
     font-weight: 200;
     font-size: 13px;
     transition: ${Transitions.COLORS};
+
+    > svg {
+      color: ${Colors.SECONDARY};
+    }
+
+    > span {
+      margin-left: ${Spacing(0.3125)};
+    }
   }
 
   > div {
