@@ -6,6 +6,7 @@ import {ShortBioMethodRequests} from '../api/short-bio'
 import {BlogMethodRequests} from '../api/blog'
 import {fetchApi} from './fetchApi'
 import {SkillsMethodRequests} from '../api/skills'
+import {useAppContext} from '../ui/app/AppContext'
 
 const AllMethodRequests = [
   WorkExperiencesMethodRequests,
@@ -29,6 +30,8 @@ export const useMethodRequest = (requestName, opt) => {
 
   const options = {manual: false, onSuccess: () => {}, ...opt}
 
+  const {actions} = useAppContext()
+
   const [data, setData] = useState()
   const [status, setStatus] = useState(RequestStatuses.IDLE)
 
@@ -40,6 +43,7 @@ export const useMethodRequest = (requestName, opt) => {
   const run = async (params) => {
     try {
       setStatus(RequestStatuses.LOADING)
+      actions.addLoader(requestName)
       let response = await methodCall(requestName, params)
       if (options.updateCollection) {
         const {validate, sourceDataUrl, updateRequestName} = options.updateCollection
@@ -53,14 +57,13 @@ export const useMethodRequest = (requestName, opt) => {
           response = await methodCall(requestName, params)
         }
       }
-      //TODO: remove after all loading tests
-      setTimeout(() => {
-        setStatus(RequestStatuses.SUCCESS)
-        setData(response)
-        options.onSuccess(response)
-      }, 1000)
+      setStatus(RequestStatuses.SUCCESS)
+      setData(response)
+      options.onSuccess(response)
     } catch (error) {
       handleError(error)
+    } finally {
+      actions.removeLoader(requestName)
     }
   }
 

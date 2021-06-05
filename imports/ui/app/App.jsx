@@ -5,16 +5,19 @@ import styled from 'styled-components'
 import {Colors} from '../theme'
 import {routes} from './routes'
 import {Switch} from './Router'
+import {AppProvider} from './AppContext'
 
 export const App = () => {
   return (
-    <AppContainer>
-      <Switch>
-        {routes.map(({name, path, component: Component}) => (
-          <Component key={name} path={path} />
-        ))}
-      </Switch>
-    </AppContainer>
+    <AppProvider>
+      <AppContainer>
+        <Switch>
+          {routes.map(({name, path, component: Component}) => (
+            <Component key={name} path={path} />
+          ))}
+        </Switch>
+      </AppContainer>
+    </AppProvider>
   )
 }
 
