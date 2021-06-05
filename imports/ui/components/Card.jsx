@@ -7,9 +7,8 @@ import {Skeleton, SkeletonTypes} from './Skeleton'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faLaptopCode, faIdCard, faSparkles, faBooks, faMapMarkedAlt, faBlog} from '@fortawesome/pro-duotone-svg-icons'
 import {library} from '@fortawesome/fontawesome-svg-core'
-library.add(faLaptopCode, faIdCard, faSparkles, faBooks, faMapMarkedAlt, faBlog)
-
-console.log(library)
+import {faChevronDown} from '@fortawesome/pro-light-svg-icons'
+library.add(faChevronDown, faLaptopCode, faIdCard, faSparkles, faBooks, faMapMarkedAlt, faBlog)
 
 export const CardIcons = {
   WORK: faLaptopCode,
@@ -44,13 +43,14 @@ CardIcon.propTypes = {
 //   onFixButtonClick: PropTypes.func,
 // }
 
-export const Card = ({icon, title, loading, skeletonType, active, onHeaderClick, children}) => {
+export const Card = ({icon, title, loading, skeletonType, active, onHeaderClick, appReady, children}) => {
   return (
     <CardContainer tabIndex={0} active={active}>
-      <Header onClick={onHeaderClick}>
+      <Header onClick={appReady && onHeaderClick}>
         <h1>
           <CardIcon icon={icon} /> {title}
         </h1>
+        <HeaderChevronIcon icon={faChevronDown} loading={!appReady || loading} active={active} />
       </Header>
       <HeaderShadow />
       <StyledSimpleBar>
@@ -71,6 +71,7 @@ Card.propTypes = {
   skeletonType: PropTypes.oneOf(Object.values(SkeletonTypes)),
   active: PropTypes.bool,
   onHeaderClick: PropTypes.func.isRequired,
+  appReady: PropTypes.bool.isRequired,
   children: PropTypes.node,
 }
 
@@ -86,9 +87,8 @@ const CardContainer = styled.div`
   position: relative;
   overflow: hidden;
   height: ${CARD_HEADER_HEIGHT};
-  transition: height 0.3s linear;
+  transition: height 0.3s;
   outline: none;
-  //backdrop-filter: blur(3px);
 
   ${(props) => {
     if (props.active) {
@@ -123,6 +123,28 @@ const Header = styled.div`
 
   ${Breakpoints.XS} {
     cursor: auto;
+  }
+`
+
+const HeaderChevronIcon = styled(FontAwesomeIcon)`
+  font-size: 13px;
+  color: ${Colors.LIGHT_PRIMARY};
+  transition: transform 0.3s;
+  transform: ${({active}) => (active ? 'rotate(-180deg)' : 'rotate(0)')};
+
+  ${({loading}) => {
+    if (loading) {
+      return css`
+        transform: translateX(50px);
+      `
+    }
+    return css`
+      transform: translateX(0);
+    `
+  }}
+
+  ${Breakpoints.XS} {
+    display: none;
   }
 `
 
