@@ -1,21 +1,19 @@
-import 'normalize.css'
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {WorkExperiences} from './cards/WorkExperiences'
 import {GitHub} from './cards/GitHub'
-import {HeaderLogo} from './HeaderLogo'
+import {Header} from './Header'
 import {ShortBio} from './cards/ShortBio'
 import PropTypes from 'prop-types'
 import {WorldMap} from './cards/WorldMap'
 import {Blog} from './cards/Blog'
 import {Breakpoints, Colors, Spacing, Transitions, Typography} from '../../theme'
-import {Contact, ContactDataType} from '../../components/Contact'
-import {PERSONAL_INFO_DATA} from '../../../infra/data/personal-info'
 import {MAX_WIDTH_XS} from '../../theme/config/breakpoints'
 import {Skills} from './cards/Skills'
 import {faHeart, faCoffee} from '@fortawesome/pro-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {library} from '@fortawesome/fontawesome-svg-core'
+import {useAppSelectors} from '../../app/AppContext'
 library.add(faHeart, faCoffee)
 
 const CardNames = {
@@ -61,11 +59,11 @@ const cards = [
 ]
 
 export const HomePage = () => {
-  const {email, phone, networks} = PERSONAL_INFO_DATA
-  return <HomePageComponent cards={cards} contactData={{email, phone, networks}} />
+  const {appReady} = useAppSelectors()
+  return <HomePageComponent cards={cards} appReady={appReady} />
 }
 
-export const HomePageComponent = ({cards, contactData}) => {
+export const HomePageComponent = ({cards, appReady}) => {
   const [activeCardId, setActiveCardId] = useState()
   const [isSmallScreen, setIsSmallScreen] = useState()
 
@@ -78,12 +76,7 @@ export const HomePageComponent = ({cards, contactData}) => {
 
   return (
     <BoxedLayout>
-      <Header>
-        <HeaderLogo />
-        <HeaderContact>
-          <Contact data={contactData} />
-        </HeaderContact>
-      </Header>
+      <Header />
       <CardsGrid>
         {cards?.map(({id, title, component: Component}) => (
           <Component
@@ -91,10 +84,11 @@ export const HomePageComponent = ({cards, contactData}) => {
             title={title}
             active={isSmallScreen ? activeCardId === id : true}
             onHeaderClick={() => isSmallScreen && setActiveCardId((prev) => (prev !== id ? id : undefined))}
+            appReady={appReady}
           />
         ))}
       </CardsGrid>
-      <Footer>
+      <Footer appReady={appReady}>
         <MadeAndCopyright>
           <MadeWith>
             Made with <FontAwesomeIcon icon={faHeart} /> and <FontAwesomeIcon icon={faCoffee} />{' '}
@@ -111,9 +105,6 @@ export const HomePageComponent = ({cards, contactData}) => {
             </a>{' '}
           </Copyright>
         </MadeAndCopyright>
-        <FooterContact>
-          <Contact data={contactData} />
-        </FooterContact>
       </Footer>
     </BoxedLayout>
   )
@@ -127,29 +118,13 @@ HomePageComponent.propTypes = {
       component: PropTypes.func.isRequired,
     }),
   ),
-  contactData: PropTypes.shape(ContactDataType),
+  appReady: PropTypes.bool.isRequired,
 }
 
 const BoxedLayout = styled.div`
   width: 100%;
   max-width: ${Spacing(80)};
   margin: 0 ${Spacing(1)};
-`
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: ${Spacing(7)};
-  margin: 0 ${Spacing(1)};
-`
-
-const HeaderContact = styled.div`
-  display: none;
-
-  ${Breakpoints.XS} {
-    display: block;
-  }
 `
 
 const CardsGrid = styled.div`
@@ -171,7 +146,9 @@ const CardsGrid = styled.div`
 `
 
 const Footer = styled.div`
-  margin: ${Spacing(2)} auto;
+  margin: ${Spacing(2.25)} 0;
+  transition: opacity 0.2s;
+  opacity: ${({appReady}) => (appReady ? 1 : 0)};
 `
 
 const MadeAndCopyright = styled.div`
@@ -183,26 +160,23 @@ const MadeAndCopyright = styled.div`
 const MadeWith = styled.span`
   display: block;
   color: ${Colors.DARK_TEXT};
-  font-size: 10px;
-  text-align: center;
+  font-size: 11px;
+  font-weight: 200;
+  text-align: left;
 
   ${Breakpoints.XS} {
     display: inline;
   }
-
-  // > svg:nth-child(1) {
-  //   color: ${Colors.PRIMARY};
-  // }
 `
 
 const Copyright = styled.span`
   display: block;
-  margin: ${Spacing(0.625)} auto;
+  margin: ${Spacing(0.625)} 0;
   max-width: ${Spacing(18)};
   color: ${Colors.DARK_TEXT};
-  font-size: 10px;
-  text-align: center;
-  opacity: 0.5;
+  font-size: 11px;
+  font-weight: 200;
+  text-align: left;
   line-height: ${Typography.LINE_HEIGHT_NORMAL};
 
   > a {
@@ -211,22 +185,11 @@ const Copyright = styled.span`
     color: ${Colors.TEXT};
 
     :hover {
-      color: ${Colors.LIGHT_TEXT};
+      color: ${Colors.LIGHT_PRIMARY};
     }
   }
 
   ${Breakpoints.XS} {
     display: inline;
-  }
-`
-
-const FooterContact = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: ${Spacing(1.5)} 0;
-
-  ${Breakpoints.XS} {
-    display: none;
   }
 `

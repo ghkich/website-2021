@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled, {css, keyframes} from 'styled-components'
 import {Colors, Spacing} from '../theme'
 
 export const LogoShape = {
@@ -10,7 +10,7 @@ export const LogoShape = {
 
 export const Logo = ({shape}) => {
   return (
-    <MainContainer>
+    <MainContainer shape={shape}>
       <TopPiece shape={shape} />
       <LeftPiece shape={shape}>
         <div className="left-piece-a" />
@@ -37,10 +37,28 @@ export const LOGO_TRANSITION = 'all 0.2s linear'
 const SCALE_ON_TRANSITION = 0.9
 const RADIUS_ON_TRANSITION = Spacing(0.125)
 
+const swinging = keyframes`
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  
+  50% {
+    transform: rotate(5deg);
+  }
+`
+
 const MainContainer = styled.div`
   position: relative;
   width: ${LOGO_WIDTH};
   height: ${LOGO_WIDTH};
+
+  ${(props) => {
+    if (props.shape === LogoShape.CODE) {
+      return css`
+        animation: ${swinging} infinite 1s;
+      `
+    }
+  }}
 `
 
 const TopPiece = styled.div`
