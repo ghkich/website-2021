@@ -1,17 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import {Spacing} from '../../ui/theme'
+import {Colors, Spacing, Transitions} from '../../ui/theme'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faGithub, faInstagram, faLinkedin} from '@fortawesome/free-brands-svg-icons'
+import {faWhatsapp, faGithub, faInstagram, faLinkedin, faTwitter} from '@fortawesome/free-brands-svg-icons'
 import {faAt} from '@fortawesome/pro-light-svg-icons'
 import {library} from '@fortawesome/fontawesome-svg-core'
-library.add(faAt, faGithub, faInstagram, faLinkedin)
+library.add(faAt, faWhatsapp, faGithub, faInstagram, faLinkedin, faTwitter)
 
 const NetworkCodeIcons = {
   github: faGithub,
   linkedin: faLinkedin,
   instagram: faInstagram,
+  twitter: faTwitter,
 }
 
 export const ContactDataType = {
@@ -28,13 +29,12 @@ export const ContactDataType = {
 
 export const Contact = ({data}) => {
   const {phone, email, networks} = data
-  const [codeArea, phoneNumber] = phone.split(/ (.+)/)
 
   return (
     <MainContainer>
       <Links>
-        <IconLink title={`Send email to: ${email}`} href={`mailto:${email}`}>
-          <FontAwesomeIcon icon={faAt} />
+        <IconLink href={`https://wa.me/${phone}`}>
+          <FontAwesomeIcon icon={faWhatsapp} />
         </IconLink>
         <LinksDivider />
         {networks?.map((network) => (
@@ -43,9 +43,7 @@ export const Contact = ({data}) => {
           </IconLink>
         ))}
       </Links>
-      <Phone>
-        <span>{codeArea}</span> {phoneNumber}
-      </Phone>
+      <Email href={`mailto:${email}`}>{email}</Email>
     </MainContainer>
   )
 }
@@ -55,7 +53,11 @@ Contact.propTypes = {
   data: PropTypes.shape(ContactDataType),
 }
 
-const MainContainer = styled.div``
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`
 
 const Links = styled.div`
   display: flex;
@@ -73,20 +75,24 @@ const LinksDivider = styled.div`
 const IconLink = styled.a`
   margin-left: ${Spacing(0.625)};
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.3);
-  transition: color 0.15s linear;
+  color: ${Colors.LIGHT_TEXT};
+  transition: ${Transitions.COLORS};
 
   :hover {
-    color: rgba(255, 255, 255, 0.6);
+    color: ${Colors.LIGHT_PRIMARY};
   }
 `
 
-const Phone = styled.div`
+const Email = styled.a`
   margin-top: ${Spacing(0.45)};
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.25);
+  font-weight: 200;
+  text-decoration: none;
+  letter-spacing: 0.35px;
+  color: ${Colors.TEXT};
+  transition: ${Transitions.COLORS};
 
-  > span {
-    color: rgba(255, 255, 255, 0.15);
+  :hover {
+    color: ${Colors.LIGHT_PRIMARY};
   }
 `

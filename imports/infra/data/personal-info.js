@@ -1,8 +1,8 @@
 export const PERSONAL_INFO_DATA = {
   name: 'Gustavo Kich',
   jobTitle: 'Full-stack Developer',
-  phone: '+55 41 99997-9819',
-  email: 'gh.kich@gmail.com',
+  phone: '5541999979819',
+  email: 'hello@gustavokich.com',
   networks: [
     {
       code: 'github',
@@ -13,6 +13,11 @@ export const PERSONAL_INFO_DATA = {
       code: 'linkedin',
       name: 'LinkedIn',
       url: 'https://www.linkedin.com/in/ghkich',
+    },
+    {
+      code: 'twitter',
+      name: 'Twitter',
+      url: 'https://twitter.com/ghkich',
     },
     {
       code: 'instagram',
