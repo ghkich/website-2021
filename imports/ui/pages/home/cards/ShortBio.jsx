@@ -25,42 +25,44 @@ export const ShortBioComponent = ({loading, data, ...props}) => {
   const birthdateFormatted = formatDate(birthdate, {year: 'numeric', month: 'short', day: 'numeric'})
 
   return (
-    <Card {...props} icon={CardIcons.PROFILE} loading={loading} skeletonType={SkeletonTypes.TEXT}>
-      <MainContainer>
-        <Profile>
-          <Avatar>
-            <img alt={name} src={avatarSrc} />
-          </Avatar>
-          <div>
-            <Identification>
-              <h3>{name}</h3>
-              <p>
-                {age} years <span>({birthdateFormatted})</span>
-              </p>
-            </Identification>
-            <Likes>
-              <div>
-                <FontAwesomeIcon icon={faGamepadAlt} />
-              </div>
-              <div>
-                <FontAwesomeIcon icon={faCode} />
-              </div>
-              <div>
-                <FontAwesomeIcon
-                  icon={faPlaneAlt}
-                  style={{marginLeft: Spacing(0.125), marginBottom: Spacing(0.0625)}}
-                />
-              </div>
-              <div>
-                <FontAwesomeIcon icon={faMugHot} />
-              </div>
-            </Likes>
-          </div>
-        </Profile>
-        <Description>
-          <p>{description}</p>
-        </Description>
-      </MainContainer>
+    <Card {...props} icon={CardIcons.PROFILE} loading={loading} skeletonType={SkeletonTypes.BLOCKS}>
+      {avatarSrc && (
+        <MainContainer>
+          <Profile>
+            <Avatar>
+              <img alt={name} src={avatarSrc} />
+            </Avatar>
+            <div>
+              <Identification>
+                <h3>{name}</h3>
+                <p>
+                  {age} years <span>({birthdateFormatted})</span>
+                </p>
+              </Identification>
+              <Likes>
+                <div>
+                  <FontAwesomeIcon icon={faGamepadAlt} />
+                </div>
+                <div>
+                  <FontAwesomeIcon icon={faCode} />
+                </div>
+                <div>
+                  <FontAwesomeIcon
+                    icon={faPlaneAlt}
+                    style={{marginLeft: Spacing(0.125), marginBottom: Spacing(0.0625)}}
+                  />
+                </div>
+                <div>
+                  <FontAwesomeIcon icon={faMugHot} />
+                </div>
+              </Likes>
+            </div>
+          </Profile>
+          <Description>
+            <p>{description}</p>
+          </Description>
+        </MainContainer>
+      )}
     </Card>
   )
 }

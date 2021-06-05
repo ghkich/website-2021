@@ -7,6 +7,7 @@ import {WorldMapImage} from '../../../images/WorldMap'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faChevronDown} from '@fortawesome/pro-regular-svg-icons'
 import {library} from '@fortawesome/fontawesome-svg-core'
+import {SkeletonTypes} from '../../../components/Skeleton'
 library.add(faChevronDown)
 
 export const WorldMap = (props) => {
@@ -14,12 +15,12 @@ export const WorldMap = (props) => {
   //
   // const age = '32'
 
-  return <WorldMapComponent {...props} />
+  return <WorldMapComponent {...props} loading={false} />
 }
 
-export const WorldMapComponent = ({...props}) => {
+export const WorldMapComponent = ({loading, ...props}) => {
   return (
-    <Card {...props} icon={CardIcons.WORLD}>
+    <Card {...props} icon={CardIcons.WORLD} loading={loading} skeletonType={SkeletonTypes.TEXT}>
       <MainContainer>
         <Locations>
           <Selected>
@@ -37,7 +38,7 @@ export const WorldMapComponent = ({...props}) => {
 }
 
 WorldMapComponent.propTypes = {
-  title: PropTypes.string.isRequired,
+  loading: PropTypes.bool,
 }
 
 const MainContainer = styled.div`
@@ -46,7 +47,7 @@ const MainContainer = styled.div`
 
 const Locations = styled.div`
   margin-bottom: ${Spacing(0.25)};
-  padding: ${Spacing(0.625)};
+  padding: ${Spacing(0.825)};
   border-radius: ${Spacing(0.25)};
   border: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.03);
   background-color: rgba(255, 255, 255, 0.01);
@@ -79,8 +80,8 @@ const Selected = styled.div`
 
 const MapContainer = styled.div`
   position: relative;
-  max-width: ${Spacing(20)};
-  margin: 0 auto;
+  max-width: ${Spacing(18.5)};
+  margin: 5px auto;
 `
 
 const pulsate = keyframes`
