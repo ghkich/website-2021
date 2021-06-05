@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import styled, {css, keyframes} from 'styled-components'
 import {Spacing} from '../theme'
@@ -11,7 +11,24 @@ export const SkeletonTypes = {
 }
 
 export const Skeleton = ({type, loading, children}) => {
-  return <MainContainer>{loading ? SkeletonComponents[type]() : children}</MainContainer>
+  const [unmounted, setUnmounted] = useState(false)
+
+  useEffect(() => {
+    if (loading) {
+      setUnmounted(false)
+    }
+  }, [loading])
+
+  return (
+    <>
+      {!unmounted && (
+        <AnimatedContainer loading={loading} onTransitionEnd={() => !loading && setUnmounted(true)}>
+          <SkeletonComponent type={type} />
+        </AnimatedContainer>
+      )}
+      {!loading && children}
+    </>
+  )
 }
 
 Skeleton.propTypes = {
@@ -20,8 +37,26 @@ Skeleton.propTypes = {
   children: PropTypes.node,
 }
 
-const MainContainer = styled.div`
-  position: relative;
+const AnimatedContainer = styled.div`
+  padding: ${Spacing(1.25)};
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+
+  ${({loading}) => {
+    if (loading) {
+      return css`
+        opacity: 1;
+      `
+    }
+    return css`
+      opacity: 0;
+      transition: opacity 0.2s linear;
+    `
+  }}
 `
 
 const SkeletonText = () => (
@@ -59,10 +94,15 @@ const SkeletonBlocks = () => (
   </Blocks>
 )
 
-const SkeletonComponents = {
-  [SkeletonTypes.TEXT]: SkeletonText,
-  [SkeletonTypes.GRID]: SkeletonGrid,
-  [SkeletonTypes.BLOCKS]: SkeletonBlocks,
+const SkeletonComponent = ({type}) => {
+  if (type === SkeletonTypes.TEXT) return <SkeletonText />
+  if (type === SkeletonTypes.GRID) return <SkeletonGrid />
+  if (type === SkeletonTypes.BLOCKS) return <SkeletonBlocks />
+  throw new Error(`No component found for ${type}`)
+}
+
+SkeletonComponent.propTypes = {
+  type: PropTypes.oneOf(Object.values(SkeletonTypes)),
 }
 
 const pulse = keyframes`
@@ -80,12 +120,6 @@ const pulseAnimation = css`
 `
 
 const Text = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
   ${pulseAnimation};
 
   > div {
@@ -110,12 +144,6 @@ const Text = styled.div`
 `
 
 const Grid = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: ${Spacing(0.625)};
@@ -130,12 +158,6 @@ const Grid = styled.div`
 `
 
 const Blocks = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
   display: grid;
   grid-template-columns: 1fr;
   row-gap: ${Spacing(0.75)};
