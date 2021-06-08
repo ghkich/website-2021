@@ -54,8 +54,8 @@ HeaderComponent.propTypes = {
 const MainContainer = styled.div`
   display: flex;
   align-items: center;
-  height: ${Spacing(7)};
-  margin: 0 ${Spacing(1)};
+  height: ${Spacing(6)};
+  margin: 0 ${Spacing(0.625)};
   position: relative;
 `
 
@@ -81,7 +81,6 @@ const AnimateHeaderDiv = styled.div`
 `
 
 const NameContainer = styled.div`
-  display: none;
   width: ${Spacing(8)};
   margin-top: ${Spacing(0.175)};
   transition: opacity 0.3s;
@@ -89,15 +88,14 @@ const NameContainer = styled.div`
   position: absolute;
   left: ${Spacing(3.25)};
 
-  ${Breakpoints.XS} {
-    display: block;
+  ${Breakpoints.TABLET_S} {
+    display: none;
   }
 
   > h1 {
     margin: 0 0 2px;
     font-size: 14px;
     font-weight: 400;
-    //letter-spacing: 0.35px;
     transition: ${LOGO_TRANSITION};
     color: ${Colors.WHITE_PRIMARY};
   }

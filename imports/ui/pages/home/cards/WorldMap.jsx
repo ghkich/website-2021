@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled, {keyframes} from 'styled-components'
 import {Card, CardIcons} from '../../../components/Card'
-import {Colors, Spacing} from '../../../theme'
+import {Breakpoints, Colors, Spacing} from '../../../theme'
 import {WorldMapImage} from '../../../images/WorldMap'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faChevronDown} from '@fortawesome/pro-regular-svg-icons'
@@ -22,7 +22,7 @@ export const WorldMapComponent = ({loading, ...props}) => {
   return (
     <Card {...props} icon={CardIcons.WORLD} loading={loading} skeletonType={SkeletonTypes.TEXT}>
       <MainContainer>
-        <Locations>
+        <Locations onClick={() => alert('Not yet implemented')}>
           <Selected>
             <span className="country">Brazil</span> - <span>Toledo, PR</span> - Current location
           </Selected>
@@ -43,6 +43,7 @@ WorldMapComponent.propTypes = {
 
 const MainContainer = styled.div`
   position: relative;
+  z-index: 10;
 `
 
 const Locations = styled.div`
@@ -67,6 +68,9 @@ const Selected = styled.div`
   font-weight: 200;
   font-size: 11px;
   color: ${Colors.TEXT};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   > span {
     font-weight: 400;
@@ -81,7 +85,17 @@ const Selected = styled.div`
 const MapContainer = styled.div`
   position: relative;
   max-width: ${Spacing(18.5)};
-  margin: 5px auto;
+  height: ${Spacing(11.2)};
+  margin: ${Spacing(0.625)} auto 0;
+
+  ${Breakpoints.MOBILE_S} {
+    margin: ${Spacing(0.625)} auto 0;
+  }
+
+  ${Breakpoints.MOBILE_XS} {
+    margin: ${Spacing(1.325)} auto 0;
+    height: auto;
+  }
 `
 
 const pulsate = keyframes`

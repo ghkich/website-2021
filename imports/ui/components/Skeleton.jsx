@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import styled, {css, keyframes} from 'styled-components'
-import {Spacing} from '../theme'
+import {Breakpoints, Spacing} from '../theme'
 
 export const SkeletonTypes = {
   TEXT: 'text',
@@ -155,16 +155,58 @@ const Grid = styled.div`
     border-radius: ${Spacing(0.25)};
     background-color: rgba(255, 255, 255, 0.03);
   }
+
+  ${Breakpoints.DESKTOP_S} {
+    grid-template-columns: 1fr;
+
+    > div {
+      height: ${Spacing(3.625)};
+    }
+  }
+
+  ${Breakpoints.TABLET_L} {
+    grid-template-columns: 1fr 1fr;
+
+    > div {
+      height: ${Spacing(4.5)};
+    }
+  }
+
+  ${Breakpoints.TABLET_S} {
+    grid-template-columns: 1fr;
+
+    > div {
+      height: ${Spacing(3.625)};
+    }
+  }
+
+  ${Breakpoints.MOBILE_L} {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  ${Breakpoints.MOBILE_M} {
+    > div {
+      height: ${Spacing(4.5)};
+    }
+  }
+
+  ${Breakpoints.MOBILE_S} {
+    grid-template-columns: 1fr;
+
+    > div {
+      height: ${Spacing(3.625)};
+    }
+  }
 `
 
 const Blocks = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: ${Spacing(0.75)};
+  row-gap: ${Spacing(0.625)};
   ${pulseAnimation};
 
   > div {
-    height: ${Spacing(6)};
+    height: ${Spacing(5)};
     border-radius: ${Spacing(0.25)};
     background-color: rgba(255, 255, 255, 0.03);
   }

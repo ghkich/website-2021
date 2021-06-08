@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import {Colors, Spacing, Transitions} from '../../ui/theme'
+import {Breakpoints, Colors, Spacing, Transitions} from '../../ui/theme'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faWhatsapp, faGithub, faInstagram, faLinkedin, faTwitter} from '@fortawesome/free-brands-svg-icons'
 import {faAt} from '@fortawesome/pro-light-svg-icons'
@@ -63,23 +63,34 @@ const Links = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  column-gap: ${Spacing(0.625)};
+
+  ${Breakpoints.MOBILE_L} {
+    column-gap: ${Spacing(1)};
+  }
 `
 
 const LinksDivider = styled.div`
   height: ${Spacing(0.625)};
   width: ${Spacing(0.0625)};
-  margin-left: ${Spacing(0.625)};
   background-color: rgba(255, 255, 255, 0.1);
+
+  ${Breakpoints.MOBILE_L} {
+    display: none;
+  }
 `
 
 const IconLink = styled.a`
-  margin-left: ${Spacing(0.625)};
   font-size: 16px;
   color: ${Colors.LIGHT_TEXT};
   transition: ${Transitions.COLORS};
 
   :hover {
     color: ${Colors.LIGHT_PRIMARY};
+  }
+
+  ${Breakpoints.MOBILE_L} {
+    font-size: 18px;
   }
 `
 
@@ -94,5 +105,10 @@ const Email = styled.a`
 
   :hover {
     color: ${Colors.LIGHT_PRIMARY};
+  }
+
+  ${Breakpoints.MOBILE_L} {
+    letter-spacing: 0.75px;
+    font-size: 14px;
   }
 `

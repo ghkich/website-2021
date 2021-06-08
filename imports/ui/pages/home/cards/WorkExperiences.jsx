@@ -85,7 +85,7 @@ const Indicator = styled.div`
   transition: all 0.3s ease;
   position: absolute;
   left: 0;
-  top: ${Spacing(0.25)};
+  top: ${Spacing(0.35)};
 
   ${(props) => {
     if (props.active) {
@@ -118,6 +118,7 @@ const Header = styled.div`
 const Title = styled.h2`
   flex: 1;
   margin: 0 0 ${Spacing(0.425)};
+  line-height: ${Typography.LINE_HEIGHT_NORMAL};
   color: ${({active}) => (active ? Colors.SECONDARY : Colors.LIGHT_TEXT)};
   font-size: 13px;
   font-weight: normal;

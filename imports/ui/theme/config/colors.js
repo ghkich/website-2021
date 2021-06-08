@@ -11,6 +11,4 @@ export default {
   WHITE_TEXT: 'var(--color-white-text)',
   BG_GRADIENT_1: 'var(--color-bg-gradient-1)',
   BG_GRADIENT_2: 'var(--color-bg-gradient-2)',
-  BG_GRADIENT_3: 'var(--color-bg-gradient-3)',
-  BG_GRADIENT_4: 'var(--color-bg-gradient-4)',
 }

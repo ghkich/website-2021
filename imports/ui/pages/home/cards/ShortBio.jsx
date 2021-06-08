@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import {ShortBioMethodRequests} from '../../../../api/short-bio'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card, CardIcons} from '../../../components/Card'
-import {Colors, Spacing, Typography} from '../../../theme'
+import {Breakpoints, Colors, Spacing, Typography} from '../../../theme'
 import {SkeletonTypes} from '../../../components/Skeleton'
 import {calculateAge} from '../../../utils/calculators'
 import {formatDate} from '../../../utils/formatters'
@@ -32,32 +32,17 @@ export const ShortBioComponent = ({loading, data, ...props}) => {
             <Avatar>
               <img alt={name} src={avatarSrc} />
             </Avatar>
-            <div>
+            <IdentificationLikes>
               <Identification>
                 <h3>{name}</h3>
                 <p>
                   {age} years <span>({birthdateFormatted})</span>
                 </p>
               </Identification>
-              <Likes>
-                <div>
-                  <FontAwesomeIcon icon={faGamepadAlt} />
-                </div>
-                <div>
-                  <FontAwesomeIcon icon={faCode} />
-                </div>
-                <div>
-                  <FontAwesomeIcon
-                    icon={faPlaneAlt}
-                    style={{marginLeft: Spacing(0.125), marginBottom: Spacing(0.0625)}}
-                  />
-                </div>
-                <div>
-                  <FontAwesomeIcon icon={faMugHot} />
-                </div>
-              </Likes>
-            </div>
+              <LikesComponent />
+            </IdentificationLikes>
           </Profile>
+          <LikesComponent className="on-avatar-bottom" />
           <Description>
             <p>{description}</p>
           </Description>
@@ -93,11 +78,51 @@ const Avatar = styled.div`
   padding: ${Spacing(0.25)};
   border: ${Spacing(0.25)} solid rgba(255, 255, 255, 0.05);
   border-radius: ${Spacing(0.625)};
+  flex: none;
 
   > img {
     width: 100%;
     border-radius: ${Spacing(0.25)};
   }
+
+  ${Breakpoints.DESKTOP_S} {
+    width: ${Spacing(5.25)};
+    height: ${Spacing(5.25)};
+  }
+
+  ${Breakpoints.TABLET_L} {
+    width: ${Spacing(6.8)};
+    height: ${Spacing(6.8)};
+  }
+
+  ${Breakpoints.TABLET_M} {
+    width: ${Spacing(6)};
+    height: ${Spacing(6)};
+  }
+
+  ${Breakpoints.TABLET_S} {
+    width: ${Spacing(5.25)};
+    height: ${Spacing(5.25)};
+  }
+
+  ${Breakpoints.MOBILE_L} {
+    width: ${Spacing(6.8)};
+    height: ${Spacing(6.8)};
+  }
+
+  ${Breakpoints.MOBILE_M} {
+    width: ${Spacing(6)};
+    height: ${Spacing(6)};
+  }
+
+  ${Breakpoints.MOBILE_S} {
+    width: ${Spacing(5.25)};
+    height: ${Spacing(5.25)};
+  }
+`
+
+const IdentificationLikes = styled.div`
+  flex: 1;
 `
 
 const Identification = styled.div`
@@ -105,9 +130,10 @@ const Identification = styled.div`
 
   > h3 {
     display: block;
-    margin: 0 0 ${Spacing(0.425)} 0;
+    margin: 0 0 ${Spacing(0.25)} 0;
     font-size: 13px;
     font-weight: 300;
+    line-height: ${Typography.LINE_HEIGHT_NORMAL};
     color: ${Colors.LIGHT_SECONDARY};
   }
 
@@ -115,6 +141,7 @@ const Identification = styled.div`
     margin: 0;
     font-size: 12px;
     font-weight: 200;
+    line-height: ${Typography.LINE_HEIGHT_NORMAL};
     color: ${Colors.LIGHT_TEXT};
 
     > span {
@@ -123,26 +150,131 @@ const Identification = styled.div`
   }
 `
 
+const LikesComponent = (props) => (
+  <Likes {...props}>
+    <div>
+      <FontAwesomeIcon icon={faGamepadAlt} />
+    </div>
+    <div>
+      <FontAwesomeIcon icon={faCode} />
+    </div>
+    <div>
+      <FontAwesomeIcon icon={faPlaneAlt} style={{marginLeft: Spacing(0.125), marginBottom: Spacing(0.0625)}} />
+    </div>
+    <div>
+      <FontAwesomeIcon icon={faMugHot} />
+    </div>
+  </Likes>
+)
+
 const Likes = styled.div`
-  flex: 1;
-  margin-top: ${Spacing(1.15)};
-  width: 100%;
   display: flex;
+  margin-top: ${Spacing(0.75)};
+  width: 100%;
   justify-content: space-between;
+  column-gap: ${Spacing(0.425)};
   font-size: 16px;
+
+  &.on-avatar-bottom {
+    display: none;
+  }
 
   > div {
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex: 1;
     width: ${Spacing(2.6)};
     height: ${Spacing(2.6)};
-    margin-right: ${Spacing(0.425)};
     border: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.03);
     border-radius: ${Spacing(0.25)};
     background-color: rgba(255, 255, 255, 0.01);
     color: ${Colors.SECONDARY};
+  }
+
+  ${Breakpoints.DESKTOP_S} {
+    column-gap: ${Spacing(0.3)};
+
+    > div {
+      width: ${Spacing(2.2)};
+      height: ${Spacing(2.2)};
+    }
+  }
+
+  ${Breakpoints.TABLET_L} {
+    column-gap: ${Spacing(0.425)};
+    font-size: 20px;
+
+    > div {
+      width: ${Spacing(3.2)};
+      height: ${Spacing(3.2)};
+    }
+  }
+
+  ${Breakpoints.TABLET_M} {
+    column-gap: ${Spacing(0.425)};
+    font-size: 18px;
+
+    > div {
+      width: ${Spacing(2.8)};
+      height: ${Spacing(2.8)};
+    }
+  }
+
+  ${Breakpoints.TABLET_S} {
+    column-gap: ${Spacing(0.3)};
+    font-size: 16px;
+
+    > div {
+      width: ${Spacing(2.2)};
+      height: ${Spacing(2.2)};
+    }
+  }
+
+  ${Breakpoints.MOBILE_L} {
+    column-gap: ${Spacing(0.425)};
+    font-size: 20px;
+
+    > div {
+      width: ${Spacing(3.2)};
+      height: ${Spacing(3.2)};
+    }
+  }
+
+  ${Breakpoints.MOBILE_M} {
+    column-gap: ${Spacing(0.425)};
+    font-size: 16px;
+
+    > div {
+      width: ${Spacing(2.6)};
+      height: ${Spacing(2.6)};
+    }
+  }
+
+  ${Breakpoints.MOBILE_S} {
+    column-gap: ${Spacing(0.3)};
+    font-size: 14px;
+
+    > div {
+      width: ${Spacing(2.2)};
+      height: ${Spacing(2.2)};
+    }
+  }
+
+  ${Breakpoints.MOBILE_XS} {
+    display: none;
+
+    &.on-avatar-bottom {
+      display: flex;
+      column-gap: ${Spacing(0.425)};
+      margin-bottom: ${Spacing(1)};
+
+      > div {
+        width: ${Spacing(2.4)};
+        height: ${Spacing(2.4)};
+      }
+    }
   }
 `
 

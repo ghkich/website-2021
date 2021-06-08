@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import {GitHubMethodRequests} from '../../../../api/github'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card, CardIcons} from '../../../components/Card'
-import {Colors, Spacing, Transitions, Typography} from '../../../theme'
+import {Breakpoints, Colors, Spacing, Transitions, Typography} from '../../../theme'
 import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
 import {SkeletonTypes} from '../../../components/Skeleton'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -61,6 +61,26 @@ const MainContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   column-gap: ${Spacing(0.625)};
   row-gap: ${Spacing(0.625)};
+
+  ${Breakpoints.DESKTOP_S} {
+    grid-template-columns: 1fr;
+  }
+
+  ${Breakpoints.TABLET_L} {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  ${Breakpoints.TABLET_S} {
+    grid-template-columns: 1fr;
+  }
+
+  ${Breakpoints.MOBILE_L} {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  ${Breakpoints.MOBILE_S} {
+    grid-template-columns: 1fr;
+  }
 `
 
 const GitHubItem = styled.a`
@@ -73,6 +93,26 @@ const GitHubItem = styled.a`
   transition: ${Transitions.COLORS};
   cursor: pointer;
   text-decoration: none;
+
+  ${Breakpoints.DESKTOP_S} {
+    height: auto;
+  }
+
+  ${Breakpoints.TABLET_L} {
+    height: ${Spacing(4.5)};
+  }
+
+  ${Breakpoints.TABLET_S} {
+    height: auto;
+  }
+
+  ${Breakpoints.MOBILE_M} {
+    height: ${Spacing(4.5)};
+  }
+
+  ${Breakpoints.MOBILE_S} {
+    height: auto;
+  }
 
   > h2 {
     margin: 0 0 ${Spacing(0.4375)};

@@ -66,7 +66,7 @@ const MainContainer = styled.div`
 
 const PostContainer = styled.a`
   display: block;
-  margin-bottom: ${Spacing(0.75)};
+  margin-bottom: ${Spacing(0.625)};
   padding: ${Spacing(0.625)};
   border-radius: ${Spacing(0.25)};
   border: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.03);
@@ -76,10 +76,11 @@ const PostContainer = styled.a`
   text-decoration: none;
 
   > h2 {
-    margin: 0 0 ${Spacing(0.625)};
+    margin: 0 0 ${Spacing(0.375)};
     color: ${Colors.LIGHT_SECONDARY};
     font-weight: 200;
     font-size: 13px;
+    line-height: ${Typography.LINE_HEIGHT_NORMAL};
     transition: ${Transitions.COLORS};
 
     > svg {

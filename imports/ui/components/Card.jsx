@@ -7,8 +7,8 @@ import {Skeleton, SkeletonTypes} from './Skeleton'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faLaptopCode, faIdCard, faSparkles, faBooks, faMapMarkedAlt, faBlog} from '@fortawesome/pro-duotone-svg-icons'
 import {library} from '@fortawesome/fontawesome-svg-core'
-import {faChevronDown} from '@fortawesome/pro-light-svg-icons'
-library.add(faChevronDown, faLaptopCode, faIdCard, faSparkles, faBooks, faMapMarkedAlt, faBlog)
+import {faSquarePlus, faSquareMinus} from '@fortawesome/pro-light-svg-icons'
+library.add(faSquarePlus, faSquareMinus, faLaptopCode, faIdCard, faSparkles, faBooks, faMapMarkedAlt, faBlog)
 
 export const CardIcons = {
   WORK: faLaptopCode,
@@ -46,15 +46,18 @@ CardIcon.propTypes = {
 export const Card = ({icon, title, loading, skeletonType, active, onHeaderClick, appReady, children}) => {
   return (
     <CardContainer tabIndex={0} active={active}>
-      <Header onClick={appReady && onHeaderClick}>
+      <Header onClick={appReady && onHeaderClick} active={active}>
         <h1>
           <CardIcon icon={icon} /> {title}
         </h1>
-        <HeaderChevronIcon icon={faChevronDown} loading={!appReady || loading} active={active} />
+        <HeaderToggleIcon
+          icon={!active ? faSquarePlus : faSquareMinus}
+          className={!appReady || loading ? 'fa-fade' : ''}
+        />
       </Header>
       <HeaderShadow />
-      <StyledSimpleBar>
-        <Body>
+      <StyledSimpleBar active={active}>
+        <Body active={active}>
           <Skeleton type={skeletonType} loading={loading}>
             {children}
           </Skeleton>
@@ -94,9 +97,18 @@ const CardContainer = styled.div`
     if (props.active) {
       return css`
         height: calc(${CARD_HEIGHT} + ${CARD_HEADER_HEIGHT});
+
+        ${Breakpoints.MOBILE_L} {
+          background-color: rgba(0, 0, 0, 0.4);
+        }
       `
     }
   }}
+
+  ${Breakpoints.MOBILE_L} {
+    border-radius: 0;
+    box-shadow: none;
+  }
 `
 
 const Header = styled.div`
@@ -105,7 +117,6 @@ const Header = styled.div`
   align-items: center;
   height: ${CARD_HEADER_HEIGHT};
   padding: 0 ${CARD_PADDING};
-  cursor: pointer;
 
   > h1 {
     margin: 0;
@@ -115,36 +126,40 @@ const Header = styled.div`
     letter-spacing: 0.6px;
     color: ${Colors.LIGHT_TEXT};
 
+    ${Breakpoints.MOBILE_L} {
+      font-weight: 300;
+      color: ${Colors.LIGHT_TEXT};
+      letter-spacing: 0.3px;
+
+      ${({active}) => {
+        if (active) {
+          return css`
+            letter-spacing: 0.3px;
+            font-weight: 400;
+            color: ${Colors.WHITE_PRIMARY};
+          `
+        }
+      }}
+    }
+
     > svg {
       margin-right: ${Spacing(0.3125)};
       color: ${Colors.PRIMARY};
     }
   }
 
-  ${Breakpoints.XS} {
-    cursor: auto;
+  ${Breakpoints.MOBILE_L} {
+    cursor: pointer;
   }
 `
 
-const HeaderChevronIcon = styled(FontAwesomeIcon)`
+const HeaderToggleIcon = styled(FontAwesomeIcon)`
+  display: none;
   font-size: 13px;
-  color: ${Colors.LIGHT_PRIMARY};
-  transition: transform 0.3s;
-  transform: ${({active}) => (active ? 'rotate(-180deg)' : 'rotate(0)')};
+  color: ${Colors.TEXT};
 
-  ${({loading}) => {
-    if (loading) {
-      return css`
-        transform: translateX(50px);
-      `
-    }
-    return css`
-      transform: translateX(0);
-    `
-  }}
-
-  ${Breakpoints.XS} {
-    display: none;
+  ${Breakpoints.MOBILE_L} {
+    display: block;
   }
 `
 
@@ -178,9 +193,22 @@ const HeaderShadow = styled.div`
 
 const StyledSimpleBar = styled(SimpleBar)`
   height: ${CARD_HEIGHT};
-  margin-bottom: ${Spacing(0.25)};
   position: relative;
   z-index: 0;
+  transition: opacity 0.3s;
+  opacity: ${({active}) => (active ? 1 : 0)};
+
+  ${Breakpoints.MOBILE_L} {
+    &:after {
+      content: '';
+      height: ${Spacing(1)};
+      background-image: linear-gradient(to top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
 
   .simplebar-scrollbar {
     opacity: 0.25;

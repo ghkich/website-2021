@@ -8,13 +8,13 @@ import PropTypes from 'prop-types'
 import {WorldMap} from './cards/WorldMap'
 import {Blog} from './cards/Blog'
 import {Breakpoints, Colors, Spacing, Transitions, Typography} from '../../theme'
-import {MAX_WIDTH_XS} from '../../theme/config/breakpoints'
+import {MAX_WIDTH_MOBILE_L} from '../../theme/config/breakpoints'
 import {Skills} from './cards/Skills'
-import {faHeart, faCoffee} from '@fortawesome/pro-solid-svg-icons'
+import {faHeart, faMugHot} from '@fortawesome/pro-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {useAppSelectors} from '../../app/AppContext'
-library.add(faHeart, faCoffee)
+library.add(faHeart, faMugHot)
 
 const CardNames = {
   WORK_EXPERIENCES: 'work-experiences',
@@ -68,7 +68,7 @@ export const HomePageComponent = ({cards, appReady}) => {
   const [isSmallScreen, setIsSmallScreen] = useState()
 
   useEffect(() => {
-    setIsSmallScreen(window.matchMedia(MAX_WIDTH_XS).matches)
+    setIsSmallScreen(window.matchMedia(MAX_WIDTH_MOBILE_L).matches)
   }, [])
 
   // wait matchMedia().matches before rendering
@@ -91,7 +91,7 @@ export const HomePageComponent = ({cards, appReady}) => {
       <Footer appReady={appReady}>
         <MadeAndCopyright>
           <MadeWith>
-            Made with <FontAwesomeIcon icon={faHeart} /> and <FontAwesomeIcon icon={faCoffee} />{' '}
+            Made with <FontAwesomeIcon icon={faHeart} /> and <FontAwesomeIcon icon={faMugHot} />{' '}
             <span>in Parana, Brazil</span>
           </MadeWith>
           <Copyright>
@@ -105,6 +105,11 @@ export const HomePageComponent = ({cards, appReady}) => {
             </a>{' '}
           </Copyright>
         </MadeAndCopyright>
+        <div style={{flex: 1}} />
+        <AnotherText>
+          © 2021 - Gustavo Henrique Kich / Consectetur elit. Accusantium aliquam, animi consectetur dolores eaque eos
+          exercitationem.
+        </AnotherText>
       </Footer>
     </BoxedLayout>
   )
@@ -130,66 +135,91 @@ const BoxedLayout = styled.div`
 const CardsGrid = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr;
-  column-gap: ${Spacing(0.625)};
-  row-gap: ${Spacing(0.625)};
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: ${Spacing(1)};
+  row-gap: ${Spacing(1)};
+  border-radius: ${Spacing(0.325)};
+  overflow: hidden;
 
-  ${Breakpoints.XS} {
+  ${Breakpoints.TABLET_L},
+  ${Breakpoints.DUO_SCREEN_M} {
     grid-template-columns: 1fr 1fr;
-    column-gap: ${Spacing(1)};
-    row-gap: ${Spacing(1)};
   }
 
-  ${Breakpoints.XL} {
-    grid-template-columns: 1fr 1fr 1fr;
+  ${Breakpoints.MOBILE_L} {
+    grid-template-columns: 1fr;
+    column-gap: ${Spacing(0.0625)};
+    row-gap: ${Spacing(0.0625)};
   }
 `
 
 const Footer = styled.div`
-  margin: ${Spacing(2.25)} 0;
-  transition: opacity 0.2s;
-  opacity: ${({appReady}) => (appReady ? 1 : 0)};
-`
-
-const MadeAndCopyright = styled.div`
-  margin: 0 auto;
   display: flex;
-  flex-direction: column;
-`
-
-const MadeWith = styled.span`
-  display: block;
-  color: ${Colors.DARK_TEXT};
-  font-size: 11px;
-  font-weight: 200;
-  text-align: left;
-
-  ${Breakpoints.XS} {
-    display: inline;
-  }
-`
-
-const Copyright = styled.span`
-  display: block;
-  margin: ${Spacing(0.625)} 0;
-  max-width: ${Spacing(18)};
+  margin: ${Spacing(1.5)} ${Spacing(0.625)};
   color: ${Colors.DARK_TEXT};
   font-size: 11px;
   font-weight: 200;
   text-align: left;
   line-height: ${Typography.LINE_HEIGHT_NORMAL};
+  transition: opacity 0.2s;
+  opacity: ${({appReady}) => (appReady ? 1 : 0)};
+
+  ${Breakpoints.MOBILE_L} {
+    flex-direction: column;
+    font-size: 12px;
+    color: ${Colors.TEXT};
+    letter-spacing: 0.15px;
+  }
+`
+
+const MadeAndCopyright = styled.div``
+
+const MadeWith = styled.div`
+  > svg {
+    margin: 0 ${Spacing(0.125)};
+
+    &:nth-child(1) {
+      color: ${Colors.PRIMARY};
+    }
+
+    &:nth-child(2) {
+      font-size: 1.1em;
+    }
+  }
+`
+
+const Copyright = styled.div`
+  margin-top: ${Spacing(0.625)};
+  max-width: ${Spacing(18)};
 
   > a {
     transition: ${Transitions.COLORS};
     text-decoration: none;
     color: ${Colors.TEXT};
 
+    ${Breakpoints.MOBILE_L} {
+      color: ${Colors.LIGHT_TEXT};
+    }
+
     :hover {
       color: ${Colors.LIGHT_PRIMARY};
     }
   }
 
-  ${Breakpoints.XS} {
-    display: inline;
+  ${Breakpoints.MOBILE_L} {
+    max-width: 100%;
+  }
+`
+
+const AnotherText = styled.div`
+  max-width: ${Spacing(18)};
+  text-align: right;
+
+  ${Breakpoints.MOBILE_L} {
+    max-width: 100%;
+    margin-top: ${Spacing(1)};
+    padding-top: ${Spacing(1)};
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: left;
   }
 `
