@@ -52,9 +52,13 @@ export const useMethodRequest = (requestName, opt) => {
           return
         }
         if (validate(response)) {
-          const sourceData = await fetchApi(sourceDataUrl)
-          await methodCall(updateRequestName, {id: response?._id, data: sourceData})
-          response = await methodCall(requestName, params)
+          try {
+            const sourceData = await fetchApi(sourceDataUrl)
+            await methodCall(updateRequestName, {id: response?._id, data: sourceData})
+            response = await methodCall(requestName, params)
+          } catch (error) {
+            console.error(`Error while trying to updateCollection ${updateRequestName}: ${error}`)
+          }
         }
       }
       setStatus(RequestStatuses.SUCCESS)
