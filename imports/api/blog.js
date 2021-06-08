@@ -22,7 +22,7 @@ const Methods = {
     const posts = data.items?.map(({guid, title, description, categories, link}) => {
       // TODO: improve the following code to get content of first paragraph
       const htmlTagsRemoved = description.replace(/<[^>]+>/g, '')
-      const shorterDescription = htmlTagsRemoved.substr(0, 150) + '...'
+      const shorterDescription = htmlTagsRemoved.substr(0, 100) + '...'
 
       return {
         guid,
