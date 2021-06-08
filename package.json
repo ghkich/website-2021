@@ -6,7 +6,9 @@
     "test": "jest",
     "test-meteor": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
-    "visualize": "meteor --production --extra-packages bundle-visualizer"
+    "visualize": "meteor --production --extra-packages bundle-visualizer",
+    "deploy": "waves deploy personal-website",
+    "deploy-galaxy": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy gustavo.meteorapp.com --free --mongo"
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
