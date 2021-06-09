@@ -79,10 +79,26 @@ const Avatar = styled.div`
   border: ${Spacing(0.25)} solid rgba(255, 255, 255, 0.05);
   border-radius: ${Spacing(0.625)};
   flex: none;
+  position: relative;
+
+  :after {
+    content: '';
+    background-color: rgba(255, 255, 255, 0.02);
+    margin: ${Spacing(0.25)};
+    border-radius: ${Spacing(0.25)};
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+  }
 
   > img {
     width: 100%;
     border-radius: ${Spacing(0.25)};
+    position: relative;
+    z-index: 1;
   }
 
   ${Breakpoints.DESKTOP_S} {
