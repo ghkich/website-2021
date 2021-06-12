@@ -6,8 +6,9 @@ import {Breakpoints, Spacing} from '../theme'
 export const SkeletonTypes = {
   TEXT: 'text',
   GRID: 'grid',
-  BLOCKS: 'blocks',
-  PROFILE: 'profile',
+  DOUBLE_ROW: 'double-row',
+  TRIPLE_ROW: 'triple-row',
+  MAP: 'map',
 }
 
 export const Skeleton = ({type, loading, children}) => {
@@ -86,18 +87,31 @@ const SkeletonGrid = () => (
   </Grid>
 )
 
-const SkeletonBlocks = () => (
-  <Blocks>
+const SkeletonRows = ({rows}) => (
+  <Rows rows={rows}>
     <div />
     <div />
+    {rows === 3 && <div />}
+  </Rows>
+)
+
+SkeletonRows.propTypes = {
+  rows: PropTypes.oneOf([2, 3]),
+}
+
+const SkeletonMap = () => (
+  <Map>
     <div />
-  </Blocks>
+    <div />
+  </Map>
 )
 
 const SkeletonComponent = ({type}) => {
   if (type === SkeletonTypes.TEXT) return <SkeletonText />
   if (type === SkeletonTypes.GRID) return <SkeletonGrid />
-  if (type === SkeletonTypes.BLOCKS) return <SkeletonBlocks />
+  if (type === SkeletonTypes.DOUBLE_ROW) return <SkeletonRows rows={2} />
+  if (type === SkeletonTypes.TRIPLE_ROW) return <SkeletonRows rows={3} />
+  if (type === SkeletonTypes.MAP) return <SkeletonMap />
   throw new Error(`No component found for ${type}`)
 }
 
@@ -199,15 +213,32 @@ const Grid = styled.div`
   }
 `
 
-const Blocks = styled.div`
+const Rows = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   row-gap: ${Spacing(0.625)};
   ${pulseAnimation};
 
   > div {
-    height: ${Spacing(5)};
+    height: ${({rows}) => (rows === 3 ? Spacing(5) : Spacing(7))};
     border-radius: ${Spacing(0.25)};
     background-color: rgba(255, 255, 255, 0.03);
+  }
+`
+
+const Map = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: ${Spacing(0.625)};
+  ${pulseAnimation};
+
+  > div {
+    height: ${Spacing(11.5)};
+    border-radius: ${Spacing(0.25)};
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  > div:nth-child(1) {
+    height: ${Spacing(2.5)};
   }
 `

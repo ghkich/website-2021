@@ -25,7 +25,7 @@ export const ShortBioComponent = ({loading, data, ...props}) => {
   const birthdateFormatted = formatDate(birthdate, {year: 'numeric', month: 'short', day: 'numeric'})
 
   return (
-    <Card {...props} icon={CardIcons.PROFILE} loading={loading} skeletonType={SkeletonTypes.BLOCKS}>
+    <Card {...props} icon={CardIcons.PROFILE} loading={loading} skeletonType={SkeletonTypes.DOUBLE_ROW}>
       {avatarSrc && (
         <MainContainer>
           <Profile>

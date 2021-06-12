@@ -20,7 +20,7 @@ export const WorldMap = (props) => {
 
 export const WorldMapComponent = ({loading, ...props}) => {
   return (
-    <Card {...props} icon={CardIcons.WORLD} loading={loading} skeletonType={SkeletonTypes.TEXT}>
+    <Card {...props} icon={CardIcons.WORLD} loading={loading} skeletonType={SkeletonTypes.MAP}>
       <MainContainer>
         <Locations onClick={() => alert('Not yet implemented')}>
           <Selected>

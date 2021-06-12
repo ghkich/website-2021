@@ -31,7 +31,7 @@ export const Blog = (props) => {
 
 export const BlogComponent = ({loading, posts, ...props}) => {
   return (
-    <Card {...props} icon={CardIcons.BLOG} loading={loading} skeletonType={SkeletonTypes.BLOCKS}>
+    <Card {...props} icon={CardIcons.BLOG} loading={loading} skeletonType={SkeletonTypes.TRIPLE_ROW}>
       <MainContainer>
         {posts?.map((post) => (
           <PostContainer key={post.guid} target="_blank" rel="noreferrer" href={post.link}>
