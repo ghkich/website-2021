@@ -4,6 +4,7 @@ export const WORK_EXPERIENCES_DATA = [
   {
     jobTitle: 'Full-stack developer',
     company: 'Pathable',
+    website: 'https://www.pathable.com',
     startDate: '2021-03-22',
     endDate: null,
     location: 'Toledo, PR',
@@ -14,6 +15,7 @@ export const WORK_EXPERIENCES_DATA = [
   {
     jobTitle: 'Front-end developer',
     company: 'Noverde',
+    website: 'https://www.noverde.com.br',
     startDate: '2018-02-19',
     endDate: '2020-09-30',
     location: 'São Paulo, SP',
@@ -24,6 +26,7 @@ export const WORK_EXPERIENCES_DATA = [
   {
     jobTitle: 'Web developer & Designer',
     company: 'Silcom',
+    website: 'https://www.silcom.com.br',
     startDate: '2008-03-10',
     endDate: '2017-02-15',
     location: 'Curitiba, PR',

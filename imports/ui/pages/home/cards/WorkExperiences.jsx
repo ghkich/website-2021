@@ -46,7 +46,14 @@ export const WorkExperiencesComponent = ({loading, experiences, ...props}) => {
             ))}
           </Header>
           <Body active={item._id === activeId}>
-            <p>{item.description}</p>
+            <p>
+              {item.description}{' '}
+              {!item.endDate && (
+                <a href={item.website} target="_blank" rel="noreferrer">
+                  Visit {item.website.replace('https://www.', '')}
+                </a>
+              )}
+            </p>
           </Body>
         </MainContainer>
       ))}
@@ -60,6 +67,7 @@ WorkExperiencesComponent.propTypes = {
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
       company: PropTypes.string.isRequired,
+      website: PropTypes.string.isRequired,
       jobTitle: PropTypes.string.isRequired,
       startDate: PropTypes.string.isRequired,
       endDate: PropTypes.string,
@@ -167,6 +175,15 @@ const Body = styled.div`
     font-weight: 200;
     line-height: ${Typography.LINE_HEIGHT_NORMAL};
     color: ${Colors.TEXT};
+
+    > a {
+      text-decoration: none;
+      color: ${Colors.LIGHT_TEXT};
+
+      &:hover {
+        color: ${Colors.LIGHT_SECONDARY};
+      }
+    }
   }
 
   ${({active}) => {
