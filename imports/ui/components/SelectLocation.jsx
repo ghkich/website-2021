@@ -45,7 +45,6 @@ export const LocationProptype = PropTypes.shape({
 
 SelectLocation.propTypes = {
   selectedLocation: LocationProptype,
-  locations: PropTypes.arrayOf(LocationProptype).isRequired,
   onPreviousClick: PropTypes.func.isRequired,
   onNextClick: PropTypes.func.isRequired,
 }
