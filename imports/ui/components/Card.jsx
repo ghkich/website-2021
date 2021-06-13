@@ -46,7 +46,7 @@ CardIcon.propTypes = {
 export const Card = ({icon, title, loading, skeletonType, active, onHeaderClick, appReady, children}) => {
   return (
     <CardContainer tabIndex={0} active={active}>
-      <Header onClick={appReady && onHeaderClick} active={active}>
+      <Header onClick={appReady ? onHeaderClick : () => {}} active={active}>
         <h1>
           <CardIcon icon={icon} /> {title}
         </h1>
