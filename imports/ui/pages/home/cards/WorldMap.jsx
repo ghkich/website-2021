@@ -47,7 +47,7 @@ export const WorldMapComponent = ({loading, locations, ...props}) => {
 
   return (
     <Card {...props} icon={CardIcons.WORLD} loading={loading} skeletonType={SkeletonTypes.MAP}>
-      {locations.length > 0 && (
+      {locations?.length > 0 && (
         <MainContainer>
           <SelectLocation
             selectedLocation={locations[selectedIndex]}
@@ -58,10 +58,10 @@ export const WorldMapComponent = ({loading, locations, ...props}) => {
             {locations.map((location, index) => (
               <PinMap
                 key={location._id}
-                left={location.position.left}
-                top={location.position.top}
-                active={index === selectedIndex}
                 onClick={() => setSelectedIndex(index)}
+                $left={location.position.left}
+                $top={location.position.top}
+                $active={index === selectedIndex}
               />
             ))}
             <StyledWorldMapImage />
@@ -74,7 +74,7 @@ export const WorldMapComponent = ({loading, locations, ...props}) => {
 
 WorldMapComponent.propTypes = {
   loading: PropTypes.bool,
-  locations: PropTypes.arrayOf(LocationProptype).isRequired,
+  locations: PropTypes.arrayOf(LocationProptype),
 }
 
 const MainContainer = styled.div`
@@ -118,8 +118,8 @@ const PinMap = styled.button`
   background-color: transparent;
   cursor: pointer;
   position: absolute;
-  left: ${({left}) => left}%;
-  top: ${({top}) => top}%;
+  left: ${({$left}) => $left}%;
+  top: ${({$top}) => $top}%;
   z-index: 1;
   width: 10px;
   height: 10px;
@@ -153,8 +153,8 @@ const PinMap = styled.button`
     top: 50%;
   }
 
-  ${({active}) => {
-    if (active) {
+  ${({$active}) => {
+    if ($active) {
       return css`
         :before {
           width: 9px;

@@ -45,8 +45,8 @@ CardIcon.propTypes = {
 
 export const Card = ({icon, title, loading, skeletonType, active, onHeaderClick, appReady, children}) => {
   return (
-    <CardContainer tabIndex={0} active={active}>
-      <Header onClick={appReady ? onHeaderClick : () => {}} active={active}>
+    <CardContainer tabIndex={0} $active={active}>
+      <Header onClick={appReady ? onHeaderClick : () => {}} $active={active}>
         <h1>
           <CardIcon icon={icon} /> {title}
         </h1>
@@ -56,8 +56,8 @@ export const Card = ({icon, title, loading, skeletonType, active, onHeaderClick,
         />
       </Header>
       <HeaderShadow />
-      <StyledSimpleBar active={active}>
-        <Body active={active}>
+      <StyledSimpleBar $active={active}>
+        <Body $active={active}>
           <Skeleton type={skeletonType} loading={loading}>
             {children}
           </Skeleton>
@@ -94,7 +94,7 @@ const CardContainer = styled.div`
   outline: none;
 
   ${(props) => {
-    if (props.active) {
+    if (props.$active) {
       return css`
         height: calc(${CARD_HEIGHT} + ${CARD_HEADER_HEIGHT});
 
@@ -131,8 +131,8 @@ const Header = styled.div`
       color: ${Colors.LIGHT_TEXT};
       letter-spacing: 0.3px;
 
-      ${({active}) => {
-        if (active) {
+      ${({$active}) => {
+        if ($active) {
           return css`
             letter-spacing: 0.3px;
             font-weight: 400;
@@ -196,7 +196,7 @@ const StyledSimpleBar = styled(SimpleBar)`
   position: relative;
   z-index: 0;
   transition: opacity 0.3s;
-  opacity: ${({active}) => (active ? 1 : 0)};
+  opacity: ${({$active}) => ($active ? 1 : 0)};
 
   ${Breakpoints.MOBILE_L} {
     &:after {

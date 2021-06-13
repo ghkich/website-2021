@@ -23,7 +23,7 @@ export const Skeleton = ({type, loading, children}) => {
   return (
     <>
       {!unmounted && (
-        <AnimatedContainer loading={loading} onTransitionEnd={() => !loading && setUnmounted(true)}>
+        <AnimatedContainer $loading={loading} onTransitionEnd={() => !loading && setUnmounted(true)}>
           <SkeletonComponent type={type} />
         </AnimatedContainer>
       )}
@@ -47,8 +47,8 @@ const AnimatedContainer = styled.div`
   left: 0;
   z-index: 10;
 
-  ${({loading}) => {
-    if (loading) {
+  ${({$loading}) => {
+    if ($loading) {
       return css`
         opacity: 1;
       `
