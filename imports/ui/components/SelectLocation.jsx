@@ -3,17 +3,17 @@ import React from 'react'
 import styled from 'styled-components'
 import {Breakpoints, Colors, Spacing, Transitions} from '../theme'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faChevronLeft, faChevronRight} from '@fortawesome/pro-regular-svg-icons'
+import {faAngleLeft, faAngleRight} from '@fortawesome/pro-light-svg-icons'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {formatDate} from '../utils/formatters'
-library.add(faChevronLeft, faChevronRight)
+library.add(faAngleLeft, faAngleRight)
 
 export const SelectLocation = ({selectedLocation, onPreviousClick, onNextClick}) => {
   return (
     <MainContainer>
       <Select>
         <button onClick={onPreviousClick}>
-          <FontAwesomeIcon icon={faChevronLeft} />
+          <FontAwesomeIcon icon={faAngleLeft} />
         </button>
         <LocationItem>
           <div>
@@ -24,7 +24,7 @@ export const SelectLocation = ({selectedLocation, onPreviousClick, onNextClick})
           </span>
         </LocationItem>
         <button onClick={onNextClick}>
-          <FontAwesomeIcon icon={faChevronRight} />
+          <FontAwesomeIcon icon={faAngleRight} />
         </button>
       </Select>
     </MainContainer>
@@ -74,7 +74,7 @@ const Select = styled.div`
     }
 
     > svg {
-      font-size: 12px;
+      font-size: 18px;
       color: ${Colors.LIGHT_SECONDARY};
     }
   }
