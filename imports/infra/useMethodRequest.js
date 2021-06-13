@@ -7,12 +7,14 @@ import {BlogMethodRequests} from '../api/blog'
 import {fetchApi} from './fetchApi'
 import {SkillsMethodRequests} from '../api/skills'
 import {useAppContext} from '../ui/app/AppContext'
+import {WorldMapMethodRequests} from '../api/world-map'
 
 const AllMethodRequests = [
   WorkExperiencesMethodRequests,
   GitHubMethodRequests,
   ShortBioMethodRequests,
   SkillsMethodRequests,
+  WorldMapMethodRequests,
   BlogMethodRequests,
 ]
 
