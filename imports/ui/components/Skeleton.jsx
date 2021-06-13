@@ -233,12 +233,13 @@ const Map = styled.div`
   ${pulseAnimation};
 
   > div {
-    height: ${Spacing(11.5)};
+    height: ${Spacing(11.125)};
     border-radius: ${Spacing(0.25)};
     background-color: rgba(255, 255, 255, 0.03);
   }
 
   > div:nth-child(1) {
-    height: ${Spacing(2.5)};
+    border-radius: 0;
+    height: ${Spacing(2.875)};
   }
 `

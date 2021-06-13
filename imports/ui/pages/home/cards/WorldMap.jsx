@@ -1,85 +1,85 @@
 import PropTypes from 'prop-types'
-import React from 'react'
-import styled, {keyframes} from 'styled-components'
+import React, {useEffect, useState} from 'react'
+import styled, {css, keyframes} from 'styled-components'
 import {Card, CardIcons} from '../../../components/Card'
 import {Breakpoints, Colors, Spacing} from '../../../theme'
 import {WorldMapImage} from '../../../images/WorldMap'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faChevronDown} from '@fortawesome/pro-regular-svg-icons'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {SkeletonTypes} from '../../../components/Skeleton'
+import {WorldMapMethodRequests} from '../../../../api/world-map'
+import {useMethodRequest} from '../../../../infra/useMethodRequest'
+import {LocationProptype, SelectLocation} from '../../../components/SelectLocation'
 library.add(faChevronDown)
 
 export const WorldMap = (props) => {
-  // const {data} = useMethodRequest(WorldMapMethodRequests.FETCH)
-  //
-  // const age = '32'
+  const {data = [], loading} = useMethodRequest(WorldMapMethodRequests.FETCH)
 
-  return <WorldMapComponent {...props} loading={false} />
+  return <WorldMapComponent {...props} loading={loading} locations={data} />
 }
 
-export const WorldMapComponent = ({loading, ...props}) => {
+export const WorldMapComponent = ({loading, locations, ...props}) => {
+  const [selectedIndex, setSelectedIndex] = useState(0)
+
+  useEffect(() => {
+    if (locations?.length > 0) {
+      setSelectedIndex(0)
+    }
+  }, [locations])
+
+  const handleShowNextLocation = () => {
+    const nextIndex = selectedIndex + 1
+    if (nextIndex < locations.length) {
+      setSelectedIndex(nextIndex)
+    } else {
+      setSelectedIndex(0)
+    }
+  }
+
+  const handleShowPreviousLocation = () => {
+    const previousIndex = selectedIndex - 1
+    if (previousIndex >= 0) {
+      setSelectedIndex(previousIndex)
+    } else {
+      setSelectedIndex(locations.length - 1)
+    }
+  }
+
   return (
     <Card {...props} icon={CardIcons.WORLD} loading={loading} skeletonType={SkeletonTypes.MAP}>
-      <MainContainer>
-        <Locations onClick={() => alert('Not yet implemented')}>
-          <Selected>
-            <span className="country">Brazil</span> - <span>Toledo, PR</span> - Current location
-          </Selected>
-          <FontAwesomeIcon icon={faChevronDown} />
-        </Locations>
-        <MapContainer>
-          <CurrentLocationPin />
-          <StyledWorldMapImage />
-        </MapContainer>
-      </MainContainer>
+      {locations.length > 0 && (
+        <MainContainer>
+          <SelectLocation
+            selectedLocation={locations[selectedIndex]}
+            onNextClick={handleShowNextLocation}
+            onPreviousClick={handleShowPreviousLocation}
+          />
+          <MapContainer>
+            {locations.map((location, index) => (
+              <PinMap
+                key={location._id}
+                left={location.position.left}
+                top={location.position.top}
+                active={index === selectedIndex}
+                onClick={() => setSelectedIndex(index)}
+              />
+            ))}
+            <StyledWorldMapImage />
+          </MapContainer>
+        </MainContainer>
+      )}
     </Card>
   )
 }
 
 WorldMapComponent.propTypes = {
   loading: PropTypes.bool,
+  locations: PropTypes.arrayOf(LocationProptype).isRequired,
 }
 
 const MainContainer = styled.div`
   position: relative;
   z-index: 10;
-`
-
-const Locations = styled.div`
-  margin-bottom: ${Spacing(0.25)};
-  padding: ${Spacing(0.825)};
-  border-radius: ${Spacing(0.25)};
-  border: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.03);
-  background-color: rgba(255, 255, 255, 0.01);
-  display: flex;
-  align-items: center;
-  font-weight: 200;
-
-  > svg {
-    margin-left: ${Spacing(0.625)};
-    font-size: 11px;
-    color: ${Colors.LIGHT_SECONDARY};
-  }
-`
-
-const Selected = styled.div`
-  flex: 1;
-  font-weight: 200;
-  font-size: 11px;
-  color: ${Colors.TEXT};
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  > span {
-    font-weight: 400;
-    color: ${Colors.LIGHT_SECONDARY};
-  }
-
-  > span.country {
-    color: ${Colors.SECONDARY};
-  }
 `
 
 const MapContainer = styled.div`
@@ -112,37 +112,68 @@ const pulsate = keyframes`
   }
 `
 
-const CurrentLocationPin = styled.div`
+const PinMap = styled.button`
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
   position: absolute;
-  left: 33%;
-  top: 73%;
+  left: ${({left}) => left}%;
+  top: ${({top}) => top}%;
   z-index: 1;
+  width: 10px;
+  height: 10px;
 
   :before {
     content: '';
     display: block;
-    width: 8px;
-    height: 8px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    background-color: ${Colors.SECONDARY};
+    background-color: ${Colors.LIGHT_SECONDARY};
     border: 1px solid transparent;
+    margin-top: -3px;
+    margin-left: -3px;
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 50%;
+    top: 50%;
   }
 
   :after {
     content: '';
     display: block;
-    width: 8px;
-    height: 8px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     border: 1px solid ${Colors.LIGHT_SECONDARY};
-    animation: ${pulsate} 1s ease-out infinite;
+    margin-top: -3px;
+    margin-left: -3px;
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 50%;
+    top: 50%;
   }
+
+  ${({active}) => {
+    if (active) {
+      return css`
+        :before {
+          width: 9px;
+          height: 9px;
+          margin-top: -5px;
+          margin-left: -5px;
+          background-color: ${Colors.SECONDARY};
+        }
+
+        :after {
+          width: 9px;
+          height: 9px;
+          margin-top: -5px;
+          margin-left: -5px;
+          animation: ${pulsate} 1s ease-out infinite;
+        }
+      `
+    }
+  }}
 `
 
 const StyledWorldMapImage = styled(WorldMapImage)`
