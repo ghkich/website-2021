@@ -63,7 +63,7 @@ ShortBioComponent.propTypes = {
 }
 
 const MainContainer = styled.div`
-  padding: ${Spacing(0.325)};
+  padding: 0;
 `
 
 const Profile = styled.div`
@@ -77,7 +77,7 @@ const Avatar = styled.div`
   margin-right: ${Spacing(1)};
   padding: ${Spacing(0.25)};
   border: ${Spacing(0.25)} solid rgba(255, 255, 255, 0.05);
-  border-radius: ${Spacing(0.625)};
+  border-radius: ${Spacing(0.5)};
   flex: none;
   position: relative;
 
@@ -85,7 +85,7 @@ const Avatar = styled.div`
     content: '';
     background-color: rgba(255, 255, 255, 0.02);
     margin: ${Spacing(0.25)};
-    border-radius: ${Spacing(0.25)};
+    border-radius: ${Spacing(0.125)};
     position: absolute;
     top: 0;
     right: 0;
@@ -96,7 +96,7 @@ const Avatar = styled.div`
 
   > img {
     width: 100%;
-    border-radius: ${Spacing(0.25)};
+    border-radius: ${Spacing(0.125)};
     position: relative;
     z-index: 1;
   }
@@ -201,10 +201,9 @@ const Likes = styled.div`
     justify-content: center;
     align-items: center;
     flex: 1;
-    width: ${Spacing(2.6)};
-    height: ${Spacing(2.6)};
+    height: ${Spacing(2.65)};
     border: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.03);
-    border-radius: ${Spacing(0.25)};
+    border-radius: ${Spacing(0.125)};
     background-color: rgba(255, 255, 255, 0.01);
     color: ${Colors.SECONDARY};
   }
@@ -295,9 +294,35 @@ const Likes = styled.div`
 `
 
 const Description = styled.div`
+  position: relative;
+
+  :before {
+    content: '';
+    display: block;
+    width: ${Spacing(0.3125)};
+    height: ${Spacing(1)};
+    border-radius: ${Spacing(0.125)};
+    background-color: rgba(255, 255, 255, 0.03);
+    position: absolute;
+    top: ${Spacing(0.25)};
+    left: ${Spacing(0.35)};
+  }
+
+  :after {
+    content: '';
+    display: block;
+    width: ${Spacing(0.3125)};
+    height: ${Spacing(1.5)};
+    border-radius: ${Spacing(0.125)};
+    background-color: rgba(255, 255, 255, 0.03);
+    position: absolute;
+    top: ${Spacing(0.25)};
+    left: ${Spacing(0.85)};
+  }
+
   > p {
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 ${Spacing(1.75)};
     font-size: 13px;
     font-weight: 200;
     line-height: ${Typography.LINE_HEIGHT_NORMAL};

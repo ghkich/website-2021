@@ -1,21 +1,35 @@
 import PropTypes from 'prop-types'
-import React from 'react'
-import styled from 'styled-components'
+import React, {useEffect, useState} from 'react'
+import styled, {css} from 'styled-components'
 import {Breakpoints, Colors, Spacing, Transitions} from '../theme'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faAngleLeft, faAngleRight} from '@fortawesome/pro-light-svg-icons'
+import {faAngleLeft, faAngleRight} from '@fortawesome/pro-regular-svg-icons'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {formatDate} from '../utils/formatters'
 library.add(faAngleLeft, faAngleRight)
 
 export const SelectLocation = ({selectedLocation, onPreviousClick, onNextClick}) => {
+  const [locationChanged, setLocationChanged] = useState()
+
+  useEffect(() => {
+    if (locationChanged === false) {
+      setLocationChanged(true)
+      setTimeout(() => {
+        setLocationChanged(false)
+      }, 200)
+    }
+    if (locationChanged === undefined) {
+      setLocationChanged(false)
+    }
+  }, [selectedLocation])
+
   return (
     <MainContainer>
       <Select>
         <button onClick={onPreviousClick}>
           <FontAwesomeIcon icon={faAngleLeft} />
         </button>
-        <LocationItem>
+        <LocationItem $locationChanged={locationChanged}>
           <div>
             <span className="country">{selectedLocation.country}</span> - <span>{selectedLocation.location}</span>
           </div>
@@ -63,14 +77,20 @@ const Select = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: ${Spacing(0.125)};
     border: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.03);
     background-color: rgba(255, 255, 255, 0.01);
     transition: ${Transitions.COLORS};
     cursor: pointer;
 
     :hover {
-      border-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.05);
       background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    :active {
+      background-color: rgba(255, 255, 255, 0.01);
+      border-color: rgba(255, 255, 255, 0.03);
     }
 
     > svg {
@@ -84,13 +104,23 @@ const LocationItem = styled.div`
   flex: 1;
   padding: ${Spacing(0.5)};
   margin: 0 ${Spacing(0.5)};
+  border-radius: ${Spacing(0.125)};
   border: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.03);
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: rgba(255, 255, 255, 0.01);
   font-size: 11px;
   color: ${Colors.LIGHT_TEXT};
   font-weight: 200;
   text-align: center;
   overflow: hidden;
+
+  ${({$locationChanged}) => {
+    if ($locationChanged) {
+      return css`
+        border-color: rgba(255, 255, 255, 0.05);
+        background-color: rgba(255, 255, 255, 0.02);
+      `
+    }
+  }}
 
   ${Breakpoints.MOBILE_S} {
     margin: 0 ${Spacing(0.35)};

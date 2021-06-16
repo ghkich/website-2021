@@ -80,7 +80,7 @@ Card.propTypes = {
 
 const CARD_HEIGHT = Spacing(17)
 const CARD_HEADER_HEIGHT = Spacing(3)
-const CARD_RADIUS = Spacing(0.3)
+const CARD_RADIUS = Spacing(0.3125)
 const CARD_PADDING = Spacing(1.25)
 
 const CardContainer = styled.div`

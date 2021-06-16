@@ -142,6 +142,7 @@ const Text = styled.div`
     > div {
       width: 75%;
       height: ${Spacing(0.85)};
+      border-radius: ${Spacing(0.125)};
       margin-bottom: ${Spacing(0.3)};
       background-color: rgba(255, 255, 255, 0.03);
 
@@ -166,7 +167,7 @@ const Grid = styled.div`
 
   > div {
     height: ${Spacing(4.5)};
-    border-radius: ${Spacing(0.25)};
+    border-radius: ${Spacing(0.125)};
     background-color: rgba(255, 255, 255, 0.03);
   }
 
@@ -220,10 +221,26 @@ const Rows = styled.div`
   ${pulseAnimation};
 
   > div {
-    height: ${({rows}) => (rows === 3 ? Spacing(5) : Spacing(7))};
-    border-radius: ${Spacing(0.25)};
+    height: ${Spacing(5)};
+    border-radius: ${Spacing(0.125)};
     background-color: rgba(255, 255, 255, 0.03);
   }
+
+  ${({rows}) => {
+    if (rows === 2) {
+      return css`
+        row-gap: ${Spacing(0.75)};
+
+        > div:nth-child(1) {
+          height: ${Spacing(5.25)};
+        }
+
+        > div {
+          height: ${Spacing(8.65)};
+        }
+      `
+    }
+  }}
 `
 
 const Map = styled.div`
@@ -234,7 +251,7 @@ const Map = styled.div`
 
   > div {
     height: ${Spacing(11.125)};
-    border-radius: ${Spacing(0.25)};
+    border-radius: ${Spacing(0.125)};
     background-color: rgba(255, 255, 255, 0.03);
   }
 

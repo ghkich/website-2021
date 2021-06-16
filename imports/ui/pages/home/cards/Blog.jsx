@@ -68,7 +68,7 @@ const PostContainer = styled.a`
   display: block;
   margin-bottom: ${Spacing(0.625)};
   padding: ${Spacing(0.625)};
-  border-radius: ${Spacing(0.25)};
+  border-radius: ${Spacing(0.125)};
   border: ${Spacing(0.0625)} solid rgba(255, 255, 255, 0.03);
   background-color: rgba(255, 255, 255, 0.01);
   transition: ${Transitions.COLORS};
@@ -110,5 +110,10 @@ const PostContainer = styled.a`
     > h2 {
       color: ${Colors.WHITE_SECONDARY};
     }
+  }
+
+  :active {
+    background-color: rgba(255, 255, 255, 0.01);
+    border-color: rgba(255, 255, 255, 0.03);
   }
 `
