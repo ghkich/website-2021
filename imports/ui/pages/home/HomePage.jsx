@@ -95,7 +95,7 @@ export const HomePageComponent = ({cards, appReady}) => {
             <span>in Parana, Brazil</span>
           </MadeWith>
           <Copyright>
-            The background and skills are using the Circuit Board SVG Pattern from{' '}
+            The background is using the Circuit Board SVG Pattern from{' '}
             <a href="https://www.heropatterns.com/" target="_blank" rel="noreferrer">
               Hero Patterns
             </a>{' '}
