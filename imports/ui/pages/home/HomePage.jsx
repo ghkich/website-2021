@@ -139,7 +139,6 @@ const CardsGrid = styled.div`
   column-gap: ${Spacing(1)};
   row-gap: ${Spacing(1)};
   border-radius: ${Spacing(0.325)};
-  overflow: hidden;
 
   ${Breakpoints.TABLET_L},
   ${Breakpoints.DUO_SCREEN_M} {
@@ -150,6 +149,7 @@ const CardsGrid = styled.div`
     grid-template-columns: 1fr;
     column-gap: ${Spacing(0.0625)};
     row-gap: ${Spacing(0.0625)};
+    overflow: hidden;
   }
 `
 

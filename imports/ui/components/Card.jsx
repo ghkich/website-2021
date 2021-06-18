@@ -86,7 +86,7 @@ const CARD_PADDING = Spacing(1.25)
 const CardContainer = styled.div`
   border-radius: ${CARD_RADIUS};
   background-color: rgba(0, 0, 0, 0.25);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04);
   position: relative;
   overflow: hidden;
   height: ${CARD_HEADER_HEIGHT};
