@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import React, {useEffect, useState} from 'react'
-import styled, {css} from 'styled-components'
+import React, {useState} from 'react'
+import styled, {keyframes} from 'styled-components'
 import {Breakpoints, Colors, Spacing, Transitions} from '../theme'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faAngleLeft, faAngleRight} from '@fortawesome/pro-regular-svg-icons'
@@ -8,36 +8,39 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import {formatDate} from '../utils/formatters'
 library.add(faAngleLeft, faAngleRight)
 
-export const SelectLocation = ({selectedLocation, onPreviousClick, onNextClick}) => {
-  const [locationChanged, setLocationChanged] = useState()
+const BUTTON_TYPES = {
+  PREVIOUS: 'button-previous',
+  NEXT: 'button-next',
+}
 
-  useEffect(() => {
-    if (locationChanged === false) {
-      setLocationChanged(true)
-      setTimeout(() => {
-        setLocationChanged(false)
-      }, 200)
-    }
-    if (locationChanged === undefined) {
-      setLocationChanged(false)
-    }
-  }, [selectedLocation])
+export const SelectLocation = ({selectedLocation, onPreviousClick, onNextClick}) => {
+  const [buttonTypeClicked, setButtonTypeClicked] = useState()
 
   return (
     <MainContainer>
       <Select>
-        <button onClick={onPreviousClick}>
+        <button
+          onClick={() => {
+            onPreviousClick()
+            setButtonTypeClicked(BUTTON_TYPES.PREVIOUS)
+          }}
+        >
           <FontAwesomeIcon icon={faAngleLeft} />
         </button>
-        <LocationItem $locationChanged={locationChanged}>
-          <div>
+        <LocationItem key={selectedLocation._id} $buttonType={buttonTypeClicked}>
+          <div className="row-location">
             <span className="country">{selectedLocation.country}</span> - <span>{selectedLocation.location}</span>
           </div>
-          <span>
+          <div className="row-visit">
             {selectedLocation.isCurrent ? 'Current location' : `Visited on ${formatDate(selectedLocation.lastVisit)}`}
-          </span>
+          </div>
         </LocationItem>
-        <button onClick={onNextClick}>
+        <button
+          onClick={() => {
+            onNextClick()
+            setButtonTypeClicked(BUTTON_TYPES.NEXT)
+          }}
+        >
           <FontAwesomeIcon icon={faAngleRight} />
         </button>
       </Select>
@@ -100,6 +103,16 @@ const Select = styled.div`
   }
 `
 
+const fromLeftAnimation = keyframes`
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+`
+
+const fromRightAnimation = keyframes`
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+`
+
 const LocationItem = styled.div`
   flex: 1;
   padding: ${Spacing(0.5)};
@@ -113,15 +126,6 @@ const LocationItem = styled.div`
   text-align: center;
   overflow: hidden;
 
-  ${({$locationChanged}) => {
-    if ($locationChanged) {
-      return css`
-        border-color: rgba(255, 255, 255, 0.05);
-        background-color: rgba(255, 255, 255, 0.02);
-      `
-    }
-  }}
-
   ${Breakpoints.MOBILE_S} {
     margin: 0 ${Spacing(0.35)};
   }
@@ -131,7 +135,6 @@ const LocationItem = styled.div`
   }
 
   > div {
-    margin-bottom: ${Spacing(0.25)};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -145,5 +148,16 @@ const LocationItem = styled.div`
     > span.country {
       color: ${Colors.LIGHT_SECONDARY};
     }
+  }
+
+  > div:nth-child(1) {
+    margin-bottom: ${Spacing(0.25)};
+    animation: ${({$buttonType}) => ($buttonType === BUTTON_TYPES.PREVIOUS ? fromLeftAnimation : fromRightAnimation)}
+      0.35s normal forwards;
+  }
+
+  > div:nth-child(2) {
+    animation: ${({$buttonType}) => ($buttonType === BUTTON_TYPES.PREVIOUS ? fromLeftAnimation : fromRightAnimation)}
+      0.35s normal forwards;
   }
 `
