@@ -14,8 +14,8 @@ body {
   --color-text: rgba(255,255,255, 0.3);
   --color-light-text: rgba(255,255,255, 0.5);
   --color-white-text: rgba(255,255,255, 0.75);
-  --color-bg-gradient-1: #303239;
-  --color-bg-gradient-2: #2f3342;
+  --color-bg-gradient-1: #2c2d31;
+  --color-bg-gradient-2: #323437;
 }
 
 
