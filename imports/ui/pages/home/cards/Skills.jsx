@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {useEffect, useState} from 'react'
-import styled, {css} from 'styled-components'
+import styled, {css, keyframes} from 'styled-components'
 import {Card, CardIcons} from '../../../components/Card'
 import {Breakpoints, Colors, Spacing, Transitions, Typography} from '../../../theme'
 import {SkillsMethodRequests} from '../../../../api/skills'
@@ -33,25 +33,12 @@ export const Skills = (props) => {
 
 export const SkillsComponent = ({loading, skills, ...props}) => {
   const [activeId, setActiveId] = useState('')
-  const [activeSkillChanged, setActiveSkillChanged] = useState()
 
   useEffect(() => {
     if (skills?.length > 0) {
       setActiveId(skills[0]._id)
     }
   }, [skills])
-
-  useEffect(() => {
-    if (activeSkillChanged === false) {
-      setActiveSkillChanged(true)
-      setTimeout(() => {
-        setActiveSkillChanged(false)
-      }, 200)
-    }
-    if (activeSkillChanged === undefined) {
-      setActiveSkillChanged(false)
-    }
-  }, [activeId])
 
   return (
     <Card {...props} icon={CardIcons.SKILLS} loading={loading} skeletonType={SkeletonTypes.DOUBLE_ROW}>
@@ -63,7 +50,7 @@ export const SkillsComponent = ({loading, skills, ...props}) => {
             </SkillItem>
           ))}
         </SkillsTabs>
-        <Description $activeSkillChanged={activeSkillChanged}>
+        <Description>
           {skills.map(
             (skill) =>
               skill._id === activeId && (
@@ -187,6 +174,21 @@ const SkillItem = styled.div`
   }
 `
 
+const h1Animation = keyframes`
+  from { padding-left: 0; }
+  to { padding-left: 22px; }
+`
+
+const iconAnimation = keyframes`
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+`
+
+const pAnimation = keyframes`
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+`
+
 const Description = styled.div`
   margin-top: ${Spacing(0.75)};
   padding: ${Spacing(1)};
@@ -194,15 +196,7 @@ const Description = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.03);
   position: relative;
   transition: ${Transitions.COLORS};
-
-  ${({$activeSkillChanged}) => {
-    if ($activeSkillChanged) {
-      return css`
-        border-color: rgba(255, 255, 255, 0.05);
-        background-color: rgba(255, 255, 255, 0.02);
-      `
-    }
-  }}
+  overflow: hidden;
 
   > div {
     > h1 {
@@ -213,10 +207,14 @@ const Description = styled.div`
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       padding-bottom: ${Spacing(1)};
       margin-bottom: ${Spacing(0.75)};
+      animation: ${h1Animation} 0.35s normal forwards;
 
       > svg {
-        margin-right: 3px;
+        position: absolute;
+        left: ${Spacing(1)};
+        top: ${Spacing(1.075)};
         color: rgba(255, 255, 255, 0.2);
+        animation: ${iconAnimation} 0.35s normal forwards;
       }
     }
 
@@ -227,6 +225,7 @@ const Description = styled.div`
       font-weight: 200;
       line-height: ${Typography.LINE_HEIGHT_NORMAL};
       color: ${Colors.TEXT};
+      animation: ${pAnimation} 0.35s normal forwards;
     }
   }
 `
