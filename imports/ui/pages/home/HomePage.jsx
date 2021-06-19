@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 import {WorkExperiences} from './cards/WorkExperiences'
 import {GitHub} from './cards/GitHub'
 import {Header} from './Header'
@@ -89,12 +89,36 @@ export const HomePageComponent = ({cards, appReady}) => {
         ))}
       </CardsGrid>
       <Footer appReady={appReady}>
-        <MadeAndCopyright>
+        <div>
           <MadeWith>
             Made with <FontAwesomeIcon icon={faHeart} /> and <FontAwesomeIcon icon={faMugHot} />{' '}
             <span>in Parana, Brazil</span>
           </MadeWith>
-          <Copyright>
+          <TechStack>
+            <div>
+              <a href="https://github.com/ghkich/website-meteor" target="_blank" rel="noreferrer">
+                This website source code
+              </a>
+            </div>
+            <div>
+              <a href="https://www.meteor.com/" target="_blank" rel="noreferrer">
+                Meteor
+              </a>
+              <span />
+              <a href="https://www.reactjs.org/" target="_blank" rel="noreferrer">
+                React
+              </a>
+              <span />
+              <a href="https://styled-components.com/" target="_blank" rel="noreferrer">
+                Styled-components
+              </a>
+            </div>
+          </TechStack>
+        </div>
+        <div style={{flex: 1}} />
+        <Copyright>
+          <div>Copyright © {new Date().getFullYear()} Gustavo Henrique Kich</div>
+          <div>
             The background is using the Circuit Board SVG Pattern from{' '}
             <a href="https://www.heropatterns.com/" target="_blank" rel="noreferrer">
               Hero Patterns
@@ -103,13 +127,8 @@ export const HomePageComponent = ({cards, appReady}) => {
             <a href="https://www.steveschoger.com/" target="_blank" rel="noreferrer">
               Steve Schoger
             </a>{' '}
-          </Copyright>
-        </MadeAndCopyright>
-        <div style={{flex: 1}} />
-        <AnotherText>
-          © 2021 - Gustavo Henrique Kich / Consectetur elit. Accusantium aliquam, animi consectetur dolores eaque eos
-          exercitationem.
-        </AnotherText>
+          </div>
+        </Copyright>
       </Footer>
     </BoxedLayout>
   )
@@ -155,7 +174,7 @@ const CardsGrid = styled.div`
 
 const Footer = styled.div`
   display: flex;
-  margin: ${Spacing(1.5)} ${Spacing(0.625)};
+  padding: ${Spacing(1.5)} ${Spacing(0.625)};
   color: ${Colors.DARK_TEXT};
   font-size: 11px;
   font-weight: 200;
@@ -163,6 +182,21 @@ const Footer = styled.div`
   line-height: ${Typography.LINE_HEIGHT_NORMAL};
   transition: opacity 0.2s;
   opacity: ${({appReady}) => (appReady ? 1 : 0)};
+  
+  a {
+      transition: ${Transitions.COLORS};
+      text-decoration: none;
+      color: ${Colors.TEXT};
+
+      ${Breakpoints.MOBILE_L} {
+        color: ${Colors.LIGHT_TEXT};
+      }
+
+      :hover {
+        color: ${Colors.LIGHT_PRIMARY};
+      }
+    }
+  }
 
   ${Breakpoints.MOBILE_L} {
     flex-direction: column;
@@ -172,48 +206,70 @@ const Footer = styled.div`
   }
 `
 
-const MadeAndCopyright = styled.div``
+const heartIconAnimation = keyframes`
+  0% {
+    color: ${Colors.PRIMARY};
+  }
+  50% {
+    transform: scale(1.2);
+    color: ${Colors.PRIMARY};
+  }
+  100% {
+    transform: scale(1);
+    color: ${Colors.PRIMARY};
+  }
+`
 
 const MadeWith = styled.div`
   > svg {
     margin: 0 ${Spacing(0.125)};
 
-    &:nth-child(1) {
-      color: ${Colors.PRIMARY};
-    }
-
     &:nth-child(2) {
       font-size: 1.1em;
     }
   }
+
+  ${Footer}:hover & {
+    > svg:nth-child(1) {
+      animation: ${heartIconAnimation} 1.25s infinite ease-in-out;
+    }
+  }
 `
 
-const Copyright = styled.div`
+const TechStack = styled.div`
   margin-top: ${Spacing(0.625)};
   max-width: ${Spacing(18)};
 
-  > a {
-    transition: ${Transitions.COLORS};
-    text-decoration: none;
-    color: ${Colors.TEXT};
+  > div:nth-child(2) {
+    display: inline-flex;
+    align-items: center;
+    margin-top: ${Spacing(0.125)};
+    column-gap: ${Spacing(0.35)};
 
-    ${Breakpoints.MOBILE_L} {
-      color: ${Colors.LIGHT_TEXT};
-    }
-
-    :hover {
-      color: ${Colors.LIGHT_PRIMARY};
+    > span {
+      width: 1px;
+      height: 10px;
+      background-color: rgba(255, 255, 255, 0.07);
     }
   }
 
   ${Breakpoints.MOBILE_L} {
     max-width: 100%;
+
+    > div:nth-child(2) {
+      margin-top: ${Spacing(0.3125)};
+      column-gap: ${Spacing(0.5)};
+    }
   }
 `
 
-const AnotherText = styled.div`
+const Copyright = styled.div`
   max-width: ${Spacing(18)};
   text-align: right;
+
+  > div:nth-child(2) {
+    margin-top: ${Spacing(0.625)};
+  }
 
   ${Breakpoints.MOBILE_L} {
     max-width: 100%;
