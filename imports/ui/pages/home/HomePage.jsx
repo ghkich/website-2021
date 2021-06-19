@@ -13,8 +13,9 @@ import {Skills} from './cards/Skills'
 import {faHeart, faMugHot} from '@fortawesome/pro-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {library} from '@fortawesome/fontawesome-svg-core'
+import {faGithub} from '@fortawesome/free-brands-svg-icons'
 import {useAppSelectors} from '../../app/AppContext'
-library.add(faHeart, faMugHot)
+library.add(faHeart, faMugHot, faGithub)
 
 const CardNames = {
   WORK_EXPERIENCES: 'work-experiences',
@@ -94,26 +95,12 @@ export const HomePageComponent = ({cards, appReady}) => {
             Made with <FontAwesomeIcon icon={faHeart} /> and <FontAwesomeIcon icon={faMugHot} />{' '}
             <span>in Parana, Brazil</span>
           </MadeWith>
-          <TechStack>
-            <div>
-              <a href="https://github.com/ghkich/website-meteor" target="_blank" rel="noreferrer">
-                This website source code
-              </a>
-            </div>
-            <div>
-              <a href="https://www.meteor.com/" target="_blank" rel="noreferrer">
-                Meteor
-              </a>
-              <span />
-              <a href="https://www.reactjs.org/" target="_blank" rel="noreferrer">
-                React
-              </a>
-              <span />
-              <a href="https://styled-components.com/" target="_blank" rel="noreferrer">
-                Styled-components
-              </a>
-            </div>
-          </TechStack>
+          <SourceCode>
+            <a href="https://github.com/ghkich/website-meteor" target="_blank" rel="noreferrer">
+              <FontAwesomeIcon icon={faGithub} /> This website source code
+            </a>
+            <div>Meteor / React / Styled-components</div>
+          </SourceCode>
         </div>
         <div style={{flex: 1}} />
         <Copyright>
@@ -206,18 +193,9 @@ const Footer = styled.div`
   }
 `
 
-const heartIconAnimation = keyframes`
-  0% {
-    color: ${Colors.PRIMARY};
-  }
-  50% {
-    transform: scale(1.2);
-    color: ${Colors.PRIMARY};
-  }
-  100% {
-    transform: scale(1);
-    color: ${Colors.PRIMARY};
-  }
+const heartBeatAnimation = keyframes`
+  0%, 50%, 100% { transform: scale(1, 1); color: ${Colors.PRIMARY}; }
+  30%, 80% { transform: scale(1.2, 1.17); color: ${Colors.PRIMARY}; }
 `
 
 const MadeWith = styled.div`
@@ -231,43 +209,26 @@ const MadeWith = styled.div`
 
   ${Footer}:hover & {
     > svg:nth-child(1) {
-      animation: ${heartIconAnimation} 1.25s infinite ease-in-out;
+      animation: ${heartBeatAnimation} 2s infinite ease;
     }
   }
 `
 
-const TechStack = styled.div`
+const SourceCode = styled.div`
   margin-top: ${Spacing(0.625)};
-  max-width: ${Spacing(18)};
 
-  > div:nth-child(2) {
-    display: inline-flex;
-    align-items: center;
-    margin-top: ${Spacing(0.125)};
-    column-gap: ${Spacing(0.35)};
-
-    > span {
-      width: 1px;
-      height: 10px;
-      background-color: rgba(255, 255, 255, 0.07);
-    }
+  a > svg {
+    font-size: 1.1em;
+    margin-right: ${Spacing(0.125)};
   }
 
-  ${Breakpoints.MOBILE_L} {
-    max-width: 100%;
-    margin-top: ${Spacing(1)};
-
-    > div:nth-child(2) {
-      margin-top: ${Spacing(0.4125)};
-      padding-top: ${Spacing(0.4125)};
-      border-top: 1px solid rgba(255, 255, 255, 0.03);
-      column-gap: ${Spacing(0.5)};
-    }
+  > div {
+    margin-top: ${Spacing(0.125)};
   }
 `
 
 const Copyright = styled.div`
-  max-width: ${Spacing(18)};
+  max-width: ${Spacing(17)};
   text-align: right;
 
   > div:nth-child(2) {
