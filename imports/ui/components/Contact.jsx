@@ -76,7 +76,8 @@ const LinksDivider = styled.div`
   background-color: rgba(255, 255, 255, 0.1);
 
   ${Breakpoints.MOBILE_L} {
-    display: none;
+    margin-right: -${Spacing(0.3125)};
+    margin-left: -${Spacing(0.3125)};
   }
 `
 
