@@ -255,9 +255,12 @@ const TechStack = styled.div`
 
   ${Breakpoints.MOBILE_L} {
     max-width: 100%;
+    margin-top: ${Spacing(1)};
 
     > div:nth-child(2) {
-      margin-top: ${Spacing(0.3125)};
+      margin-top: ${Spacing(0.4125)};
+      padding-top: ${Spacing(0.4125)};
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
       column-gap: ${Spacing(0.5)};
     }
   }
