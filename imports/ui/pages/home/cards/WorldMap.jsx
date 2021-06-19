@@ -87,6 +87,7 @@ const MapContainer = styled.div`
   max-width: ${Spacing(18.5)};
   height: ${Spacing(11.2)};
   margin: ${Spacing(0.625)} auto 0;
+  margin-bottom: -${Spacing(0.75)} !important;
 
   ${Breakpoints.MOBILE_S} {
     margin: ${Spacing(0.625)} auto 0;
@@ -121,19 +122,19 @@ const PinMap = styled.button`
   left: ${({$left}) => $left}%;
   top: ${({$top}) => $top}%;
   z-index: 1;
-  width: 10px;
-  height: 10px;
+  width: ${Spacing(0.625)};
+  height: ${Spacing(0.625)};
 
   :before {
     content: '';
     display: block;
-    width: 5px;
-    height: 5px;
+    width: ${Spacing(0.3125)};
+    height: ${Spacing(0.3125)};
     border-radius: 50%;
     background-color: ${Colors.LIGHT_SECONDARY};
-    border: 1px solid transparent;
-    margin-top: -3px;
-    margin-left: -3px;
+    border: ${Spacing(0.0625)} solid transparent;
+    margin-top: -${Spacing(0.1875)};
+    margin-left: -${Spacing(0.1875)};
     position: absolute;
     left: 50%;
     top: 50%;
@@ -142,12 +143,12 @@ const PinMap = styled.button`
   :after {
     content: '';
     display: block;
-    width: 5px;
-    height: 5px;
+    width: ${Spacing(0.3125)};
+    height: ${Spacing(0.3125)};
     border-radius: 50%;
-    border: 1px solid ${Colors.LIGHT_SECONDARY};
-    margin-top: -3px;
-    margin-left: -3px;
+    border: ${Spacing(0.0625)} solid ${Colors.LIGHT_SECONDARY};
+    margin-top: -${Spacing(0.1875)};
+    margin-left: -${Spacing(0.1875)};
     position: absolute;
     left: 50%;
     top: 50%;
@@ -157,18 +158,18 @@ const PinMap = styled.button`
     if ($active) {
       return css`
         :before {
-          width: 9px;
-          height: 9px;
-          margin-top: -5px;
-          margin-left: -5px;
+          width: ${Spacing(0.5625)};
+          height: ${Spacing(0.5625)};
+          margin-top: -${Spacing(0.3125)};
+          margin-left: -${Spacing(0.3125)};
           background-color: ${Colors.SECONDARY};
         }
 
         :after {
-          width: 9px;
-          height: 9px;
-          margin-top: -5px;
-          margin-left: -5px;
+          width: ${Spacing(0.5625)};
+          height: ${Spacing(0.5625)};
+          margin-top: -${Spacing(0.3125)};
+          margin-left: -${Spacing(0.3125)};
           animation: ${pulsate} 1s ease-out infinite;
         }
       `
