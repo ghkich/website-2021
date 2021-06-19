@@ -204,8 +204,8 @@ const Description = styled.div`
       font-weight: normal;
       color: ${Colors.SECONDARY};
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      padding-bottom: ${Spacing(1)};
-      margin-bottom: ${Spacing(0.75)};
+      padding-bottom: ${Spacing(0.9)};
+      margin-bottom: ${Spacing(0.65)};
       animation: ${h1Animation} 0.35s normal forwards;
     }
 
