@@ -55,9 +55,8 @@ export const SkillsComponent = ({loading, skills, ...props}) => {
             (skill) =>
               skill._id === activeId && (
                 <div key={skill._id}>
-                  <h1>
-                    <FontAwesomeIcon icon={SkillsIcons[skill.type]} /> {skill.name}
-                  </h1>
+                  <h1>{skill.name}</h1>
+                  <FontAwesomeIcon icon={SkillsIcons[skill.type]} />
                   <p>{skill.description}</p>
                 </div>
               ),
@@ -175,13 +174,13 @@ const SkillItem = styled.div`
 `
 
 const h1Animation = keyframes`
-  from { padding-left: 0; }
-  to { padding-left: 22px; }
+  from {  opacity: 0; transform: translateX(-20px); }
+  to {  opacity: 1; transform: translateX(0); }
 `
 
 const iconAnimation = keyframes`
-  from { transform: scale(0); }
-  to { transform: scale(1); }
+  from { opacity: 0; transform: scale(0); }
+  to { opacity: 1; transform: scale(1); }
 `
 
 const pAnimation = keyframes`
@@ -208,14 +207,14 @@ const Description = styled.div`
       padding-bottom: ${Spacing(1)};
       margin-bottom: ${Spacing(0.75)};
       animation: ${h1Animation} 0.35s normal forwards;
+    }
 
-      > svg {
-        position: absolute;
-        left: ${Spacing(1)};
-        top: ${Spacing(1.075)};
-        color: rgba(255, 255, 255, 0.2);
-        animation: ${iconAnimation} 0.35s normal forwards;
-      }
+    > svg {
+      position: absolute;
+      right: ${Spacing(1)};
+      top: ${Spacing(1)};
+      color: rgba(255, 255, 255, 0.2);
+      animation: ${iconAnimation} 0.35s normal forwards;
     }
 
     > p {
