@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import styled, {keyframes} from 'styled-components'
+import styled, {css, keyframes} from 'styled-components'
 import {WorkExperiences} from './cards/WorkExperiences'
 import {GitHub} from './cards/GitHub'
 import {Header} from './Header'
@@ -67,6 +67,7 @@ export const HomePage = () => {
 export const HomePageComponent = ({cards, appReady}) => {
   const [activeCardId, setActiveCardId] = useState()
   const [isSmallScreen, setIsSmallScreen] = useState()
+  const [sourceCodeHover, setSourceCodeHover] = useState(false)
 
   useEffect(() => {
     setIsSmallScreen(window.matchMedia(MAX_WIDTH_MOBILE_L).matches)
@@ -91,12 +92,18 @@ export const HomePageComponent = ({cards, appReady}) => {
       </CardsGrid>
       <Footer appReady={appReady}>
         <div>
-          <MadeWith>
+          <MadeWith $sourceCodeHover={sourceCodeHover}>
             Made with <FontAwesomeIcon icon={faHeart} /> and <FontAwesomeIcon icon={faMugHot} />{' '}
             <span>in Parana, Brazil</span>
           </MadeWith>
           <SourceCode>
-            <a href="https://github.com/ghkich/website-meteor" target="_blank" rel="noreferrer">
+            <a
+              href="https://github.com/ghkich/website-meteor"
+              target="_blank"
+              rel="noreferrer"
+              onMouseEnter={() => setSourceCodeHover(true)}
+              onMouseLeave={() => setSourceCodeHover(false)}
+            >
               <FontAwesomeIcon icon={faGithub} /> This website source code
             </a>
             <div>Meteor / React / Styled-components</div>
@@ -202,14 +209,17 @@ const MadeWith = styled.div`
   > svg {
     margin: 0 ${Spacing(0.125)};
 
+    &:nth-child(1) {
+      ${({$sourceCodeHover}) => {
+        if ($sourceCodeHover)
+          return css`
+            animation: ${heartBeatAnimation} 2s infinite ease;
+          `
+      }};
+    }
+
     &:nth-child(2) {
       font-size: 1.1em;
-    }
-  }
-
-  ${Footer}:hover & {
-    > svg:nth-child(1) {
-      animation: ${heartBeatAnimation} 2s infinite ease;
     }
   }
 `
@@ -218,7 +228,7 @@ const SourceCode = styled.div`
   margin-top: ${Spacing(0.625)};
 
   a > svg {
-    font-size: 1.1em;
+    font-size: 12px;
     margin-right: ${Spacing(0.125)};
   }
 
