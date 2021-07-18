@@ -10,7 +10,7 @@ export const WORK_EXPERIENCES_DATA = [
     location: 'Toledo, PR',
     keywords: [KeywordTypes.METEOR, KeywordTypes.REACT],
     description:
-      'Dolor sit asimet fugiat non proident consectetur labore. Deserunt fugiat tempor elit ex excepteur eu elit deserunt eu occaecat elit ex. Sit consequat veniam adipisicing quis ad reprehenderit amet cillum incididunt ullamco aute.',
+      "First time being part of an international team of so talented and friendly folks. It has been a constant challenge for me, but I'm pretty excited about it. Meteor is amazing for full-stack development and I'm having so much fun building new features.",
   },
   {
     jobTitle: 'Front-end developer',
@@ -21,7 +21,7 @@ export const WORK_EXPERIENCES_DATA = [
     location: 'São Paulo, SP',
     keywords: [KeywordTypes.GATSBY, KeywordTypes.REACT],
     description:
-      'Esse dolore labore laboris irure duis amet magna quis reprehenderit eu. Culpa sit elit nisi consectetur. Nostrud cupidatat nulla fugiat in do consectetur id cupidatat cupidatat. Laborum duis minim exercitation do magna ullamco veniam exercitation pariatur magna reprehenderit.',
+      'I was mainly working with front-end stuff, but we were a fintech startup, sometimes we would change roles and help each other. My final task was to code the new UI of the app while the team were migrating our monolithic architecture to microservices with AWS (Lambdas, Step Functions and API Gateways).',
   },
   {
     jobTitle: 'Web developer & Designer',
@@ -32,6 +32,6 @@ export const WORK_EXPERIENCES_DATA = [
     location: 'Curitiba, PR',
     keywords: [KeywordTypes.PHP, KeywordTypes.JQUERY],
     description:
-      'Nisi cupidatat cillum minim tempor nostrud officia aliqua dolor fugiat. Sit consequat veniam adipisicing quis ad reprehenderit amet cillum incididunt ullamco aute amet irure adipisicing. Duis sunt minim enim officia cupidatat dolore fugiat eiusmod deserunt et. Quis et do aute elit nostrud.',
+      "This was my first job in a tech company. Back then, I didn't know much about coding. I started as a Designer and slowly move towards a developer role. I helped design and develop a PPC (Production Planning and Control) system from scratch. That was fun and I learned a lot throughout the process.",
   },
 ]
