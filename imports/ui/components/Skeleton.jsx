@@ -229,7 +229,7 @@ const Rows = styled.div`
   ${({rows}) => {
     if (rows === 2) {
       return css`
-        row-gap: ${Spacing(0.75)};
+        row-gap: ${Spacing(0.625)};
 
         > div:nth-child(1) {
           height: ${Spacing(5.25)};

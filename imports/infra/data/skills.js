@@ -4,25 +4,21 @@ export const SKILLS_DATA = [
   {
     type: SkillTypes.COMMUNICATION,
     name: 'Communication',
-    description:
-      'Fugiat non proident consectetur labore amet magna quis reprehenderit eu. Deserunt fugiat tempor elit ex excepteur eu elit deserunt eu occaecat elit ex.',
+    description: `<p>I can't stress enough <span>how important I think communication skills are, especially in remote jobs</span>. That is why I'm constantly studying and practicing them.</p>`,
   },
   {
     type: SkillTypes.THINKING,
     name: 'Critical Thinking',
-    description:
-      'Esse dolore labore laboris irure duis amet magna quis reprehenderit eu. Culpa sit elit nisi consectetur. Nostrud cupidatat nulla fugiat.',
+    description: `<p><span>This is part of who I am, reasoning about situations, thoughts, things</span>. Sometimes It can be a double-edged sword but, at least, I take code reviews seriously.</p>`,
   },
   {
-    type: SkillTypes.FOCUS,
-    name: 'Focus Mode',
-    description:
-      'Nisi cupidatat cillum minim tempor nostrud officia aliqua dolor fugiat. Sit consequat veniam adipisicing quis ad reprehenderit amet. ',
+    type: SkillTypes.ADAPTABILITY,
+    name: 'Adaptability',
+    description: `<p>Things don't always go the way it was intended and also, <span>changes are an inevitable part of life</span>. I understand that, "be water, my friend".</p>`,
   },
   {
-    type: SkillTypes.PASSION,
-    name: 'Passion',
-    description:
-      'Esse dolore labore laboris irure duis amet magna quis reprehenderit eu. Culpa sit elit nisi consectetur. Nostrud cupidatat nulla fugiat.',
+    type: SkillTypes.TEAMWORK,
+    name: 'Teamwork',
+    description: `<p>I've struggled with that in the past. And as a result, <span>I learned how to identify and handle possible issues inside teams</span>. Like egos, roles or unclear goals.</p>`,
   },
 ]

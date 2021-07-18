@@ -7,22 +7,22 @@ import {SkillsMethodRequests} from '../../../../api/skills'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {SkeletonTypes} from '../../../components/Skeleton'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faComments, faBrain, faBullseye, faHeart} from '@fortawesome/pro-solid-svg-icons'
+import {faComments, faBrain, faDroplet, faSlidersUp} from '@fortawesome/pro-solid-svg-icons'
 import {library} from '@fortawesome/fontawesome-svg-core'
-library.add(faComments, faBrain, faBullseye, faHeart)
+library.add(faComments, faBrain, faDroplet, faSlidersUp)
 
 export const SkillTypes = {
   COMMUNICATION: 'communication',
   THINKING: 'thinking',
-  FOCUS: 'focus',
-  PASSION: 'passion',
+  ADAPTABILITY: 'adaptability',
+  TEAMWORK: 'teamwork',
 }
 
 const SkillsIcons = {
   [SkillTypes.COMMUNICATION]: faComments,
   [SkillTypes.THINKING]: faBrain,
-  [SkillTypes.FOCUS]: faBullseye,
-  [SkillTypes.PASSION]: faHeart,
+  [SkillTypes.ADAPTABILITY]: faDroplet,
+  [SkillTypes.TEAMWORK]: faSlidersUp,
 }
 
 export const Skills = (props) => {
@@ -43,25 +43,25 @@ export const SkillsComponent = ({loading, skills, ...props}) => {
   return (
     <Card {...props} icon={CardIcons.SKILLS} loading={loading} skeletonType={SkeletonTypes.DOUBLE_ROW}>
       <MainContainer>
-        <SkillsTabs>
+        <Tabs>
           {skills.map((skill) => (
             <SkillItem key={skill._id} $active={skill._id === activeId} onClick={() => setActiveId(skill._id)}>
               <FontAwesomeIcon icon={SkillsIcons[skill.type]} />
             </SkillItem>
           ))}
-        </SkillsTabs>
-        <Description>
+        </Tabs>
+        <Content>
           {skills.map(
             (skill) =>
               skill._id === activeId && (
                 <div key={skill._id}>
                   <h1>{skill.name}</h1>
                   <FontAwesomeIcon icon={SkillsIcons[skill.type]} />
-                  <p>{skill.description}</p>
+                  <Description dangerouslySetInnerHTML={{__html: skill.description}} />
                 </div>
               ),
           )}
-        </Description>
+        </Content>
       </MainContainer>
     </Card>
   )
@@ -87,7 +87,7 @@ const MainContainer = styled.div`
   }
 `
 
-const SkillsTabs = styled.div`
+const Tabs = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   column-gap: ${Spacing(0.625)};
@@ -188,9 +188,10 @@ const pAnimation = keyframes`
   to { opacity: 1; transform: translateX(0); }
 `
 
-const Description = styled.div`
-  margin-top: ${Spacing(0.75)};
+const Content = styled.div`
+  margin-top: ${Spacing(0.625)};
   padding: ${Spacing(1)};
+  padding-bottom: ${Spacing(0.8)};
   background-color: rgba(255, 255, 255, 0.01);
   border: 1px solid rgba(255, 255, 255, 0.03);
   position: relative;
@@ -205,7 +206,7 @@ const Description = styled.div`
       color: ${Colors.SECONDARY};
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       padding-bottom: ${Spacing(0.9)};
-      margin-bottom: ${Spacing(0.65)};
+      margin-bottom: ${Spacing(0.6)};
       animation: ${h1Animation} 0.35s normal forwards;
     }
 
@@ -216,15 +217,21 @@ const Description = styled.div`
       color: rgba(255, 255, 255, 0.2);
       animation: ${iconAnimation} 0.35s normal forwards;
     }
+  }
+`
 
-    > p {
-      margin: 0;
-      padding: 0;
-      font-size: 13px;
-      font-weight: 200;
-      line-height: ${Typography.LINE_HEIGHT_NORMAL};
-      color: ${Colors.TEXT};
-      animation: ${pAnimation} 0.35s normal forwards;
+const Description = styled.div`
+  > p {
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    font-weight: 200;
+    line-height: ${Typography.LINE_HEIGHT_NORMAL};
+    color: ${Colors.TEXT};
+    animation: ${pAnimation} 0.35s normal forwards;
+
+    > span {
+      color: ${Colors.LIGHT_TEXT};
     }
   }
 `
