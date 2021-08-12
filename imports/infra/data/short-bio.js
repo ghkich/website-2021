@@ -6,6 +6,6 @@ export const SHORT_BIO_DATA = {
   birthdate: '1989-05-06',
   avatarSrc: AVATAR_SRC_PATH,
   description:
-    "I always thought my dream was to be a game concept artist, drawing monsters, cool weapons and creepy scenarios. But instead, I'm building some apps while sipping a good coffee and looking for a next place to visit, haha.",
+    "I'm a developer who has a degree in Product Design, so I really like building things. But besides that, I love playing games and watching animes. And my biggest dream is to travel around the world.",
   likes: ['gaming', 'coding', 'traveling', 'coffee'],
 }
