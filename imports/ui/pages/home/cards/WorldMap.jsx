@@ -23,7 +23,8 @@ export const WorldMapComponent = ({loading, locations, ...props}) => {
 
   useEffect(() => {
     if (locations?.length > 0) {
-      setSelectedIndex(0)
+      const currentLocationIndex = locations.findIndex((location) => location.isCurrent)
+      setSelectedIndex(currentLocationIndex)
     }
   }, [locations])
 
