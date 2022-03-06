@@ -1,8 +1,8 @@
 export const PERSONAL_INFO_DATA = {
   name: 'Gustavo Kich',
-  jobTitle: 'Full-stack Developer',
+  jobTitle: 'Designer / Developer',
   phone: '5541999979819',
-  email: 'hello@gustavokich.com',
+  email: 'gh.kich@gmail.com',
   networks: [
     {
       code: 'github',
