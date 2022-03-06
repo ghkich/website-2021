@@ -5,12 +5,12 @@ export const WORK_EXPERIENCES_DATA = [
     jobTitle: 'Full-stack developer',
     company: 'Pathable',
     website: 'https://www.pathable.com',
-    startDate: '2021-03-22',
-    endDate: null,
+    startDate: '2021-02-22',
+    endDate: '2022-01-01',
     location: 'Toledo, PR',
     keywords: [KeywordTypes.METEOR, KeywordTypes.REACT],
     description:
-      "First time being part of an international team of so talented and friendly folks. It has been a constant challenge for me, but I'm pretty excited about it. Meteor is amazing for full-stack development and I'm having so much fun building new features.",
+      'I was working remotely in an agile international team. We were mainly using MeteorJS which I find amazing for full-stack development. I also had the opportunity to be the lead developer in one of the last features assigned to our team.',
   },
   {
     jobTitle: 'Front-end developer',
