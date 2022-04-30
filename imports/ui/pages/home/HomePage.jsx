@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import styled, {css, keyframes} from 'styled-components'
-import {WorkExperiences} from './cards/WorkExperiences'
+import {WorkExperience} from './cards/WorkExperience'
 import {GitHub} from './cards/GitHub'
 import {Header} from './Header'
 import {ShortBio} from './cards/ShortBio'
@@ -18,7 +18,7 @@ import {useAppSelectors} from '../../app/AppContext'
 library.add(faHeart, faMugHot, faGithub)
 
 const CardNames = {
-  WORK_EXPERIENCES: 'work-experiences',
+  WORK_EXPERIENCE: 'work-experience',
   SHORT_BIO: 'short-bio',
   GITHUB: 'github',
   SKILLS: 'skills',
@@ -28,9 +28,9 @@ const CardNames = {
 
 const cards = [
   {
-    id: CardNames.WORK_EXPERIENCES,
-    title: 'Work Experiences',
-    component: WorkExperiences,
+    id: CardNames.WORK_EXPERIENCE,
+    title: 'Work Experience',
+    component: WorkExperience,
   },
   {
     id: CardNames.SHORT_BIO,

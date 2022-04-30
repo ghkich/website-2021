@@ -1,6 +1,6 @@
 import {KeywordTypes} from '../../ui/components/KeywordIcon'
 
-export const WORK_EXPERIENCES_DATA = [
+export const WORK_EXPERIENCE_DATA = [
   {
     jobTitle: 'Full-stack developer',
     company: 'Pathable',
@@ -32,6 +32,6 @@ export const WORK_EXPERIENCES_DATA = [
     location: 'Curitiba, PR',
     keywords: [KeywordTypes.PHP, KeywordTypes.JQUERY],
     description:
-      "This was my first job in a tech company. Back then, I didn't know much about coding. I started as a Designer and slowly move towards a developer role. I helped design and develop a PPC (Production Planning and Control) system from scratch. That was fun and I've learned a lot in the process.",
+      "This was my first job in a tech company. Back then, I didn't know much about coding. I started as a Designer and slowly move towards a developer role. I helped design and develop a PPC (Production Planning and Control) system from scratch. That was fun and I learned a lot in the process.",
   },
 ]

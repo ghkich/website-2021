@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {WorkExperiencesMethodRequests} from '../api/work-experiences'
+import {WorkExperienceMethodRequests} from '../api/work-experience'
 import {GitHubMethodRequests} from '../api/github'
 import {methodCall} from './methodCall'
 import {ShortBioMethodRequests} from '../api/short-bio'
@@ -10,7 +10,7 @@ import {useAppContext} from '../ui/app/AppContext'
 import {WorldMapMethodRequests} from '../api/world-map'
 
 const AllMethodRequests = [
-  WorkExperiencesMethodRequests,
+  WorkExperienceMethodRequests,
   GitHubMethodRequests,
   ShortBioMethodRequests,
   SkillsMethodRequests,

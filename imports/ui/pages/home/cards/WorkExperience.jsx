@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, {useEffect, useState} from 'react'
 import styled, {css} from 'styled-components'
-import {WorkExperiencesMethodRequests} from '../../../../api/work-experiences'
+import {WorkExperienceMethodRequests} from '../../../../api/work-experience'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card, CardIcons} from '../../../components/Card'
 import {Colors, Spacing, Transitions, Typography} from '../../../theme'
@@ -9,13 +9,13 @@ import {formatDate} from '../../../utils/formatters'
 import {SkeletonTypes} from '../../../components/Skeleton'
 import {KeywordIcon, KeywordTypes} from '../../../components/KeywordIcon'
 
-export const WorkExperiences = (props) => {
-  const {data = [], loading} = useMethodRequest(WorkExperiencesMethodRequests.FETCH)
+export const WorkExperience = (props) => {
+  const {data = [], loading} = useMethodRequest(WorkExperienceMethodRequests.FETCH)
 
-  return <WorkExperiencesComponent {...props} loading={loading} experiences={data} />
+  return <WorkExperienceComponent {...props} loading={loading} experiences={data} />
 }
 
-export const WorkExperiencesComponent = ({loading, experiences, ...props}) => {
+export const WorkExperienceComponent = ({loading, experiences, ...props}) => {
   const [activeId, setActiveId] = useState('')
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export const WorkExperiencesComponent = ({loading, experiences, ...props}) => {
   )
 }
 
-WorkExperiencesComponent.propTypes = {
+WorkExperienceComponent.propTypes = {
   loading: PropTypes.bool,
   experiences: PropTypes.arrayOf(
     PropTypes.shape({
