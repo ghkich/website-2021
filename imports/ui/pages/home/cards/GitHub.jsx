@@ -1,15 +1,15 @@
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {faBookAlt} from '@fortawesome/pro-light-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import {GitHubMethodRequests} from '../../../../api/github'
+import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
 import {useMethodRequest} from '../../../../infra/useMethodRequest'
 import {Card, CardIcons} from '../../../components/Card'
-import {Breakpoints, Colors, Spacing, Transitions, Typography} from '../../../theme'
-import {shouldUpdateCollection} from '../../../../infra/shouldUpdateCollection'
 import {SkeletonTypes} from '../../../components/Skeleton'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faBookAlt} from '@fortawesome/pro-light-svg-icons'
-import {library} from '@fortawesome/fontawesome-svg-core'
+import {Breakpoints, Colors, Spacing, Transitions, Typography} from '../../../theme'
 library.add(faBookAlt)
 
 const SOURCE_DATA_URL = 'https://api.github.com/users/ghkich/repos?type=owner&sort=pushed'
@@ -136,6 +136,10 @@ const GitHubItem = styled.a`
     font-weight: 200;
     line-height: ${Typography.LINE_HEIGHT_SNUG};
     color: ${Colors.TEXT};
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   :hover {
